@@ -24,18 +24,17 @@ JVM의 구조는 Class Loader, Exection engine, Runtime Data Area, Garbage Colle
 
 <img width="700" src="https://1.bp.blogspot.com/-z_6MYjhAvcU/XZyjytx1DzI/AAAAAAAACJ4/bTY9CKKE3m8XUFkTHZPp0FVs4mDa3uvLwCLcBGAsYHQ/s1600/%25EC%259E%2590%25EB%25B0%2594%25EB%258F%2599%25EC%259E%2591%25EA%25B3%25BC%25EC%25A0%2595.PNG">
 
-- Class Loader
-  <br>자바 컴파일러가 .java 파일을 컴파일하면 .class 파일(바이트 코드)가 생성된다.
-  <br>이렇게 생성된 클래스 파일들을 엮어 Runtime Data Area 형태로 메모리에 적재하는 역할을 한다.
+- Class Loader는 자바 컴파일러가 .java 파일을 컴파일하면 .class 파일(바이트 코드)가 생성해주면,
+  <br>이 생성된 클래스 파일들을 엮어 Runtime Data Area 형태로 메모리에 적재하는 역할을 합니다.
 
-- Execution Engine
-  메모리에 적재된 클래스들을 기계어로 변경해 명령어 단위로 실행하는 역할을 한다.
+- Execution Engine는
+  메모리에 적재된 클래스들을 기계어로 변경해 명령어 단위로 실행하는 역할을 합니다.
 
-- Garbage Collector
-  Heap 메모리 영역에 생성 된 객체들 중에 참조되지 않는 객체들을 탐색 후 제거하는 역할
+- Garbage Collector는
+  Heap 메모리 영역에 생성 된 객체들 중에 참조되지 않는 객체들을 탐색 후 제거하는 역할을 합니다.
 
-- Runtime Data Area
-  <br>JVM이 프로그램을 수행하기 위해 OS로 부터 별도로 할당 받은 메모리 공간을 말하며, Runtime Data Areas는 크게 5가지 영역으로 나눌 수 있다.
+- Runtime Data Area는 JVM이 프로그램을 수행하기 위해 OS로 부터 별도로 할당 받은 메모리 공간을 말합니다.          
+  Runtime Data Areas는 크게 5가지 영역으로 나눌 수 있습니다.
   - 모든 스레드에서 공유하는 영역
     - Method Area
       - 메소드 영역에서 자바 프로그램의 클래스 코드, 변수 코드, static, final 변수 등이 생성된다.

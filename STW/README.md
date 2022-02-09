@@ -161,3 +161,74 @@ public class OverTest {
 
 출처: https://private.tistory.com/25 [공부해서 남 주자]
 ```
+#### 5. 접근제어자
+* 접근 제어자란?: 클래스나 인터페이스, 그리고 이들이 가지고 있는 멤버의 접근을 제어하기 위한 지시어.
+
+* 종류 
+ ①Public - 모든 패키지, 모든 클래스에서 접근 제한 없음 
+ ②Protected - 같은 패키지의 모든 클래스에 접근 허용 / 다른 패키지여도 자식 클래스라면 접근 허용
+ ③Default - 동일한 패키지 내에 있는 클래스만 접근 허용  
+ ④Private - 해당 멤버를 선언한 클래스에서만 접근 허용  
+
+ 
+|접근 제어자|같은 클래스의 멤버|같은 패키지의 멤버|자식 클래스의 멤버|그 외 영역|
+|:------:|:---:|:---:|:---:|:---:|
+|Public|O|O|O|O|
+|Protected|O|O|O|X|
+|Default|O|O|X|X|
+|Private|O|X|X|X|
+
+#### 6. final 키워드
+final 키워드가 선언되면 시간이 지나도 처음 정의된 상태가 변하지 않는다는 것을 보장한다는 의미이다. 
+ ①변수(variable): 변수에 final을 붙이면 이 변수는 수정할 수 없다는 의미가 된다. 수정 불가한 범위는 그 변수의 값에 한정된다. 수정될 수 없기 때문에 초기화 값이 필수적이다.
+ ②메서드(method): 메서드에 final이 붙으면 override가 제한된다. 즉, 상속받은 클래스에서 해당 메서드를 수정해서 사용하지 못하도록 제한하는 것이다.
+ ③클래스(class): 클래스에 final이 붙으면 다른 클래스가 상속할 수 없는 클래스가 된다. 
+#### 7. Generic의 개념
+데이터의 타입(data type)을 일반화(generalize)하는 것으로,
+클래스나 메소드에서 사용할 내부 데이터 타입을 클래스 외부에서 컴파일 시에 미리 지정하는 것이다. 
+JDK 1.5에서 처음 도입. <> 괄호 안에 타입을 지정해 준다.
+
+장점으로는 잘못된 타입이 들어오는 것을 컴파일 단계에서 방지할 수 있고, 클래스 외부에서 지정해주기 때문에 변환 과정이 필요 없어 관리가 편하다. 또한 비슷한 기능 지원시 코드의 재사용성이 높아진다. 
+```java
+타입 변수(Type Variable)의 예시
+
+class MyArray<T> {
+
+    T element;
+
+    void setElement(T element) { this.element = element; }
+
+    T getElement() { return element; }
+
+}
+
+```
+#### 8. ThreadLocal이 무엇이고 언제 활용되는지
+* Thread: 한 프로세스 내에세 동작되는 여러 실행 흐름.
+* ThreadLocal: Thread의 지역 변수. 
+오직 한 Thread에 의해 읽고 쓰이는 변수를 생성할 수 있도록 해준다. 
+관련된 코드가 파라미터를 사용하지 않고 객체를 각자 가져다 쓸 때 활용된다. 
+Thread 정보를 key로 하여 값을 저장해 두는 Map 구조로 되어 있다.
+```java
+public class UserTermService {
+
+  public static ThreadLocal<Integer> threadLocalValue = new ThreadLocal<>(); // ThreadLocal 사용을 위한 선언
+
+  public UserTermService(Integer value) {
+    threadLocalValue.set(value); // ThreadLocal에 set 값을 세팅
+  }
+
+  public void threadLocal_1() {
+    System.out.println("threadLocalValue : " + threadLocalValue.get()); // ThreadLocal에 있는 값을 가져오기
+  }
+}
+
+public class ThreadLocalTest {
+
+    @Test
+    public void threadLocalTest() {
+        UserTermService userTermService = new UserTermService(5);
+        userTermService.threadLocal_1(); // threadLocalValue : 5 출력 확인
+    }
+}
+```

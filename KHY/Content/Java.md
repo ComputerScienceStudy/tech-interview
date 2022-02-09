@@ -127,25 +127,32 @@ Class 파일이 JVM에 올라가게 되면 심볼릭 레퍼런스는 그 이름�
 - JIT 컴파일러로 인해, 자바는 네이티브 언어와 유사한 수준의 퍼포먼스를 낼 수 있게 되었습니다.
   
 ## 각 변수 타입이 몇 byte인지, primitive type과 reference type 인지
-### 핵심답변
-- 기본 데이터 타입(Primitive Data Type)의
-  - 종류는 byte, short, char, int, float, double, boolean이 있습니다.
-    - 정수형 : byte, short, int, long `1, 2, 4, 8 byte`
-    - 실수형 : float, double `4, 8 byte`
-    - 논리형 : boolean(ture/false) `1 byte`
-    - 문자형 : char `2 byte`
-  - 기본 타입의 크기가 작고 고정적이기 때문에 메모리의 Stack 영역에 저장됩니다.
-- 참조 타입(Reference Data Type)의
-  - 종류는 class, array, interface, Enumeration이 있습니다.
-  - 기본형을 제외하고는 모두 참조형입니다.
-  - 참조 타입은 값이 저장된 곳의 주소를 저장하는 공간으로 `객체의 주소`를 저장합니다.  
-  - 참조 타입은 `4 byte` 크기의 주소값이 들어갑니다.
+### 핵심 답변
+primitive type는 기본 데이터 타입으로,    
+종류는 byte, short, char, int, float, double, boolean이 있습니다.
+- 정수형 : byte, short, int, long `1, 2, 4, 8 byte`
+- 실수형 : float, double `4, 8 byte`
+- 논리형 : boolean(ture/false) `1 byte`
+- 문자형 : char `2 byte`
 
-#### 🤔 참조 타입에 대해 더 자세히 설명해주세요.
-- 참조 타입은 보통 new 키워드를 이용하여 객체를 생성하여 데이터가 생성된 주소를 참조하는 타입입니다.
-- 참조 타입의 데이터의 크기가 가변적, 동적이기 때문에 동적으로 관리되는 Heap 영역에 저장됩니다.
-- 더 이상 참조하는 변수가 없을 때 가비지 컬렉션에 의해 파괴됩니다.
-<br><br>
+reference type은 참조 데이터 타입으로,    
+기본 데이터 타입을 제외하고는 모두 참조 데이터 타입입니다.     
+종류는 class, array, interface, Enumeration이 있습니다.         
+참조 타입은 값이 저장된 곳의 주소를 저장합니다.         
+참조 타입은 `4 byte` 크기의 주소값이 들어갑니다.   
+
+`primitive type과 reference type의 차이점`은 다음과 같습니다.      
+기본 데이터 타입은 실제 데이터 값 자체를 저장합니다.      
+데이터의 크기가 작고 고정적이기 때문에 메모리의 Stack 영역에 저장됩니다.       
+반면, array와 class와 같은 참조 데이터 타입은 객체가 메모리 상에 위치한 주소를 저장합니다.       
+데이터의 크기가 동적이기 때문에 동적으로 관리하는 Heap 영역에 저장됩니다.       
+또한, 참조 데이터 타입의 경우 더이상 참조하는 변수가 없을 때, 가비지 컬렉션에 의해 파괴 됩니다.        
+
+`primitive type과 reference type의 활용`은 다음과 같습니다.       
+primitive type은 null을 다루지도 못하고, generics에 담기지도 못하지만, primitive type이 reference type과 비교해서 갖는 장점은 성능과 메모리에 이점이 있습니다.       
+왜냐하면, reference type은 스택 메모리에는 참조 값만 있고 실제 값은 힙 메모리에 존재하기 때문입니다. 따라서 reference type은 값이 필요로 할 때마다, primitive type과 비해  접근 속도가 느려지게 됩니다.
+데이터가 동적이지 않으면, 성능과 메모리에 장점이 있는 primitive type을 먼저 고려해보고,      
+만약 Null을 다뤄야 하거나, Generic 타입에서 사용되어야 한다면 reference type을 사용합니다.
 
 ## overriding vs overloading 개념과 활용
 ### 핵심답변

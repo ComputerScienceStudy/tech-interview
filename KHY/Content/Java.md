@@ -1,15 +1,19 @@
-# JVM 동작 과정/원리
+## JVM 동작 과정/원리
+### 핵심답변
 
 <br><br>
 
-# GC(Garbage Collector)의 종류와 동작 과정/원리
+## GC(Garbage Collector)의 종류와 동작 과정/원리
+### 핵심답변
+
 <br><br>
 
-# 정적 타입 언어와 동적 타입 언어의 차이
+## 정적 타입 언어와 동적 타입 언어의 차이
+### 핵심답변
 <br><br>
 
-# Java 코드의 컴파일 과정
-## 핵심 답변
+## Java 코드의 컴파일 과정
+### 핵심 답변
 Java 코드의 컴파일 과정을 다음과 같습니다.      
 개발자가 자바 소스 코드를 작성하면,        
 첫번째로, 자바 컴파일러가 자바 소스 파일을 컴파일 합니다.           
@@ -19,6 +23,7 @@ Java 코드의 컴파일 과정을 다음과 같습니다.
 마지막으로 실행엔진은 JVM 메모리에 올라온 바이트 코드들을 명령어 단위로 하나씩 가져와서 실행합니다.       
 이때, 실행엔진은 바이트 코드를 각 OS가 실행할 수 있는 기계어로 변환시킵니다.
 <br><br>
+
 #### 🤔 바이트 코드란?
 바이트코드는 특정 하드웨어가 아닌 가상 머신에서 돌아가는 실행 프로그램을 위한 이진 표현법입니다.     
 바이트 코드의 대부분 명령어는 0개 이상의 매개변수를 갖는 1바이트 크기를 가지고 있습니다.
@@ -31,12 +36,12 @@ Java 코드의 컴파일 과정을 다음과 같습니다.
 이 후, 클래스의 상수 풀 내 모든 심볼릭 레퍼런스를 다이렉트 레퍼런스로 변경합니다.        
 마지막으로 클래스 변수들을 적절한 값으로 초기화합니다.         
 
-###### 심볼릭 레퍼런스는 무엇인가요?
+###### + 심볼릭 레퍼런스는 무엇인가요?
 심볼릭 레퍼런스란 참조할 때, 클래스의 특정 메모리 주소를 참조 관계로 구성한 것이 아닌 참조하는 대상의 이름을 지칭합니다.       
 Class 파일이 JVM에 올라가게 되면 심볼릭 레퍼런스는 그 이름에 맞는 객체의 주소를 찾아서 연결하는 작업을 수행합니다.         
 그러므로, 실제 메모리 주소가 아니라 이름만을 가집니다.        
 
-###### 다이렉트 레퍼런스로 변경이라는 의미는?
+###### + 다이렉트 레퍼런스로 변경이라는 의미는?
 실제 메모리 주소 값으로 변경해 주는 작업을 의미합니다.
 
 #### 🤔 동적로딩이란 무엇인가요?
@@ -47,19 +52,75 @@ Class 파일이 JVM에 올라가게 되면 심볼릭 레퍼런스는 그 이름�
 - 또 다른 형태로는 저스트 인 타임 컴파일러라 불리는 시스템은 실행 중에 필요에 따라서 바이트코드를 기계어로 번역합니다. 이로 인해, 자바는 네이티브 언어와 유사한 수준의 퍼포먼스를 낼 수 있게 되었습니다.
 <br><br>
   
-# 각 변수 타입이 몇 byte인지, primitive type과 reference type 인지
+## 각 변수 타입이 몇 byte인지, primitive type과 reference type 인지
+### 핵심답변
 <br><br>
 
-# overriding vs overloading 개념과 활용
+## overriding vs overloading 개념과 활용
+### 핵심답변
 <br><br>
 
-# 접근자 종류와 기능
+## 접근자 종류와 기능
+### 핵심답변
 <br><br>
 
-# final 키워드
+## final 키워드
+### 핵심답변
 <br><br>
 
-# Generic의 개념
+## Generic의 개념
+### 핵심답변
+제네릭스는 Java에서 컬렉션을 사용하면 자주 볼 수 있습니다.         
+제네릭스는 꺽쇠를 사용하여 타입을 명시해 줌으로서, 컴파일 시에 객체의 타입을 체크하는 것을 말합니다.               
+의도하지 않은 타입의 객체가 저장되는 것을 막고 잘못된 형변환을 막을 수 있기 때문에 안정성이 높아집니다.    
+
+#### 🤔 제네릭스의 형식과 약어는?
+###### 제네릭스의 형식
+```java
+public class 클래스명<T> {...}
+public interface 인터페이스명<T> {...}
+```
+###### 제네릭스의 자주 사용되는 타입인자
+```java
+- <T> == Type
+- <E> == Element
+- <K> == Key
+- <V> == Value
+- <N> == Number
+- <R> == Result
+```
+#### 🤔 제네릭스의 사용 예시
+제네릭스를 가장 잘 사용한 예제는 바로 Collection으로 볼 수 있습니다.
+```java
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+
+        List<String> list = new ArrayList();
+        Collection<String> collection = list;
+    }
+}
+```
+위의 collection의 경우,String type만을 담겠다고 명시하고, 
+```java
+public interface Collection<E> extends Iterable<E> {
+    int size();
+    boolean isEmpty();
+    Iterator<E> iterator();
+    boolean add(E e);
+    <T> T[] toArray(T[] a);
+    boolean containsAll(Collection<?> c);
+    boolean addAll(Collection<? extends E> c);
+}
+```
+
+#### 💡 제네릭스의 유용함
+- 제네릭스를 활용하면 동작은 같지만 클래스 타입만 바뀌어야 하는 경우를 쉽게 다룰 수 있습니다. 
+- 제네릭스를 통해 컴파일언어의 특징인 타입 안정성을 보장하면서도 유연한 프로그램을 작성할 수 있습니다.
 <br><br>
 
-# ThreadLocal이 무엇이고 언제 활용되는지
+## ThreadLocal이 무엇이고 언제 활용되는지
+### 핵심답변

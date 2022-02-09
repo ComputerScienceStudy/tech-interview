@@ -1,21 +1,17 @@
 ## JVM 동작 과정/원리
 ### 핵심답변
-JVM은 컴퓨터가 자바 프로그램을 실행할 수 있도록 도와주는 가상머신입니다.    
+JVM은 컴퓨터가 자바 프로그램을 실행할 수 있도록 도와주는 가상머신입니다.      
 그러기에, Java의 실행방식을 말씀 드리면서 JVM 동작 과정을 설명드리겠습니다.     
 
-가장 먼저, 프로그램이 실행되면 JVM은 OS로부터 이 프로그램이 필요로 하는 메모리를 할당받습니다.        
+가장 먼저, 프로그램이 실행되면 JVM은 OS로부터 이 프로그램이 필요로 하는 메모리를 할당받습니다.            
 JVM은 이 메모리를 용도에 따라 여러 영역으로 나누어 관리합니다.
 
-JVM 외부에 있는 자바 컴파일러(javac)가 자바 소스 코드를 읽어들여 자바 바이트 코드(.class)로 변환시키면,
+JVM 외부에 있는 자바 컴파일러(javac)가 자바 소스 코드를 읽어들여 자바 바이트 코드(.class)로 변환시키면,     
 Class Loader가 바이트 코드의 명령어가 올바른지 확인합니다.    
 
 바이트 코드의 명령어가 올바르면 Class Loader가 class 파일들을 JVM으로 로딩합니다.   
-로딩된 class 파일들은 Execution Engine을 통해 해석합니다.
-이때, 해석된 바이트 코드는 Runtime Data Area에 배치되어 실질적인 수행이 이루어지게 됩니다.     
-
-JVM은 자바 코드를 컴파일해서 얻은 바이트 코드를 해당 운영체제가 이해할 수 있는 기계어로 바꿔 실행시켜주는 역할을 하기 때문에,    
-자바는 운영체제의 종류와 상관없이 동일하게 실행됩니다.           
-그래서 자바를 platform independent programming language라고 합니다.
+로딩된 class 파일들은 Execution Engine을 통해 해석합니다.      
+이때, 해석된 바이트 코드는 Runtime Data Area에 배치되어 실질적인 수행이 이루어지게 됩니다.
 
 #### 🤔 JVM의 구조에 대해 자세히 설명해주세요
 JVM의 구조는 Class Loader, Exection engine, Runtime Data Area, Garbage Collector로 이루어져 있습니다.
@@ -49,6 +45,11 @@ JVM의 구조는 Class Loader, Exection engine, Runtime Data Area, Garbage Colle
     - Native Method
       - 자바외 언어로 작성된 네이티브 코드를 위한 메모리 영역
 
+
+#### 🤔 자바를 platform independent programming language하는 이유는 무엇일까요?
+JVM은 자바 코드를 컴파일해서 얻은 바이트 코드를 해당 운영체제가 이해할 수 있는 기계어로 바꿔 실행시켜주는 역할을 하기 때문에,    
+자바는 운영체제의 종류와 상관없이 동일하게 실행됩니다.           
+그래서 자바를 platform independent programming language라고 합니다.
 <br><br>
 
 ## GC(Garbage Collector)의 종류와 동작 과정/원리

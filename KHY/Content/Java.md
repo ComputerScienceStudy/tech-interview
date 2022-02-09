@@ -13,6 +13,7 @@ Class Loader가 바이트 코드의 명령어가 올바른지 확인합니다.
 로딩된 class 파일들은 Execution Engine을 통해 해석합니다.      
 이때, 해석된 바이트 코드는 Runtime Data Area에 배치되어 실질적인 수행이 이루어지게 됩니다.
 
+
 #### 🤔 JVM의 구조에 대해 자세히 설명해주세요
 JVM의 구조는 Class Loader, Exection engine, Runtime Data Area, Garbage Collector로 이루어져 있습니다.
 
@@ -246,6 +247,26 @@ public interface Collection<E> extends Iterable<E> {
 
 ## ThreadLocal이 무엇이고 언제 활용되는지
 ### 핵심답변
-ThreadLocal은 한 쓰레드에서 읽고 쓰여질 수 있는 변수를 할당하여 접근할 수 있도록 합니다.            
-멀티 쓰레드 환경에서 각 쓰레드마다 get(), set() 메서드를 통해 독립적으로 변수에 접근할 수 있습니다.            
-말 그대로 Thread 내부에서 사용하는 지역변수입니다.
+ThreadLocal은 Thread 내부에서 사용하는 지역변수입니다.      
+일반 변수의 수명은 특정 코드 블록 범위 내에서만 유효하지만,<br>
+ThreadLocal을 이용하면 쓰레드 영역에 변수를 설정할 수 있기 때문에,<br>
+특정 쓰레드가 실행하는 모든 코드에서 그 쓰레드에 설정된 변수 값을 사용할 수 있게 됩니다.<br>
+멀티 쓰레드 환경에서 각 쓰레드마다 get(), set() 메서드를 통해 독립적으로 변수에 접근할 수 있습니다.
+
+ThreadLocal의 활용은 다음과 같습니다.    
+ThreadLocal은 한 쓰레드에서 실행되는 코드가 동일한 객체를 사용할 수 있도록 해 줍니다.      
+따라서, 쓰레드와 관련된 코드에서 변수를 공유할 때, 파라미터 또는 리턴 값으로 정보를 제공해주지 않아도 됩니다.     
+
+대표적인 활용 예시는 Spring Security에서 사용자 인증 정보를 사용입니다.                
+서버에서 클라이언트 요청들에 대해 각 쓰레드에서 처리하게 될 경우, 해당 유저의 인증 및 세션 정보나 참조 데이터를 저장하는데 ThreadLocal이 사용됩니다.
+
+
+#### 🤔 ThreadLocal의 내부는 어떻게 되어 있을까요?
+ThreadLocal의 내부는 thread 정보를 key로 하여 값을 저장해두는 Map 구조를 가지고 있습니다.    
+기본적인 사용에는 `get`, `set` 메서드를 이용합니다.    
+
+#### 🤔 ThreadLocal 사용시 주의 사항은 무엇이 있을까요?
+ThreadLocal은 Thead의 정보를 key로 하여 Map의 형식으로 데이터를 저장한 후 사용할 수 있는 자료구조를 가지고 있습니다.           
+따라서 만약 ThreadPool을 사용하여 thread를 재활용한다면            
+동일한 이전에 세팅했던 ThreadLocal의 정보가 남아있어 원치않는 동작을 할 수 있습니다. 
+따라서 ThreadPool을 사용하는 경우에는 반드시 모두 사용 후 THreadLocal의 값을 remove 메서드를 사용하여 값을 제거해주는것이 필요합니다.             

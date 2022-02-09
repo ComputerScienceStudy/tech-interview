@@ -55,3 +55,109 @@ Minor GC가 발생할 때마다 Survivor1 영역과 Survivor2 영역으로 객�
   ⑤초기화: 클래스 변수를 적절한 값으로 초기화 
 4. 로딩된 파일들은 실행 엔진(Execution engine)을 통해 해석된다.
 5. 해석된 코드는 각 런타임 데이터 영역(Runtime Data Areas)에 배치되어 실질적으로 수행된다.
+
+#### 3. Java 변수
+* 원시 타입(Primitive Type)과 참조 타입(Reference Type)
+-원시 타입: 정수, 실수, 문자, 논리 리터럴 등 실제 데이터 값을 저장하는 
+|타입|형|저장공간|범위|비고|
+|:------:|:---:|:---:|:---:|:---:|
+|int|정수|4 Byte|2,147,483,648 ~ 2,147,483,647 (약 ±20억)|-|
+|long|정수|8 Byte|9,223,372,036,854,775,808|접미어 L 사용|
+|short|정수|2 Byte|32,768 ~32,767|-|
+|byte|정수|1 Byte|128 ~ 127|-|
+|float|부동 소수점|4 Byte|약 +-3.40282347E+38F (자릿수 6~7)|접미어 F 사용|
+|double|부동 소수점|8 Byte|약 +-1.79769313486231579E+308 (자릿수 15)|-|
+|char|char|테스트3|-|UTF-16 문자 인코딩|
+|boolean|boolean|-|True, False만 가능|논리 값 판단(참, 거짓)|
+
+-참조 타입: 객체(Object)의 주소를 저장(참조)하는 타입. Array, Class, Interface 등
+
+#### 4. overriding vs overloading 개념과 활용
+* Overloading
+자바 클래스 내에 이미 사용하려는 이름과 같은 메서드가 있더라도, 매개변수의 유형과 개수가 다르다면 같은 이름을 사용하여 다양한 유형의 호출에 응답하도록 하는 것.
+```java
+class OverloadingTest{
+    //이름이 cat인 메서드
+    void cat(){
+        System.out.println("매개변수 없음");
+    }
+    
+    //매개변수 int형이 2개인 cat 메서드
+    void cat(int a, int b){
+        System.out.println("매개변수 :"+a+", "+b);
+    }
+    
+    //매개변수 String형이 한 개인 cat 메서드
+    void cat(String c){
+        System.out.println("매개변수 : "+ c);
+    }
+    
+}
+ 
+public class OverTest {
+ 
+    public static void main(String[] args) {
+        
+        //OverloadingTest 객체 생성
+        OverloadingTest ot = new OverloadingTest();
+        
+        //매개변수가 없는 cat() 호출
+        ot.cat();
+        
+        //매개변수가 int형 두개인 cat() 호출
+        ot.cat(20, 80);
+        
+        //매개변수가 String 한개인 cat() 호출
+        ot.cat("오버로딩 예제입니다.");
+        
+    }
+ 
+}
+
+출처: https://private.tistory.com/25 [공부해서 남 주자]
+```
+* Overriding
+메서드의 이름, 매개변수, 반환형이 같은 경우 상속받은 메서드를 덮어쓴다는 개념. 상위 클래스가 가진 메서드를 하위 클래스로 상속하여 사용할 수 있고, 상속한 메서드를 재정의해서 사용할 수도 있다.
+```java
+class Woman{ //부모클래스
+    public String name;
+    public int age;
+    
+    //info 메서드
+    public void info(){
+        System.out.println("여자의 이름은 "+name+", 나이는 "+age+"살입니다.");
+    }
+    
+}
+ 
+class Job extends Woman{ //Woman클래스(부모클래스)를 상속받음 : 
+ 
+    String job;
+    
+    public void info() {//부모(Woman)클래스에 있는 info()메서드를 재정의
+        super.info();
+        System.out.println("여자의 직업은 "+job+"입니다.");
+    }
+}
+ 
+public class OverTest {
+ 
+    public static void main(String[] args) {
+        
+        //Job 객체 생성
+        Job job = new Job();
+        
+        //변수 설정
+        job.name = "유리";
+        job.age = 30;
+        job.job = "프로그래머";
+        
+        //호출
+        job.info();
+        
+    }
+ 
+}
+
+출처: https://private.tistory.com/25 [공부해서 남 주자]
+```

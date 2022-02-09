@@ -1,5 +1,20 @@
 # Tech Interview
 
+## 목차
+- [JVM 동작 과정/원리](https://github.com/ComputerScienceStudy/tech-interview#jvm-%EB%8F%99%EC%9E%91-%EA%B3%BC%EC%A0%95%EC%9B%90%EB%A6%AC)
+- [GC(Garbage Collector)의 종류와 동작 과정/원리](https://github.com/ComputerScienceStudy/tech-interview#gcgarbage-collector%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EB%8F%99%EC%9E%91-%EA%B3%BC%EC%A0%95%EC%9B%90%EB%A6%AC)
+- [정적 타입 언어와 동적 타입 언어의 차이](https://github.com/ComputerScienceStudy/tech-interview#%EC%A0%95%EC%A0%81-%ED%83%80%EC%9E%85-%EC%96%B8%EC%96%B4%EC%99%80-%EB%8F%99%EC%A0%81-%ED%83%80%EC%9E%85-%EC%96%B8%EC%96%B4%EC%9D%98-%EC%B0%A8%EC%9D%B4)
+- [Java 코드의 컴파일 과정](https://github.com/ComputerScienceStudy/tech-interview#java-%EC%BD%94%EB%93%9C%EC%9D%98-%EC%BB%B4%ED%8C%8C%EC%9D%BC-%EA%B3%BC%EC%A0%95)
+- [각 변수 타입이 몇 byte인지, primitive type과 reference type의 차이와 활용
+](https://github.com/ComputerScienceStudy/tech-interview#%EA%B0%81-%EB%B3%80%EC%88%98-%ED%83%80%EC%9E%85%EC%9D%B4-%EB%AA%87-byte%EC%9D%B8%EC%A7%80-primitive-type%EA%B3%BC-reference-type%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%99%80-%ED%99%9C%EC%9A%A9)
+- [overriding vs overloading 개념과 활용](https://github.com/ComputerScienceStudy/tech-interview#overriding-vs-overloading-%EA%B0%9C%EB%85%90%EA%B3%BC-%ED%99%9C%EC%9A%A9)
+- [접근자 종류와 기능](https://github.com/ComputerScienceStudy/tech-interview#%EC%A0%91%EA%B7%BC%EC%9E%90-%EC%A2%85%EB%A5%98%EC%99%80-%EA%B8%B0%EB%8A%A5)
+- [final 키워드](https://github.com/ComputerScienceStudy/tech-interview#final-%ED%82%A4%EC%9B%8C%EB%93%9C)
+- [Generic의 개념](https://github.com/ComputerScienceStudy/tech-interview#generic%EC%9D%98-%EA%B0%9C%EB%85%90)
+- [ThreadLocal이 무엇이고 언제 활용되는지](https://github.com/ComputerScienceStudy/tech-interview#threadlocal%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B4%EA%B3%A0-%EC%96%B8%EC%A0%9C-%ED%99%9C%EC%9A%A9%EB%90%98%EB%8A%94%EC%A7%80)
+
+
+
 ### JVM 동작 과정/원리
 
 ---
@@ -78,6 +93,8 @@ Minor GC에서 객체가 살아남은 횟수를 의미하는 것을 age라고 �
 먼저 Minor GC는 한 지역의 메모리가 가득 차게 되면 다른 지역에 객체를 할당시키고, 실행이 됩니다. 가비지 퍼스트 GC는 각 지역을 추적하고 있어 가비지가 가장 많은 지역을 찾아서 Mark and Sweep을 수행합니다.
 
 Major GC(Full GC)는 객체가 너무 많아 빠르게 메모리를 회수할 수 없을 때, Major GC(Full GC)가 실행됩니다. 기존의 GC 알고리즘은 Heap 전 영역에서 GC가 수행되었지만, 가비지 퍼스트 GC는 어느 영역에 가비지가 많은지 알고있기 때문에,  GC를 수행할 지역을 조합하여 해당 지역에 대해서만 GC를 수행하게 됩니다.
+
+---
 
 ### 정적 타입 언어와 동적 타입 언어의 차이
 

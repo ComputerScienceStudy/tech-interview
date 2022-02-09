@@ -10,14 +10,12 @@ JVM 외부에 있는 자바 컴파일러(javac)가 자바 소스 코드를 읽�
 Class Loader가 바이트 코드의 명령어가 올바른지 확인합니다.    
 
 바이트 코드의 명령어가 올바르면 Class Loader가 class 파일들을 JVM으로 로딩합니다.   
-로딩된 class 파일들은 Execution Engine을 통해 해석됩니다.
-
-해석된 바이트 코드는 Runtime Data Area에 배치되어 실질적인 수행이 이루어지게 됩니다.     
+로딩된 class 파일들은 Execution Engine을 통해 해석합니다.
+이때, 해석된 바이트 코드는 Runtime Data Area에 배치되어 실질적인 수행이 이루어지게 됩니다.     
 
 JVM은 자바 코드를 컴파일해서 얻은 바이트 코드를 해당 운영체제가 이해할 수 있는 기계어로 바꿔 실행시켜주는 역할을 하기 때문에,    
 자바는 운영체제의 종류와 상관없이 동일하게 실행됩니다.           
 그래서 자바를 platform independent programming language라고 합니다.
-<br><br>
 
 #### 🤔 JVM의 구조에 대해 자세히 설명해주세요
 JVM의 구조는 Class Loader, Exection engine, Runtime Data Area, Garbage Collector로 이루어져 있습니다.
@@ -34,7 +32,7 @@ JVM의 구조는 Class Loader, Exection engine, Runtime Data Area, Garbage Colle
   Heap 메모리 영역에 생성 된 객체들 중에 참조되지 않는 객체들을 탐색 후 제거하는 역할을 합니다.
 
 - Runtime Data Area는 JVM이 프로그램을 수행하기 위해 OS로 부터 별도로 할당 받은 메모리 공간을 말합니다.          
-  Runtime Data Areas는 크게 5가지 영역으로 나눌 수 있습니다.
+  Runtime Data Area는 크게 5가지 영역으로 나눌 수 있습니다.
   - 모든 스레드에서 공유하는 영역
     - Method Area
       - 메소드 영역에서 자바 프로그램의 클래스 코드, 변수 코드, static, final 변수 등이 생성된다.
@@ -51,7 +49,7 @@ JVM의 구조는 Class Loader, Exection engine, Runtime Data Area, Garbage Colle
     - Native Method
       - 자바외 언어로 작성된 네이티브 코드를 위한 메모리 영역
 
-
+<br><br>
 
 ## GC(Garbage Collector)의 종류와 동작 과정/원리
 ### 핵심답변
@@ -159,7 +157,7 @@ Class 파일이 JVM에 올라가게 되면 심볼릭 레퍼런스는 그 이름�
   - private는 같은 클래스 내에서만 접근이 가능하도록 하고, 
   - default는 같은 패키지 내에서만 접근이 가능하도록 합니다. 
   - protected는 같은 패키지 내에서, 그리고 다른 패키지의 자손클래스에서 접근이 가능하도록 하고 
-  - public : 접근 제한이 전혀 없습니다.
+  - public은 접근 제한이 전혀 없습니다.
 - 접근 제어자를 사용하는 이유는 다음과 같습니다.
   - 객체지향 프로그래밍이란 객체들 간의 상호작용을 코드로 표현하는 것인데요.
   - 이때 객체들간의 관계에 따라서 접근 할 수 있는 것과 아닌 것, 권한을 구분할 필요가 생깁니다.
@@ -216,7 +214,7 @@ public class Main {
     }
 }
 ```
-위의 collection의 경우,String type만을 담겠다고 명시하고, 
+위의 collection의 경우,String type만을 담겠다고 명시하고, 다른 타입을 넣으면, 컴파일 에러가 납니다.
 ```java
 public interface Collection<E> extends Iterable<E> {
     int size();
@@ -236,3 +234,6 @@ public interface Collection<E> extends Iterable<E> {
 
 ## ThreadLocal이 무엇이고 언제 활용되는지
 ### 핵심답변
+ThreadLocal은 한 쓰레드에서 읽고 쓰여질 수 있는 변수를 할당하여 접근할 수 있도록 합니다.            
+멀티 쓰레드 환경에서 각 쓰레드마다 get(), set() 메서드를 통해 독립적으로 변수에 접근할 수 있습니다.            
+말 그대로 Thread 내부에서 사용하는 지역변수입니다.

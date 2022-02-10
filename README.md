@@ -1,17 +1,18 @@
 # Tech Interview
 
 ## 목차
-- [JVM 동작 과정/원리](https://github.com/ComputerScienceStudy/tech-interview#jvm-%EB%8F%99%EC%9E%91-%EA%B3%BC%EC%A0%95%EC%9B%90%EB%A6%AC)
-- [GC(Garbage Collector)의 종류와 동작 과정/원리](https://github.com/ComputerScienceStudy/tech-interview#gcgarbage-collector%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EB%8F%99%EC%9E%91-%EA%B3%BC%EC%A0%95%EC%9B%90%EB%A6%AC)
-- [정적 타입 언어와 동적 타입 언어의 차이](https://github.com/ComputerScienceStudy/tech-interview#%EC%A0%95%EC%A0%81-%ED%83%80%EC%9E%85-%EC%96%B8%EC%96%B4%EC%99%80-%EB%8F%99%EC%A0%81-%ED%83%80%EC%9E%85-%EC%96%B8%EC%96%B4%EC%9D%98-%EC%B0%A8%EC%9D%B4)
-- [Java 코드의 컴파일 과정](https://github.com/ComputerScienceStudy/tech-interview#java-%EC%BD%94%EB%93%9C%EC%9D%98-%EC%BB%B4%ED%8C%8C%EC%9D%BC-%EA%B3%BC%EC%A0%95)
-- [각 변수 타입이 몇 byte인지, primitive type과 reference type의 차이와 활용
-](https://github.com/ComputerScienceStudy/tech-interview#%EA%B0%81-%EB%B3%80%EC%88%98-%ED%83%80%EC%9E%85%EC%9D%B4-%EB%AA%87-byte%EC%9D%B8%EC%A7%80-primitive-type%EA%B3%BC-reference-type%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%99%80-%ED%99%9C%EC%9A%A9)
-- [overriding vs overloading 개념과 활용](https://github.com/ComputerScienceStudy/tech-interview#overriding-vs-overloading-%EA%B0%9C%EB%85%90%EA%B3%BC-%ED%99%9C%EC%9A%A9)
-- [접근자 종류와 기능](https://github.com/ComputerScienceStudy/tech-interview#%EC%A0%91%EA%B7%BC%EC%9E%90-%EC%A2%85%EB%A5%98%EC%99%80-%EA%B8%B0%EB%8A%A5)
-- [final 키워드](https://github.com/ComputerScienceStudy/tech-interview#final-%ED%82%A4%EC%9B%8C%EB%93%9C)
-- [Generic의 개념](https://github.com/ComputerScienceStudy/tech-interview#generic%EC%9D%98-%EA%B0%9C%EB%85%90)
-- [ThreadLocal이 무엇이고 언제 활용되는지](https://github.com/ComputerScienceStudy/tech-interview#threadlocal%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B4%EA%B3%A0-%EC%96%B8%EC%A0%9C-%ED%99%9C%EC%9A%A9%EB%90%98%EB%8A%94%EC%A7%80)
+- [JAVA]()
+    - [JVM 동작 과정/원리](https://github.com/ComputerScienceStudy/tech-interview#jvm-%EB%8F%99%EC%9E%91-%EA%B3%BC%EC%A0%95%EC%9B%90%EB%A6%AC)
+    - [GC(Garbage Collector)의 종류와 동작 과정/원리](https://github.com/ComputerScienceStudy/tech-interview#gcgarbage-collector%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EB%8F%99%EC%9E%91-%EA%B3%BC%EC%A0%95%EC%9B%90%EB%A6%AC)
+    - [정적 타입 언어와 동적 타입 언어의 차이](https://github.com/ComputerScienceStudy/tech-interview#%EC%A0%95%EC%A0%81-%ED%83%80%EC%9E%85-%EC%96%B8%EC%96%B4%EC%99%80-%EB%8F%99%EC%A0%81-%ED%83%80%EC%9E%85-%EC%96%B8%EC%96%B4%EC%9D%98-%EC%B0%A8%EC%9D%B4)
+    - [Java 코드의 컴파일 과정](https://github.com/ComputerScienceStudy/tech-interview#java-%EC%BD%94%EB%93%9C%EC%9D%98-%EC%BB%B4%ED%8C%8C%EC%9D%BC-%EA%B3%BC%EC%A0%95)
+    - [각 변수 타입이 몇 byte인지, primitive type과 reference type의 차이와 활용
+    ](https://github.com/ComputerScienceStudy/tech-interview#%EA%B0%81-%EB%B3%80%EC%88%98-%ED%83%80%EC%9E%85%EC%9D%B4-%EB%AA%87-byte%EC%9D%B8%EC%A7%80-primitive-type%EA%B3%BC-reference-type%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%99%80-%ED%99%9C%EC%9A%A9)
+    - [overriding vs overloading 개념과 활용](https://github.com/ComputerScienceStudy/tech-interview#overriding-vs-overloading-%EA%B0%9C%EB%85%90%EA%B3%BC-%ED%99%9C%EC%9A%A9)
+    - [접근자 종류와 기능](https://github.com/ComputerScienceStudy/tech-interview#%EC%A0%91%EA%B7%BC%EC%9E%90-%EC%A2%85%EB%A5%98%EC%99%80-%EA%B8%B0%EB%8A%A5)
+    - [final 키워드](https://github.com/ComputerScienceStudy/tech-interview#final-%ED%82%A4%EC%9B%8C%EB%93%9C)
+    - [Generic의 개념](https://github.com/ComputerScienceStudy/tech-interview#generic%EC%9D%98-%EA%B0%9C%EB%85%90)
+    - [ThreadLocal이 무엇이고 언제 활용되는지](https://github.com/ComputerScienceStudy/tech-interview#threadlocal%EC%9D%B4-%EB%AC%B4%EC%97%87%EC%9D%B4%EA%B3%A0-%EC%96%B8%EC%A0%9C-%ED%99%9C%EC%9A%A9%EB%90%98%EB%8A%94%EC%A7%80)
 
 <br><br>
 
@@ -54,11 +55,17 @@ JVM은 자바 코드를 컴파일해서 얻은 바이트 코드를 해당 운영
 
 가비지 콜렉터는 Young 영역에서 동작하는 Minor GC와 Old 영역에서 동작하는 Major GC로 그 종류를 나눌 수 있습니다.
 
-Minor GC는 Young 영역의 있는 Eden 영역에 객체가 계속 할당되어 가득 차게 되면 실행됩니다. Eden 영역에서 사용되지 않는 객체의 메모리가 해제되고, Eden 영역에서 살아남은 객체는 1개의 Survivor 영역으로 이동됩니다. 이런 과정이 반복되다가 Survivor 영역이 가득 차게 되면 Survivor 영역의 살아남은 객체를 다른 Survivor 영역으로 이동시킵니다. 이때, 1개의 Survivor 영역은 반드시 빈 상태가 되어야 합니다. 이때, 일정 수준의 age가 쌓인 객체는 Old 영역으로 이동됩니다.
+가비지 콜렉터는 힙의 메모리가 가득찼을 때 발생하는데, GC를 실행중인 쓰레드를 제외한 쓰레드들이 동작을 멈추는 단계인 Stop the World가 실행되고, 참조되고 있는 객체들을 구분합니다. 이때, 참조되지 않는 객체들은 Garbage라고 판단하고 메모리에서 삭제함으로써 가비지 콜렉터 동작과정이 완료됩니다.
 
-Major GC는 일정 수준의 age가 쌓인 객체가 지속적으로 Old 영역으로 넘어와 메모리가 부족해지면 발생하게 됩니다. 일반적으로 Minor GC 보다 긴 시간이 소요됩니다.
+<br>
 
-일반적인 가비지 콜렉터의 동작 과정으로는 GC가 실행되기 전에 모든 쓰레드들의 작업을 중지하는 Stop The World가 진행되고, 사용되는 메모리와 사용되지 않는 메모리를 식별하는 작업인 Mark 그리고 식별한 객체를 해제하는 작업을 하는 Sweep 단계 이렇게 구성되어 있습니다.
+****🤔 가비지 콜렉터(Garbage Collector) 동작 과정을 조금 더 디테일하게 설명해주세요.****
+
+1. 객체를 최초 생성하면 Young 영역에 Eden 영역에 위치합니다.
+2. Eden 영역에서 Minor GC가 발생하면, 참조 중인 객체는 1번 Survivor 영역으로 이동합니다.
+3. 1번 Survivor 영역에서 Minor GC가 발생하면, 참조 중인 객체는 2번 Survivor 영역으로 이동하고 1번 Survivor 영역은 비게됩니다.
+4. Young 영역에서 오래 살아남은 객체는 Old영역으로 이동하게 됩니다.
+5. Old 영역에 있는 객체는 Major GC가 발생했을 때, 참조 여부에 따라 유지되거나 제거됩니다. 
 
 <br>
 
@@ -70,22 +77,7 @@ Major GC는 일정 수준의 age가 쌓인 객체가 지속적으로 Old 영역�
 
 ****🤔 Young영역과 Old 영역이 뭔가요?****
 
-Heap 영역이 설계될 때
-
-1. 대부분의 객체는 금방 접근 불가능한 상태(Unreachable)가 된다.
-2. 오래된 객체에서 새로운 객체로의 참조는 아주 적게 존재한다.
-
-를 전제로 하기 때문에 객체 대부분 일회성이며, 오래동안 남아있는 경우는 드물기 때문에 Heap 영역을 물리적으로 구분하여 Young과 Old 영역으로 구분했습니다.
-
-Young 영역은 새롭게 객체가 할당되는 영역을 의미하고, Old 영역은 Young 영역에서 Reachable 상태를 유지하여 살아남은 객체가 복사되는 영역이입니다. 이때, 복사되는 과정에서 Young 영역보다 크게 할당됩니다.
-
-<br>
-
-****🤔 Old 영역의 객체가 Young 영역의 객체를 참조하는 경우 GC가 어떻게 실행되는지 설명해주실 수 있을까요?****
-
-객체를 참조하는 경우 해당 객체가 메모리 해제되는 것을 방지하기 위해서 Minor GC가 실행될 때, 모든 Old 객체를 검사하여 Young 영역에 있는 참조하지 않는 객체를 찾아내야 하는데, 이런 과정은 Stop The World 단계를 길게 만드는 문제가 될 수 있습니다. 이를 해결하기 위해 Old 영역에 512 byte의 덩어리로 되어 있는 카드 테이블이 존재하는데, 이 테이블에는 Old 영역에 있는 객체가 Young 영역의 객체를 참조할 때마다 그에 대한 정보를 표시합니다. 이 테이블을 통해 Minor GC가 실행 될 때, 빠르게 Old영역의 객체를 참조하는 Young 영역의 객체를 식별할 수 있게됩니다.
-
-결과적으로 Old 영역을 참조하지 않는 Young 영역의 객체를 식별하고 해제할 수 있게 됩니다.
+JVM에서 가비지 콜렉터 기능을 향상시키기 위해 힙을 물리적으로 구분한 것으로 Young영역의 경우 할당된지 얼마 안되는 객체가 존재하고 Old영역의 경우 오래동안 살아남은 객체가 존재합니다.
 
 <br>
 
@@ -97,19 +89,11 @@ Minor GC에서 객체가 살아남은 횟수를 의미하는 것을 age라고 �
 
 ****🤔 Garbage Collector의 알고리즘 종류 아시는거 있으면 설명해주실 수 있을까요?****
 
-첫번째로 Serial GC가 있습니다. Old 영역에서 Mark Sweep Compact 알고리즘이 사용되고, 기존의 GC동작과 동일하지만, Sweep단계 이후 힙의 가장 앞 부분부터 채워서 객체가 존재하는 부분과 존재하지 않는 부분을 구분하는 Compact 단계가 추가로 존재하는 알고리즘입니다. 단 이 알고리즘의 경우 CPU 코어가 1개일 때 사용하기 위해 개발되었기 때문에, 1개의 쓰레드만을 이용해야 합니다.
+첫번째로 Serial GC가 있습니다. Old 영역에서 Mark Sweep Compact 알고리즘이 사용되고, 기존의 GC동작과 동일하지만, Sweep단계 이후 힙의 가장 앞 부분부터 채워서 객체가 존재하는 부분과 존재하지 않는 부분을 구분하는 Compact 단계가 추가로 존재하는 알고리즘입니다. 이 가비지 콜렉터의 경우 1개의 쓰레드로만 동작됩니다.
 
 두번째로 Parallel GC가 있습니다. Serial GC와 동일하지만, 차이점은 여러개의 쓰레드를 통해 Parallel하게 GC를 수행할 수 있게 되어 있어 오버헤드를 줄여줍니다.
 
-마지막으로 G1(Garbage First)GC가 있습니다. 기존의 GC와는 다르게 Heap을 물리적으로 Young 영여과 Old 영역을 나누는 것이 아니라, 지역(Region)개념을 도입하여 논리적으로 Heap을 균등하게 여러개의 지역으로 나눠 각 지역을 역할과 함께 논리적으로 구분하여 객체를 할당하게 만드는 GC입니다.
-
-<br>
-
-****🤔 G1(Garbage First) GC에서 Major GC와 Minor GC 동작에 대해 설명해주실 수 있을까요?****
-
-먼저 Minor GC는 한 지역의 메모리가 가득 차게 되면 다른 지역에 객체를 할당시키고, 실행이 됩니다. 가비지 퍼스트 GC는 각 지역을 추적하고 있어 가비지가 가장 많은 지역을 찾아서 Mark and Sweep을 수행합니다.
-
-Major GC(Full GC)는 객체가 너무 많아 빠르게 메모리를 회수할 수 없을 때, Major GC(Full GC)가 실행됩니다. 기존의 GC 알고리즘은 Heap 전 영역에서 GC가 수행되었지만, 가비지 퍼스트 GC는 어느 영역에 가비지가 많은지 알고있기 때문에,  GC를 수행할 지역을 조합하여 해당 지역에 대해서만 GC를 수행하게 됩니다.
+마지막으로 G1(Garbage First)GC가 있습니다. 기존의 GC와는 다르게 Heap을 물리적으로 Young 영역과 Old 영역을 나누는 것이 아니라, 지역(Region)개념을 도입하여 논리적으로 Heap을 균등하게 여러개의 지역으로 나눠 각 지역을 역할과 함께 논리적으로 구분하여 객체를 할당하게 만드는 GC입니다.
 
 ---
 
@@ -425,3 +409,35 @@ ThreadLocal은 Thead의 정보를 key로 하여 Map의 형식으로 데이터를
 따라서 만약 ThreadPool을 사용하여 thread를 재활용한다면                
 동일한 이전에 세팅했던 ThreadLocal의 정보가 남아있어 원치않는 동작을 할 수 있습니다.     
 따라서 ThreadPool을 사용하는 경우에는 반드시 모두 사용 후 ThreadLocal의 값을 remove 메서드를 사용하여 값을 제거해주는것이 필요합니다.
+
+---
+
+<br><br>
+
+### Java SE와 JAVA EE 애플리케이션 차이가 뭔가요?
+
+---
+
+**핵심답변**
+
+JAVA SE는 자바 표준 에디션이고, JAVA EE는 JAVA SE의 API에 추가로 JSP, Servelt 등의 추가 API를 탑재한 것입니다.
+
+---
+
+<br><br>
+
+### 객체지향 프로그래밍과 절차지향 프로그래밍의 차이를 설명해주실 수 있을까요?
+
+---
+
+**핵심답변**
+
+절차지향 프로그래밍은 실행하고자 하는 절차를 정하고, 이 절차대로 프로그래밍하는 방법을 의미합니다.
+객체지향 프로그래밍이란 연관되어 있는 변수와 메서드를 하나의 그룹으로 묶어 클래스(개념)를 구현하고 이들 사이의 상호 작용을 프로그램으로 나타낸것을 의미합니다.
+
+<br>
+
+🤔 **객체지향 프로그래밍의 장,단점을 설명해주세요.**
+
+하나의 클래스에서 서로 다른 상태를 갖는 인스턴스를 만들 수 있어 재활용성이 뛰어나고, 강한 응집력과 약한 결합력을 갖고있습니다. 덕분에 유지보수와 분석에 비교적 쉽습니다.
+반면에 단점으로는 각 객체 간의 정보 교환이 일어남으로 실행 시스템에 비교적 많은 Overhead가 발생합니다.

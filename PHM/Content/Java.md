@@ -57,7 +57,59 @@ JVM은 자바 코드를 컴파일해서 얻은 바이트 코드를 해당 운영
 ## GC(Garbage Collector)의 종류와 동작 과정/원리
 ### 핵심답변
 
+GC(Garbage Collector)란, 메모리관리 기법 중 하나로, 프로그램이 동적으로 할당했던 메모리 중에, 필요 없어진 영역을 해제하는 기능입니다.
 
+GC의 동작 과정은, 메모리가 부족할 때, 접근 불가능한 객체를 판별하여 쓰레기(Garbage)라 판단하고, GC를 수행합니다.
+
+<br><br>
+
+#### 🤔 가비지 콜렉터(Garbage Collector) 동작 과정을 조금 더 디테일하게 설명해주세요.
+
+GC는 힙영역에서 발생하는 프로세스 입니다. Heap은 간단하게 New Generation 과 Old Generation 으로 구분할 수 있습니다.
+![image](https://user-images.githubusercontent.com/42319300/153561872-07fe0895-efa1-483c-bddf-7d6751951080.png)
+
+1. 새로운 객체가 생성되면 Eden 영역에 할당이 됩니다.
+2. Eden영역이 다 사용될때 GC가 발생하는데, 이때 발생하는 걸 Minor GC라 합니다.
+3. Eden영역의 접근가능한 (Mark된) 객체는 Survivor1로 이동하고 접근불가능한 (mark가 안된) 객체는 메모리에서 해제됩니다.
+4. Survivor1영역의 메모리가 가득차면, Survivor2의 영역으로 이동하게 되고, 이때 age값이 증가합니다.
+5. Survivor2영역의 메모리가 가드가면 다시 Mark-and-Sweep 알고리즘이 실행되어 survivor1의 영역으로 이동합니다.
+6. 결론적으로 Survivor 한쪽 영역이 차면 다른영역으로 이동시키면서 Mark-and-Sweep이 발생하고 age값이 증가됩니다.
+7. age값이 특정 값을 넘어가면 Old Generation으로 이동하고 이 과정을 Promotion이라고 합니다.
+8. Promotion이 계속 발생하여, Old Generation이 가득차면 GC를 실행하고 되고, 이때 실행되는 GC를 Major GC라 합니다.
+9. 이러한 과정이 반복되면서 가비지 컬렉터가 메모리를 관리합니다.
+
+<br><br>
+
+#### 🤔 Mark-and-Sweep 알고리즘이란 무엇인가요
+
+GC는 Object가 더이상 사용중인지 아닌지를 판별하기위해 객체 트리구조에서 Mark-and-Sweep 알고리즘을 사용합니다.
+1. 알고리즘은 GC 루트에서 시작하여 모든 개체 참조를 순회하고 발견된 모든 Object 를 살아있는 것으로 표시(Mark)합니다. Reachable Object 가 참조하고 있는 객체도 찾아서 마킹 됩니다. -> <b>Mark</B>
+2. 표시된 개체가 차지하지 않은 모든 힙 메모리가 회수됩니다. -> <b>Sweep</b>
+<br><br>
+
+#### 🤔 가비지콜렉터를 사용할때의 장점과 단점을 알려주세요
+
+GC를 사용할때의 장점은
+1. 메모리 누수를 막을 수 있습니다.
+2. 해제된 메모리에 접근하는 오류와, 해제된 메모리를 한번 더 해제하는 이중 해제를 막을 수 있습니다.
+
+GC를 사용할 때의 단점은
+1. GC의 메모리 해제 타이밍을 개발자가 정화하게 알기 힘듭니다.
+2. 따라서 실시간성이 강조되는 프로그램에의 경우 GC에게 메모리를 맡기는 것을 알맞지 않을 수 있습니다.
+
+<b>[참고]</b><Br>
+[저는 GC가 처음이라니까요?](https://papimon.tistory.com/93) <br>
+[가비지컬렉터](https://jins-dev.tistory.com/entry/%EA%B0%80%EB%B9%84%EC%A7%80-%EC%BB%AC%EB%A0%89%ED%84%B0Garbage-Collector-%EC%9D%98-%EA%B0%9C%EB%85%90%EA%B3%BC-%EB%8F%99%EC%9E%91-%EC%9B%90%EB%A6%AC) <br>
+[가비지 컬렉터 실행과정](https://truehong.tistory.com/52)
+
+<br><br>
+
+#### 🤔 Garbage Collector의 알고리즘 종류 아시는거 있으면 설명해주실 수 있을까요?
+1. 첫번째로 Serial GC가 있습니다. Old 영역에서 Mark Sweep Compact 알고리즘이 사용되고, 기존의 GC동작과 동일하지만, Sweep단계 이후 힙의 가장 앞 부분부터 채워서 객체가 존재하는 부분과 존재하지 않는 부분을 구분하는 Compact 단계가 추가로 존재하는 알고리즘입니다. 이 가비지 콜렉터의 경우 1개의 쓰레드로만 동작됩니다.
+
+2. 두번째로 Parallel GC가 있습니다. Serial GC와 동일하지만, 차이점은 여러개의 쓰레드를 통해 Parallel하게 GC를 수행할 수 있게 되어 있어 오버헤드를 줄여줍니다.
+
+3. 마지막으로 G1(Garbage First)GC가 있습니다. 기존의 GC와는 다르게 Heap을 물리적으로 Young 영역과 Old 영역을 나누는 것이 아니라, 지역(Region)개념을 도입하여 논리적으로 Heap을 균등하게 여러개의 지역으로 나눠 각 지역을 역할과 함께 논리적으로 구분하여 객체를 할당하게 만드는 GC입니다.
 ---
 <br><br>
 
@@ -84,7 +136,7 @@ JVM은 자바 코드를 컴파일해서 얻은 바이트 코드를 해당 운영
 
 ---
 <br><br>
-
+[자바 인터프리터vs컴파일러](https://velog.io/@jaeyunn_15/OS-Compiler-vs-Interpreter)
 ## Java 코드의 컴파일 과정
 ### 핵심 답변
 Java 코드의 컴파일 과정을 다음과 같습니다.      

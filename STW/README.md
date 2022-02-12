@@ -26,6 +26,19 @@
         - WAS에 종속적이지 않은 개발 환경
         - 트랜잭션 관리 용이
     - 스프링 프레임워크의 장점
-- 주요 개념 (DI, IoC, etc)   
+- 주요 개념
+    - DI
+    - IoC
+    - Entity
+    - Object
+    - Class & Instance
+    - Container
+    - MVC Pattern
+    - Bean 객체
+    - DTO & DAO
+    - Spring Filter & Interceptor
 - 스프링의 기본적인 동작 원리
+    - Spring과 Spring Boot
+    - Spring Boot와 Spring Framework
+    - Spring Bean LifeCycle
 - 웹 서비스 동작 과정에서의 Spring Framework의 동작과정 및 역할

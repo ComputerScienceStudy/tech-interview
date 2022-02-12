@@ -11,3 +11,34 @@
     - final 키워드
     - Generic의 개념
     - ThreadLocal이 무엇이고 언제 활용되는지
+
+## [2주차](https://github.com/ComputerScienceStudy/tech-interview/blob/main/STW/Week2.md)
+- Spring Framework
+    - 프레임워크란?
+    - 프레임워크와 라이브러리의 차이
+    - 프레임워크의 장점
+    - 스프링 프레임워크란?
+    - 스프링 프레임워크의 특징
+        - POJO 기반 구성
+        - DI(의존성 주입)을 통한 객체간 관계 구성
+        - AOP(Aspect - Oriented - Programming) 지원
+        - MVC 구조
+        - WAS에 종속적이지 않은 개발 환경
+        - 트랜잭션 관리 용이
+    - 스프링 프레임워크의 장점
+- 주요 개념
+    - DI
+    - IoC
+    - Entity
+    - Object
+    - Class & Instance
+    - Container
+    - MVC Pattern
+    - Bean 객체
+    - DTO & DAO
+    - Spring Filter & Interceptor
+- 스프링의 기본적인 동작 원리
+    - Spring과 Spring Boot
+    - Spring Boot와 Spring Framework
+    - Spring Bean LifeCycle
+- 웹 서비스 동작 과정에서의 Spring Framework의 동작과정 및 역할

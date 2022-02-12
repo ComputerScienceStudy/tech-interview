@@ -11,3 +11,8 @@
     - final 키워드
     - Generic의 개념
     - ThreadLocal이 무엇이고 언제 활용되는지
+
+## [2주차](https://github.com/ComputerScienceStudy/tech-interview/blob/main/STW/Week2.md)
+- 스프링의 기본적인 동작 원리
+- 주요 개념 (DI, IoC, etc)
+- 웹 서비스 동작 과정에서의 Spring Framework의 동작과정 및 역할

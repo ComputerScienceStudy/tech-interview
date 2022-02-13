@@ -24,13 +24,11 @@
     - 자바의 동시성 이슈(공유자원 접근)에 대해 설명해주세요. 
     - 자바에서 null을 안전하게 다루는 방법에 대해 설명해주세요.
 
-## [Spring](https://github.com/ComputerScienceStudy/tech-interview/blob/main/KHY/Content/Spring.md)
+## [Spring Framework](https://github.com/ComputerScienceStudy/tech-interview/blob/main/KHY/Content/Spring.md)
 ### Spring
 - 스프링 프레임워크란
 - Spring, Spring MVC, Spring Boot의 차이
 - MVC 패턴이란?
-- Spring Boot의 예외처리하는 방법
-- Spring Boot의 예외처리의 내부 구현은 어떻게 되어 있나요?
 - Spring DI/IoC는 어떻게 동작하나요?
 - Spring Bean이란 무엇인가요?
 - 스프링 Bean의 생성 과정을 설명해주세요. 
@@ -50,6 +48,10 @@
 - Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요? 
 - Spring Application을 구동할 때 메서드를 실행시키는 방법에 대해 설명해주세요.
 - 의존성과 설정값을 생성자 인자로 주입해야 하는 이유에 대해 설명해주세요.
+- DTO를 사용하는 이유
+- Spring Boot의 예외처리하는 방법
+- Spring Boot의 예외처리의 내부 구현은 어떻게 되어 있나요?
+
 ### JPA
 - JPA 영속성 컨텍스트의 이점(5가지)을 설명해주세요.
 - JPA Propagation 전파단계를 설명해주세요.

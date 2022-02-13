@@ -22,7 +22,7 @@
         - POJO 기반 구성
         - DI(의존성 주입)을 통한 객체간 관계 구성
         - AOP(Aspect - Oriented - Programming) 지원
-        - MVC 구조
+        - MVC 패턴
         - WAS에 종속적이지 않은 개발 환경
         - 트랜잭션 관리 용이
     - 스프링 프레임워크의 장점

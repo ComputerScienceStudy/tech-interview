@@ -29,30 +29,25 @@
 - MVC 패턴이란?
 - 프론트 컨트롤러 패턴이란 무엇인가요?
 - Spring Web MVC의 Dispatcher Servlet의 동작 원리에 대해서 간단히 설명해주세요.
-- Spring DI/IoC는 어떻게 동작하나요?
-- Spring Bean이란 무엇인가요?
-- 스프링 Bean의 생성 과정을 설명해주세요. 
-- 스프링 Bean의 Scope에 대해서 설명해주세요. 
-- IoC 컨테이너의 역할은 무엇이 있을까요? 
-- DI 종류는 어떤것이 있고, 이들의 차이는 무엇인가요? 
-- Autowiring 과정에 대해서 설명해주세요. 
-- Servlet Filter와 Spring Interceptor의 차이는 무엇인가요? 
-- Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요. 
-- Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
+- POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요?
+- spring IoC/DI의 동작원리
+  - Spring DI/IoC는 어떻게 동작하나요?
+  - IoC 컨테이너의 역할은 무엇이 있을까요?
+- Spring IoC/DI(의존성 주입)의 방법에 대해 아는대로 설명해주세요.
+  - 각 DI 주입 방식의 차이점과 이점에 대해서 설명해주세요.
+  - 의존성과 설정값을 생성자 인자로 주입해야 하는 이유에 대해 설명해주세요.
 - AOP(Aspect Oriented Programming)란 무엇일까요?
-- POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요? 
-- Spring Web MVC에서 요청 마다 Thread가 생성되어 Controller를 통해 요청을 수행할텐데, 어떻게 1개의 Controller만 생성될 수 있을까요? 
+- Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.
+- Bean에 대해 설명해보세요.
+  - Spring Bean이란 무엇인가요?
+  - 스프링 Bean의 생성 과정을 설명해주세요.
+  - 스프링 Bean의 Scope에 대해서 설명해주세요.
+  - Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
+- Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.
+- Spring에서 예외처리하는 방법에 대해서 설명해주세요.
 - Filter와 Interceptor 차이
-- Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요? 
-- Spring Application을 구동할 때 메서드를 실행시키는 방법에 대해 설명해주세요.
-- 의존성과 설정값을 생성자 인자로 주입해야 하는 이유에 대해 설명해주세요.
+  - Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 - DTO를 사용하는 이유
-- Spring Boot의 예외처리하는 방법에 대해서 설명해주세요.
-- Spring Boot의 예외처리의 내부 구현은 어떻게 되어 있나요?
-- Spring Security 내부 구조
-
 ### JPA
-- JPA를 쓴다면 그 이유에 대해서 설명해주세요.
-- JPA 영속성 컨텍스트의 이점(5가지)을 설명해주세요.
-- N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
-- JPA를 사용할 때 쿼리를 사용하는 방법에대해서 설명해주세요.
+- JPA를 사용할 때의 이점에 대해서 설명해주세요.
+- JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.

@@ -17,11 +17,11 @@
     POJO를 사용하는 이유로는, 종속된 코드를 분리함으로 코드의 간결함과 자동화 테스트의 유리, 객체지향적 설걔의 자유로운 사용이 있습니다.
 
     Spring은 가장 대표적인 POJO프레임워크이며, POJO란 객체지향적인 원리에 충실한 방식으로 설걔된 오브젝트입니다.
-
+<Br>
 참고      
 [POJO에 대하여](https://limmmee.tistory.com/8)
 
-
+<Br><br>
 ## spring IoC/DI의 동작원리**
 ### 핵심답변
 
@@ -29,10 +29,13 @@ IOC는 제어의 역전을 의미합니다.제어의 역전이란, 객체가 자
 Spring framwork는 객체에대한 생성 및 생명주기를 관리할 수 있는 IOC 컨테이너를 제공하고있습니다.    
 DI란, 스프링 IOC 기능의 대표적인 동작원리이며, 객체간의 의존성을 자신이 아닌 외부에서 주입하는 개념입니다.   
 
+<Br><br>
 
 #### 🤔 Spring DI/IoC는 어떻게 동작하나요?
 IOC 컨테이너에서 관리하는 객체를, DI를 통해 내부에 의존성을 주입함으로써, 내부에서 해당 객체의 기능을 사용할 수 있도록 합니다.   
-    
+
+<Br><br>
+
 #### 🤔 IoC 컨테이너의 역할은 무엇이 있을까요?
 컨테이너란, 보통 객체의 생명주기를 관리, 생성된 인스턴스들에게 추가적인 기능을 제공하도록 하는 것 입니다.
 스프링에서는 IOC 컨테이너가, 객체의 생성과 관리를 책임지고 의존성을 관리해줌으로써 개발자가 로직에 집중할 수 있도록 해줍니다.
@@ -42,6 +45,7 @@ Spring IOC 컨테이너의 역할
 2. POJO의 생성, 초기화, 서비스, 소멸에 대한 권한을 가진다.
 
 
+<Br><br>
 
 ## Spring IoC/DI(의존성 주입)의 방법에 대해 아는대로 설명해주세요.
 ### 핵심답변
@@ -49,6 +53,7 @@ Spring IOC 컨테이너의 역할
 2. 필드 주입(Field Injection)
 3. 생성자 주입(Constructor Injection)
 
+<Br><br>
 
 #### 🤔  각 DI 주입 방식의 차이점과 이점에 대해서 설명해주세요.
 1. 수정자 주입(Setter Injection)은 선택적인 의존성을 사용할 때 유용합니다. setter 메소드를 사용하기때문에, 런타임시 의존관걔를 주입해 낮은 결합도를 가진다는 장점이 있지만,
@@ -91,19 +96,25 @@ setter 메소드를 사용해 의존성을 주입해 주지 않아도, 메인 �
 스프링 어플리케이션이 구동이 되지 않습니다.
 하지만 , 필드 주입이나, 수정자 주입은 객체 생성 후 비지니스 로직 상에서 순환참조가 일어나기 때문에 객체 생성시점에는 순환참조가 일어나는지 아닌지 발견할 수 있는 방법이 없습니다.
 
+<br>
+    
 참고    
 [IOC와 DI에 대하여](https://mo-world.tistory.com/entry/IOC%EC%99%80-DI-%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC-%EC%8A%A4%ED%94%84%EB%A7%81-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%89%BD%EA%B2%8C-%EC%84%A4%EB%AA%85)    
 [IOC 컨테이너](https://dev-coco.tistory.com/80)   
 [생성자 주입을 사용해야하는이유](https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/)
 
+<br><br>
+
 ## MVC 패턴이란?
 ### 핵심답변
 
 Model-View-Controller로 나누어진 디자인 패턴
+<Br><br>
 
 #### 🤔 프론트 컨트롤러 패턴이란 무엇인가요?
 프론트 컨트롤러란, 뷰에서 들어오는 모든 요청을 담당하여 웹 어플리케이션을 실행하는 모든 요청을 일괄적으로 처리할 수 있도록 해주는 디자인 패턴 입니다.
 ![image](https://user-images.githubusercontent.com/42319300/153901444-5b4ebf17-4f91-4e5d-8c99-045566f72a91.png)
+<Br><br>
 
 #### 🤔 Spring Web MVC의 Dispatcher Servlet의 동작 원리에 대해서 간단히 설명해주세요.
 Dispatcher Servlet이란, Spring MVC에서 프론트 컨트롤러 패턴을 구현한 Servlet입니다.
@@ -118,6 +129,7 @@ Dispatcher Servlet이란, Spring MVC에서 프론트 컨트롤러 패턴을 구�
 8. 완성된 View 파일을 클라이언트에 response하여 화면에 출력합니다.
 
 ![image](https://user-images.githubusercontent.com/42319300/153902623-5aa34db5-749b-4a9f-bade-81eaa2ae5ab3.png)
+<Br><br>
 
 #### 🤔  Spring Web MVC에서 요청 마다 Thread가 생성되어 Controller를 통해 요청을 수행할텐데,  어떻게 1개의 Controller만 생성될 수 있을까요?
 

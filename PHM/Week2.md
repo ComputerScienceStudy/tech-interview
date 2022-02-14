@@ -136,6 +136,15 @@ Dispatcher Servlet이란, Spring MVC에서 프론트 컨트롤러 패턴을 구�
 ## AOP
     
 #### 🤔 AOP(Aspect Oriented Programming)란 무엇일까요?
+AOP란 Aspect Oriented Programming, 관점 지향 프로그래밍을 의미합니다.   
+관점지향이란, 어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 각각 모듈화하는 프로그래밍 기법을 의미합니다.   
+따라서 AOP는 핵심기능과 부가기능을 나누어서 설계, 구현하는 것을 의미합니다.
+
+![image](https://user-images.githubusercontent.com/42319300/153905949-7ab73ff7-59a3-4445-a994-5cd39f439a61.png)
+<br>
+
+참고    
+[AOP란](https://thalals.tistory.com/271)
 
 #### 🤔 Autowiring 에 대해서 설명해주세요
 

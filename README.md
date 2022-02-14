@@ -1,6 +1,6 @@
 # Tech Interview
 
-##[JAVA](https://github.com/ComputerScienceStudy/tech-interview/blob/main/Week1.md)
+## [JAVA](https://github.com/ComputerScienceStudy/tech-interview/blob/main/Week1.md)
 - JVM 동작 과정/원리
 - GC(Garbage Collector)의 종류와 동작 과정/원리
 - 정적 타입 언어와 동적 타입 언어의 차이
@@ -11,7 +11,8 @@
 - final 키워드
 - Generic의 개념
 - ThreadLocal이 무엇이고 언제 활용되는지
-##Spring Framework
+
+## Spring Framework
 ### Spring
 - POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요?
 - spring IoC/DI의 동작원리

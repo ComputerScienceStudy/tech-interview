@@ -15,8 +15,7 @@
 ## Spring Framework
 ### Spring
 - POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요?
-- spring IoC/DI의 동작원리
-  - Spring DI/IoC는 어떻게 동작하나요?
+- Spring DI/IoC는 어떻게 동작하나요?
   - IoC 컨테이너의 역할은 무엇이 있을까요?
 - Spring IoC/DI(의존성 주입)의 방법에 대해 아는대로 설명해주세요.
   - 각 DI 주입 방식의 차이점과 이점에 대해서 설명해주세요.

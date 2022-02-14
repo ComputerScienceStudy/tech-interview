@@ -173,7 +173,8 @@ Model, View, Controller의 약자로 하나의 애플리케이션, 프로젝트�
  -Controller: 데이터와 사용자 인터페이스를 잇는 역할을 합니다. 사용자가 데이터를 클릭하고 수정하는 '이벤트'에 대한 처리를 합니다. 애플리케이션의 메인 로직을 담당합니다.
    ①Model과 View에 대해 알고 있어야 합니다. Controller는 이들을 중재해야 하기 때문입니다.
    ②Model과 View의 변경을 모니터링하고 변경 통지를 받으면 해석해서 각 구성 요소에 통지해야 합니다.
-<br>
+<br><br>    
+
 **🤔 왜 MVC 패턴을 사용하나요?**   
 사용자가 보는 페이지, 데이터 처리, 이를 중간에서 제어하는 컨트롤, 이 3가지로 기능을 분리하면     
 각각 맡은 바에 집중하여 개발할 수 있어 효율적입니다.    
@@ -186,3 +187,50 @@ Model, View, Controller의 약자로 하나의 애플리케이션, 프로젝트�
 
 ---
 ****핵심 답변****  
+MVC 디자인 패턴에서 수많은 View와 Controller가 연결되어 독립적으로 실행 되면, 서버 입장에서는   
+웹 애플리케이션이 실행하는 것들을 일괄적으로 처리하기 어렵게 됩니다.    
+따라서 대표 컨트롤러 역할을 할 수 있는 Front Controller를 두고 뷰에서 들어오는 모든 요청을 담당하게 하여    
+웹 애플리케이션을 실행하는 모든 요청에 대한 일괄 처리를 하도록 하는 구조입니다.   
+
+---
+<br><br>
+
+### Spring Web MVC의 Dispatcher Servlet의 동작 원리   
+
+---
+****핵심 답변****   
+![](https://images.velog.io/images/apolontes/post/ce9004a8-4b64-4b94-b5dc-8e5c46c2ba4d/2022-02-14_22-38-16.png)   
+DispatcherServelet은 프론트 컨트롤러 패턴을 구현한 Servlet으로,   
+웹의 모든 요청은 서블릿 컨테이너(ex.Tomcat)가 받아 공통 작업은    
+DispatcherServelet이 처리하고 결과를 돌려주는 창구 역할을 합니다.   
+
+---
+<br><br>
+
+### AOP(Aspect Oriented Programming)란 무엇일까요?   
+
+---
+****핵심 답변****   
+관점 지향 프로그래밍.    
+어떤 로직이 있을 때 핵심적인 관점과 부가적인 관점을 나누고 그 관점을 기준으로 각각 모듈화해 나가는 개발을 말합니다.    
+예컨대 소스 코드 중에서 자주 사용하고 반드시 필요하지만, 매번 하기 번거로운 반복적 코드가 있는데     
+이를 Crosscutting Concerns(횡단 관심사)라고 부릅니다.(ex. log 출력, 예외처리, transaction etc)   
+AOP관점에서는 이를 모듈화 해 핵심적인 비즈니스 로직(종단 관심사)과 분리합니다.    
+이 경우 개발자는 핵심적인 비즈니스 로직에 더욱 집중하여 개발을 할 수 있게 됩니다.     
+
+---
+<br><br>
+
+### Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.   
+
+---
+****핵심 답변****     
+교차 출처 리소스 공유(Cross-Origin Resource Sharing)은 Origin이 다른 경우에도(Cross-Origin)       
+리소스를 공유할 수 있음을 의미합니다. 하지만 웹브라우저는 원래 동일 출처 원칙(Same Origin Policy)을   
+보안상의 이유로 요구합니다. CORS에러를 피하기 위해서는 request origin과 response origin을   
+일치시키는 작업이 필요합니다.    
+<br>    
+Spring 에서는 아래의 3가지 방식으로 처리할 수 있습니다.    
+1.CorsFilter를 생성해 직접 response에 header를 넣어주기    
+2.Controller에서 @CrossOrigin annotation 추가하기   
+3.WebMvcConfigurer를 이용해서 처리하기 

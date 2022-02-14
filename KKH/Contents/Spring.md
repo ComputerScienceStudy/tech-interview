@@ -1,3 +1,7 @@
+# Spring Framework
+
+## Spring
+
 ### POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요?
 
 ---
@@ -10,7 +14,10 @@ Spring Framework에서 POJO는 일반적으로 인터페이스를 상속 받지 
 
 ---
 
-[POJO란](https://www.notion.so/POJO-afefe872d2a54d9c9e841d6da6d22c4f)
+>[POJO란](https://www.notion.so/POJO-afefe872d2a54d9c9e841d6da6d22c4f)
+
+<br>
+<br>
 
 ### spring IoC/DI의 동작원리 && Spring DI/IoC는 어떻게 동작하나요?
 
@@ -24,7 +31,10 @@ DI는 앞서말한 의존관계를 주입하는 것을 의미하는데, A클래�
 
 ---
 
-[spring IoC/DI의 동작원리](https://www.notion.so/spring-IoC-DI-0af6b0ea9e844381a15ece07361b1900)
+>[spring IoC/DI의 동작원리](https://www.notion.so/spring-IoC-DI-0af6b0ea9e844381a15ece07361b1900)
+
+<br>
+<br>
 
 ### IoC 컨테이너의 역할은 무엇이 있을까요?
 
@@ -37,7 +47,10 @@ DI는 앞서말한 의존관계를 주입하는 것을 의미하는데, A클래�
 
 ---
 
-[[Spring] IoC 컨테이너 (Inversion of Control) 란](https://dev-coco.tistory.com/80)
+>[[Spring] IoC 컨테이너 (Inversion of Control) 란](https://dev-coco.tistory.com/80)
+
+<br>
+<br>
 
 ### Spring IoC/DI(의존성 주입)의 방법에 대해 아는대로 설명해주세요.
 
@@ -55,7 +68,10 @@ Spring에서는 @Autowired 어노테이션을 이용해 의존성 주입이 가�
 
 ---
 
-****[[Spring] DI(Dependency Injection) 세 가지 방법](https://velog.io/@gillog/Spring-DIDependency-Injection-%EC%84%B8-%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95)****
+>[[Spring] DI(Dependency Injection) 세 가지 방법](https://velog.io/@gillog/Spring-DIDependency-Injection-%EC%84%B8-%EA%B0%80%EC%A7%80-%EB%B0%A9%EB%B2%95)
+
+<br>
+<br>
 
 ### 의존성과 설정값을 생성자 인자로 주입해야 하는 이유에 대해 설명해주세요.
 
@@ -70,7 +86,10 @@ Spring에서는 @Autowired 어노테이션을 이용해 의존성 주입이 가�
 
 ---
 
-[[Spring] 다양한 의존성 주입 방법과 생성자 주입을 사용해야 하는 이유 - (2/2)](https://mangkyu.tistory.com/125)
+>[[Spring] 다양한 의존성 주입 방법과 생성자 주입을 사용해야 하는 이유 - (2/2)](https://mangkyu.tistory.com/125)
+
+<br>
+<br>
 
 ### MVC 패턴이란?
 
@@ -99,9 +118,12 @@ MVC 패턴에서 Controller를 빼고 ViewModel을 추가한 패턴입니다. MV
 
 ---
 
-**[일반적인 MVVM 패턴](https://jhtop0419.tistory.com/m/21)**
+>[일반적인 MVVM 패턴](https://jhtop0419.tistory.com/m/21)
 
-**[[디자인패턴] MVC 패턴이란?](https://m.blog.naver.com/tlstjd436/222010976665)**
+>[[디자인패턴] MVC 패턴이란?](https://m.blog.naver.com/tlstjd436/222010976665)
+
+<br>
+<br>
 
 ### 프론트 컨트롤러 패턴이란 무엇인가요?
 
@@ -113,7 +135,10 @@ MVC 패턴에서 Controller를 빼고 ViewModel을 추가한 패턴입니다. MV
 
 ---
 
-**[[MVC] 프론트 컨트롤러 패턴](https://yeonyeon.tistory.com/103)**
+>[[MVC] 프론트 컨트롤러 패턴](https://yeonyeon.tistory.com/103)
+
+<br>
+<br>
 
 ### Spring Web MVC의 Dispatcher Servlet의 동작 원리에 대해서 간단히 설명해주세요.
 
@@ -142,15 +167,16 @@ MVC 패턴에서 Controller를 빼고 ViewModel을 추가한 패턴입니다. MV
 7. HandlerAdapter가 반환받은 ResponseEntity를 통해 Response 처리를 진행합니다.
 8. 서버의 응답을 클라이언트로 반환합니다.
 
-![[https://mangkyu.tistory.com/18](https://mangkyu.tistory.com/18)](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fb1451e5-2225-4b44-8b55-2227065d0d62/Untitled.png)
-
-[https://mangkyu.tistory.com/18](https://mangkyu.tistory.com/18)
+![image](https://user-images.githubusercontent.com/82690689/153920718-d57055fb-c278-47c8-94e8-9febe440e96b.png)
 
 ---
 
-[[Spring]Dispatcher-Servlet(디스패처 서블릿)이란? 디스패처 서블릿의 개념과 동작 과정](https://mangkyu.tistory.com/18)
+>[[Spring]Dispatcher-Servlet(디스패처 서블릿)이란? 디스패처 서블릿의 개념과 동작 과정](https://mangkyu.tistory.com/18)
 
-[Spring MVC - DispatcherServlet 동작 원리](https://jess-m.tistory.com/15)
+>[Spring MVC - DispatcherServlet 동작 원리](https://jess-m.tistory.com/15)
+
+<br>
+<br>
 
 ### AOP(Aspect Oriented Programming)란 무엇일까요?
 
@@ -180,9 +206,12 @@ MVC 패턴에서 Controller를 빼고 ViewModel을 추가한 패턴입니다. MV
 
 ---
 
-[관점지향 프로그래밍(Aspect - Oriented Programming)이란 무엇인가?](https://dev-coco.tistory.com/81)
+>[관점지향 프로그래밍(Aspect - Oriented Programming)이란 무엇인가?](https://dev-coco.tistory.com/81)
 
 ****[[Spring] AOP(Aspect Oriented Programming)란 무엇일까?](https://devlog-wjdrbs96.tistory.com/398)****
+
+<br>
+<br>
 
 ### Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.
 
@@ -218,6 +247,6 @@ CORS는 SOP(Same Origin Policy) 즉, 동일한 출처의 Origin만 리소스를 
 
 ---
 
-**[[Spring Boot] CORS 를 해결하는 3가지 방법 (Filter, @CrossOrigin, WebMvcConfigurer)](https://wonit.tistory.com/572)**
+>[[Spring Boot] CORS 를 해결하는 3가지 방법 (Filter, @CrossOrigin, WebMvcConfigurer)](https://wonit.tistory.com/572)
 
-****[[Spring Boot] CORS와 Preflight에 관한 이슈](https://velog.io/@change/Spring-Boot-CORS%EC%99%80-Preflight%EC%97%90-%EA%B4%80%ED%95%9C-%EC%9D%B4%EC%8A%88)****
+>[[Spring Boot] CORS와 Preflight에 관한 이슈](https://velog.io/@change/Spring-Boot-CORS%EC%99%80-Preflight%EC%97%90-%EA%B4%80%ED%95%9C-%EC%9D%B4%EC%8A%88)

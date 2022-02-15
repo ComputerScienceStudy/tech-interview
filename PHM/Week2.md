@@ -23,8 +23,8 @@ Spring은 가장 대표적인 POJO프레임워크이며, POJO란 객체지향적
 Spring에서는 도메인과 비지니스 로직을 수행하는 대상이 POJO가 될 수 있습니다.
 
 <Br>
-참고      
-[POJO에 대하여](https://limmmee.tistory.com/8)
+
+>[POJO에 대하여](https://limmmee.tistory.com/8)
 
 <Br><br>
 ## spring IoC/DI의 동작원리**
@@ -103,8 +103,7 @@ setter 메소드를 사용해 의존성을 주입해 주지 않아도, 메인 �
 
 <br>
     
-참고    
-[IOC와 DI에 대하여](https://mo-world.tistory.com/entry/IOC%EC%99%80-DI-%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC-%EC%8A%A4%ED%94%84%EB%A7%81-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%89%BD%EA%B2%8C-%EC%84%A4%EB%AA%85)    
+>[IOC와 DI에 대하여](https://mo-world.tistory.com/entry/IOC%EC%99%80-DI-%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC-%EC%8A%A4%ED%94%84%EB%A7%81-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%89%BD%EA%B2%8C-%EC%84%A4%EB%AA%85)    
 [IOC 컨테이너](https://dev-coco.tistory.com/80)   
 [생성자 주입을 사용해야하는이유](https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/)
 
@@ -272,8 +271,7 @@ public class Advice {
 
 <br>
 
-참고    
-[AOP란 - (AOP, Spring AOP, AOP 어노테이션)](https://thalals.tistory.com/271)
+>[AOP란 - (AOP, Spring AOP, AOP 어노테이션)](https://thalals.tistory.com/271)
 
 <Br><br>
 
@@ -394,22 +392,78 @@ public class WebConfig implements WebMvcConfigurer {
 <Br><Br>
 ## Bean에 대해 설명해보세요.
 ### 핵심답변
+Spring Bean이란, IOC 컨테이너가 관리하는 자바 객체를 이야기합니다.
+스프링 빈을 등록하는 방법은     
+1. 컴포넌트 스캔을 사용하여 @Component 어노테이션으로 빈을 등록하거나       
+2. @Configuration 과 @Bean 어노테이션을 사용하여 자바 코드를 직접 등록하는 방법        
+3. 마지막으로, XML파일 설정을 통해 일반 객체를 Bean으로 등록할 수 있습니다.
 
 <Br><Br>
-#### 🤔 Spring Bean이란 무엇인가요?
-<Br><Br>
+#### 🤔 스프링 Bean을 사용하는 이유를 알려주세요
+Spring Bean으로 등록되어 IOC 컨테이너에서 객체를 관리하게 되면, 
+컨테이너에서 관리되는 객체를 사용하여, 코드에 의존성을 주입할 수 있습니다.
 
+<br><br>
 #### 🤔 스프링 Bean의 생성 과정을 설명해주세요.
+Bean의 생명주기는     
+1. spring 어플리케이션이 구동하면, Bean으로 등록할 객체를 탐색합니다.
+2. Bean으로 등록할 객체를 초기화하고, 의존관계를 주입해 줍니다.
+3. 모든 Bean의 초기화 끝나, 컨테이너에서 관리되며 사용가능한 상태를 bean 준비상태라 합니다.
+4. 마지막으로, 스프릥 프로젝트가 종료될 때, destroy메소드가 호출되어 Bean을 소멸합니다.
+
+<Br>
+
+>[Bean LifeCycle](https://n1tjrgns.tistory.com/257)
+
 <Br><Br>
 
 #### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
+스프링에서 Bean의 Scope는 별다른 설정이 없으면, Singleton Scope로 설정 됩니다.        
+싱글톤방식으로 설정이되면, 스프링이 bean마다 하나의 객체를 생성해주고, 스프링을 통해 Bean을 제공받으면,     
+제공받은 Bean은 언제나 같은 객체임을 의미합니다.
 <Br><Br>
 
 #### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
+Spring Bean을 등록하는 방법은 2가지가 있습니다.    
+첫 번째는, 컴포넌트 스캔을 이용하는 방법이고, 이는 @Component 어노테이션을 이용합니다.      
+@Component 어노테이션은 클래스 단에 선언되며 스프링 런타임시 빈으로 등록이 됩니다.      
+@Controller, @Service, @Repository 가 대표적인 컴포넌트 스캔 방식입니다.    
+
+두 번째는, 자바클래스를 사용자가 직접 빈으로 등록하는 방법입니다.     
+이때 @Bean 어노테이션을 사용합니다.     
+@Bean어노테이션은 메소드 레벨에서 선언되며, 객체를 개발자가 수동으로 빈으로 등록하는 어노테이션입니다.
+
+정리하자면,
+Bean은 메소드에 사용하며, Component는 클래스에 사용이 됩니다.    
+개발자가 컨트롤이 불가능한 외부 라이브러리를 빈으로 등록하고 싶을 때 @Bean을 사용하며,      
+개발자가 직접 컨트롤이 가능한 내부 클래스의 경우 @Compoenet를 사용하여 스프링 빈으로 등록합니다.    
+
+<br>
+
+>[Bean과 Componet의 차이](https://youngjinmo.github.io/2021/06/bean-component/)
+
 <Br><Br>
 
 ## Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.
 ### 핵심답변
+
+Getter와 Setter를 사용하는 이유는 데이터의 무결성을 지키기 위해서 입니다.
+
+<br><br>
+#### 🤔 데이터 무결성이 무엇이 인가요?
+데이터 무결성이란, 데이터의 값과, 현실의 실제값이 일치하는 정확성을 의미합니다.  
+
+<br><br>
+
+#### 🤔 Getter/Setter를 사용할 때 왜 데이터 무결성이 지켜지나요?
+getter, setter를 이용해서 데이터를 생성 및 접근을 하게 되면 들어오는 값을 바로저장하는게 아닌,      
+한번 검증하고 처리할 수 있도록 할 수 있기때문에 데이터의 무결성이 지켜집니다.
+
+<br><br>
+
+#### 🤔 Getter/Setter를 사용할 때의 다른 이점은 없나요?
+Getter Setter같은 엑세스 함수를 사용하면, 위와같은 데이터 무결성과 유효성검사를 할 수 있다는 장점과    
+객체의 필드를 private와 같은 접근제한자를 두면서 객체지향의 목적인 정보은닉이 가능하다는 장점이 있습니다.
 
 <br><br>
 ## Spring에서 데이터를 받는 방식(과정)과 종류에 대해서 설명해주세요.
@@ -423,13 +477,6 @@ public class WebConfig implements WebMvcConfigurer {
 #### 🤔 Spring Boot의 예외처리의 내부 구현은 어떻게 되어 있나요?
 
 <Br><Br>
-## DTO를 사용하는 이유?**
-### 핵심답변
-
-<Br><Br>
-#### 🤔 DAO와 DTO의 차이를 설명해주세요
-<Br><Br>
-
 ## Filter와 Interceptor 차이
 ### 핵심답변
 <Br><Br>
@@ -439,6 +486,20 @@ public class WebConfig implements WebMvcConfigurer {
 <Br><Br>
 ## Spring Application을 구동할 때 메서드를 실행시키는 방법에 대해 설명해주세요.
 ### 핵심답변
+
+## DTO를 사용하는 이유?
+### 핵심답변
+DTO를 사용하는 이유는, 자바 Domain 객체에 직접적으로 접근하지 않기 위해서 입니다.      
+데이터에 집적 접근하지 않음으로써, 데이터를 은닉 및 보호할 수 있고,
+
+DTO를 사용하여, 간결하게 원하는 정보만을 제공해주거나     
+엔티티의 정보뿐만이 아닌, 개발자가 원하는 형식의 데이터들을 추가하여 정보를 주고받을 수 있다는 편리함이 있습니다.
+
+<Br><Br>
+#### 🤔 DAO와 DTO의 차이를 설명해주세요
+DTO는, 데이터 전송 객체의 약자로서, 데이터를 담아 보내는 객체입니다.    
+DAO는, 데이터에 접근하는 객체로서, 데이터의 
+<Br><Br>
 
 <Br><Br>
 ## JPA

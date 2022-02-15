@@ -153,7 +153,8 @@ AOP란 Aspect Oriented Programming, 관점 지향 프로그래밍을 의미합�
 관점지향이란, 어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 각각 모듈화하는 프로그래밍 기법을 의미합니다.   
 따라서 AOP는 핵심기능과 부가기능을 나누어서 설계, 구현하는 것을 의미합니다.        
 <br>
-![image](https://user-images.githubusercontent.com/42319300/153905949-7ab73ff7-59a3-4445-a994-5cd39f439a61.png)
+
+<img src="https://user-images.githubusercontent.com/42319300/153905949-7ab73ff7-59a3-4445-a994-5cd39f439a61.png" width="60%" height="60%">
 
 <br><br>
 
@@ -273,7 +274,6 @@ public class Advice {
 [AOP란 - (AOP, Spring AOP, AOP 어노테이션)](https://thalals.tistory.com/271)
 
 <Br><br>
-#### 🤔 Autowiring 에 대해서 설명해주세요
 
 ## Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.
 ### 핵심답변

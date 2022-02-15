@@ -353,7 +353,7 @@ public class CustomAuthManager implements AuthenticationManager{
 ****핵심 답변****    
 Setter를 사용하는 이유는 변수에 임의로 접근하여 잘못된 기본 값을 대입함으로써 에러를        
 발생시키는 상황을 막기 위해서 입니다.
-Getter를 사용하는 이유는 은닉성과 때문입니다. 
+Getter를 사용하는 이유는 은닉성 때문입니다.		 
 변수 중에서 다른 사람들이 필요로하는 최소한의 주요 변수만을 getter를 통해 드러내고 
 나머지는 private 처리를 해서 해당 클래스 안에서만 노출되게 해줍니다.        
 이렇게 Getter/Setter를 사용함으로써 데이터의 정확성과 일관성을 유지하고 보증하는        
@@ -371,7 +371,7 @@ hello.html을 요청하면 tomcat 내장 서버는 이 요청을 스프링에게
 스프링은 컨트롤러에 우선권을 주어 hello라는 메서드를 찾는데, 이 메서드가 있으면 실행하고        
 없으면 resource/static에 있는 hello.html파일을 찾아 서버에 전달합니다.      
 정적 컨텐츠이기 때문에 동적인 프로그래밍은 불가하다는 단점이 있습니다.
-<br>
+<Br><Br>
 2.MVC와 템플릿 엔진: hello-mvc라는 요청이 들어오면 tomcat 내장 서버는 스프링 컨테이너       
 에게 알립니다. helloController에 hello-mvc라는 메서드가 있으면 이를 실행합니다.       
 <HelloController.java>   
@@ -389,11 +389,12 @@ public String helloMvc(@RequestParam("name") String name, Model model) {
 <p th:text="'hello ' + ${name}">hello! empty</p>
 </body>
 </html>
-```
+```		
+			
 위와 같이 hello-mvc에서 model에 name이라는 키와 value값을 넘겨주면 viewResolver에서     
 템플릿 엔진을 사용해 hello-template에 있는 name이라는 키를 요청 키 value값으로 변환해       
 웹 브라우저에 전달합니다. 정적 컨텐츠와 달리 동적 프로그래밍이 가능해집니다.        
-<br>
+<Br><Br>
 3.API: API는 json형태로 데이터를 바로 받습니다. @ResponseBody라는 태그를 이용합니다.        
 웹 브라우저에서 hello-api를 요청하면 tomcat 내장 서버가 스프링 컨테이너에 알립니다.     
 HelloController에서 hello-api 메서드가 있는지 확인하고, @ResponseBody라는       
@@ -427,18 +428,18 @@ Entity는 도메인의 핵심 로직과 속성을 가지며, 실제 DB의 테이
 비즈니스 로직과 크게 상관 없는 곳에서 리소스의 속성이 실수로라도 변경될 가능성이 있습니다.      
 따라서 이를 방지하고자 Entity는 내부 구현을 캡슐화 하고, DTO를 사용하여 데이터 전달     
 역할만을 맡기면 됩니다.     
-<br>
+<Br>
 2.화면에 필요한 데이터를 선별할 수 있다.
 애플리케이션이 확장되면 엔티티의 크기는 점차 커지며, view단도 다양해지며 API 스펙도     
 더 많아질 것입니다. 이때 request/response를 엔티티로 보내면 엔티티의 모든 속성이        
 함께 전송되기 때문에 속도가 느려집니다. 따라서 특정 API에 필요한 데이터를 포함해        
 DTO를 만들면 화면에서 요구하는 데이터만 선별하여 request/response할 수 있습니다.        
-<br>
+<Br>
 3.순환참조를 예방할 수 있다.        
 양방향 참조된 엔티티를 컨트롤러에서 response로 return하게 되면, 엔티티가 참조하고 있는      
 객체는 지연 로딩 되고, 로딩된 객체는 또 다시 본인이 참조하고 있는 객체를 호출하는 순환참조의        
-문제를 낳습니다. 따라서 이를 방지하기 위해 return으로 DTO를 두는 것이 더 안전합니다.
-<br>
+문제를 낳습니다. 따라서 이를 방지하기 위해 return으로 DTO를 두는 것이 더 안전합니다.		
+<Br>
 4.validation 코드와 모델링 코드를 분리할 수 있다.       
 엔티티 클래스는 db 테이블과 매칭되는 필드가 속성으로 선언되어 있고, 비즈니스 로직도 복잡합니다.     
 따라서 속성에 모델링을 위해 @Column, @JoinColumn, @ManyToOne, @OneToOne     
@@ -447,7 +448,7 @@ validation 코드가 들어가면 엔티티 코드가 더 복잡해질 것입니
 DTO에서 정의하면 엔티티는 모델링과 비즈니스 로직에 집중할 수 있도록 할 수 있습니다.
 <Br><Br>
 
-### 🤔 DAO와 DTO의 차이를 설명해주세요
+### 🤔 DAO와 DTO의 차이를 설명해주세요		
 Data Access Object는 실제로 DB에 접근을 하기 위해 생성하는 객체이고,        
 Data Transfer Object는 데이터 교환을 위해 사용하는 객체로, DB의 데이터를        
 controller 혹은 service로 보낼 때 사용합니다. 
@@ -474,7 +475,7 @@ XSS 방어 등)을 처리하는 역할을 합니다.
 
 <Br><Br>
 
-### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
+### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?		
 동작 대상이 다르기 때문에 필터는 예외가 발생하면 Web Application에서 처리해야 합니다.       
 <error-page>선언이나 필터 내에서 request.getRequestDispatcher(String)과 같이        
 예외 처리 할 수 있습니다.       
@@ -523,7 +524,7 @@ JPA(Java Persistence API)는 Java 진영에서 ORM 기술 표준으로 사용하
 
 ### 🤔 JPA 영속성 컨텍스트의 이점(5가지)를 설명해주세요.
 영속성 컨텍스트는 엔티티를 영구 저장하는 환경이라는 뜻입니다. em.persist()를 통해       
-객체를 저장하는 시점부터 영속성 컨텍스트에 관리되는 상태가 됩니다.      
+객체를 저장하는 시점부터 영속성 컨텍스트에 관리되는 상태가 됩니다. 		     
 1.1차 캐시   
 영속성 컨텍스트의 관리되는 상태가 되면 DB에 바로 저장하는 것이 아니라 영속성 컨텍스트에     
 의해 관리되고, 1차 캐시에서 조회가 가능합니다. 만약 DB에는 저장되어 있지만 1차 캐시에는     
@@ -534,9 +535,9 @@ JPA(Java Persistence API)는 Java 진영에서 ORM 기술 표준으로 사용하
 <Br>  
 3.트랜잭션을 지원하는 쓰기 지연(Transaction write-behind)       
 트랜잭션 commit 전까지 SQL을 쓰기 지연 메모리에 쌓아두었다가 commit시 한번에 전송해 통신 횟수를     
-줄여 성능을 최적화 합니다.
+줄여 성능을 최적화 합니다.		
 4.변경 감지(Dirty Checking)     
-1차 캐시에 들어온 데이터를 스냅샷합ㄴ디ㅏ. commit되는 시점에 엔티티와 스냅샷을 비교해       
+1차 캐시에 들어온 데이터를 스냅샷합니다. commit되는 시점에 엔티티와 스냅샷을 비교해       
 변경이 일어나면 이를 감지합니다.      
 5.지연 로딩     
 엔티티에서 해당 엔티티를 불러올 때 SQL을 날려 해당 데이터를 가져옵니다.
@@ -555,7 +556,7 @@ N + 1 문제는 1번 조회해야 할 데이터를 N개 종류의 데이터 각�
 
 <Br><Br>
 
-### 🤔 JPA를 사용할 때 쿼리를 사용하는 방법에 대해서 설명해주세요.
+### 🤔 JPA를 사용할 때 쿼리를 사용하는 방법에 대해서 설명해주세요.		
 Spring Data JPA에서 정해놓은 네이밍 컨벤션을 지키면 JPA가 해당 메서드를 분석해 적절하게 JPQL을 구성합니다.          
 대표적인 키워드로는 And, Or, Is, Equal, Between, LessThan, After, Before, IsNull                
 OrderBy, Not 등이 있습니다.     

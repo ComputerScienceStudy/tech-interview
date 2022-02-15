@@ -457,11 +457,29 @@ controller 혹은 service로 보낼 때 사용합니다.
 ### Filter와 Interceptor 차이
 ---
 ****핵심 답변****    
+필터와 인터셉터는 모두 공통적으로 처리해야 하는 일들(ex.로그인 관련 세션 처리, 권한 체크,       
+XSS 방어 등)을 처리하는 역할을 합니다.      
+![](https://images.velog.io/images/apolontes/post/01c5865b-d1a7-4e6e-8f98-d8402e651c39/2022-02-15_21-27-54.png)     
+필터는 디스패처 서블릿(Dispatcher Servlet)에 요청이 전달되기 전/후에 url 패턴에 맞는 모든 요청에 대해     
+부가작업을 처리할 수 있는 기능을 제공해줍니다.      
+반면 인터셉터는 Spring이 제공하는 기술로써, 디스패처 서블릿(Dispatcher Servlet)이 컨트롤러를 호출하기       
+전과 후에 요청과 응답을 참조하거나 가공할 수 있는 기능을 제공합니다.        
+즉 필터는 웹 컨테이너에서, 인터셉터는 스프링 컨테이너에서 동작한다는 차이가 있습니다.       
+| 대상 | 필터(Filter) | 인터셉터(interceptor) |
+| --- | --- | --- |
+| 동작 | 웹 컨테이너 | 스프링 컨테이너 |
+| Request/Response 조작 가능 여부 | O | X |
+| 용도 | ①보안 관련 공통 작업 ②모든 요청에 대한 로깅 및 감사 ③이미지,데이터 압축 및 문자열 인코딩 | ①인증,인가 공통작업 ②Controller로 넘겨주는 정보 가공 ③API 호출에 대한 로깅 또는 감사 |
+
 
 <Br><Br>
 
 ### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
-
+동작 대상이 다르기 때문에 필터는 예외가 발생하면 Web Application에서 처리해야 합니다.       
+<error-page>선언이나 필터 내에서 request.getRequestDispatcher(String)과 같이        
+예외 처리 할 수 있습니다.       
+반면 인터셉터는 스프링의 ServletDispatcher내부에 있으므로 @ConstrollerAdvice에서        
+@ExceptionHandler를 사용해 예외처리 할 수 있습니다.     
 ---
 <Br><Br>
 
@@ -477,23 +495,83 @@ controller 혹은 service로 보낼 때 사용합니다.
 ### JPA란?
 ---
 ****핵심 답변****    
-
+JPA에는 '자바 ORM 표준'이라는 수식어가 붙습니다. ORM은 객체 관계 매핑의 약자로,     
+객체는 객체대로 설계하고, 관계형 DB는 관계형 DB대로 설계한 후 ORM 프레임워크가      
+중간에서 매핑해준다는 의미입니다.       
+JPA(Java Persistence API)는 Java 진영에서 ORM 기술 표준으로 사용하는        
+인터페이스의 모음입니다. Hibernate, OpenJPA등이 JPA를 구현합니다.       
 
 <Br><Br>
 
 ### 🤔 JPA를 사용할 때의 이점에 대해서 설명해주세요.
-
+1.생산성: 자바 컬렉션에 저장하듯이 JPA에 저장할 객체를 전달하면 되므로 반복적인 코드를      
+개발자가 직접 작성하지 않아도 되기 때문에 객체 설계 중심의 개발이 가능합니다.     
+<Br>  
+2.유지보수: 필드 추가시 필요한 SQL 및 JDBC 코드를 JPA가 대신 처리해주어 개발자가 직접       
+유지보수를 해야 할 필요성이 줄어듭니다.     
+<Br>
+3.패러다임 불일치 해결: JPA는 연관된 객체를 사용하는 시점에 SQL을 전달하고,     
+같은 트랜잭션 내에서 조회할 때 동일성도 보장해 주어 다양한 패러다임 불일치를 해결합니다. 
+<Br>       
+4.성능 최적화: 같은 트랜잭션 안에서 같은 엔티티를 반환해 DB와의 통신 횟수를 줄여줍니다.     
+또한 트랜잭션을 commit하기 전까지 쓰기 지연 메모리에 쌓아주었다가 한번에 SQL을 전송해 성능이 최적화 됩니다. 
+<Br>      
+5.데이터 접근 추상화와 벤더 독립성: 관계형 DB는 벤더마다 사용법이 달라 처음 선택한 DB에         
+종속되는 문제가 발생합니다. JPA를 사용하면 Application과 DB 사이에서 추상화된 데이터 접근을     
+제공하기 때문에 종속이 되지 않도록 합니다.
 <Br><Br>
 
 ### 🤔 JPA 영속성 컨텍스트의 이점(5가지)를 설명해주세요.
+영속성 컨텍스트는 엔티티를 영구 저장하는 환경이라는 뜻입니다. em.persist()를 통해       
+객체를 저장하는 시점부터 영속성 컨텍스트에 관리되는 상태가 됩니다.      
+1.1차 캐시   
+영속성 컨텍스트의 관리되는 상태가 되면 DB에 바로 저장하는 것이 아니라 영속성 컨텍스트에     
+의해 관리되고, 1차 캐시에서 조회가 가능합니다. 만약 DB에는 저장되어 있지만 1차 캐시에는     
+데이터가 없다면 DB에서 조회해 가져온 뒤 1차 캐시에 저장하고 그 엔티티를 반환합니다.     
+<Br>  
+2.동일성 보장      
+영속성 컨텍스트에서 관리되는 엔티티를 가져왔을 경우 동일성을 보장합니다.        
+<Br>  
+3.트랜잭션을 지원하는 쓰기 지연(Transaction write-behind)       
+트랜잭션 commit 전까지 SQL을 쓰기 지연 메모리에 쌓아두었다가 commit시 한번에 전송해 통신 횟수를     
+줄여 성능을 최적화 합니다.
+4.변경 감지(Dirty Checking)     
+1차 캐시에 들어온 데이터를 스냅샷합ㄴ디ㅏ. commit되는 시점에 엔티티와 스냅샷을 비교해       
+변경이 일어나면 이를 감지합니다.      
+5.지연 로딩     
+엔티티에서 해당 엔티티를 불러올 때 SQL을 날려 해당 데이터를 가져옵니다.
 
 <Br><Br>
 
 ### 🤔 JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
+N + 1 문제는 1번 조회해야 할 데이터를 N개 종류의 데이터 각각 추가로 조회하게 되는 문제입니다.       
+문제는 N에 들어갈 숫자가 무한히 커지는 경우입니다. 이렇게 되면 성능에 큰 영향을 줄 수 있기 때문입니다.      
+이 문제는 JPA의 프록시로 인한 지연 로딩 때문에 발생 합니다.     
+해결 방법으로는     
+1.Fetch Join        
+2.FetchType을 LAZY에서 EAGER로 변경     
+3.@EntityGraph 사용     
+[참고 블로그](https://blog.advenoh.pe.kr/database/JPA-N1-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95/)
 
 <Br><Br>
 
 ### 🤔 JPA를 사용할 때 쿼리를 사용하는 방법에 대해서 설명해주세요.
-
+Spring Data JPA에서 정해놓은 네이밍 컨벤션을 지키면 JPA가 해당 메서드를 분석해 적절하게 JPQL을 구성합니다.          
+대표적인 키워드로는 And, Or, Is, Equal, Between, LessThan, After, Before, IsNull                
+OrderBy, Not 등이 있습니다.     
+| Keyword | Sample | JPQL snippet |
+| --- | --- | --- |
+| And | findByLastnameAndFirstname | … where x.lastname = ?1 and x.firstname = ?2 |
+| Or | findByLastnameOrFirstname | … where x.lastname = ?1 or x.firstname = ?2  |
+| Is, Equals | findByFirstname,findByFirstnameIs,findByFirstnameEquals | … where x.firstname = ?1 |
+| Between | findByStartDateBetween | … where x.startDate between ?1 and ?2 |
+| LessThan | findByAgeLessThan | … where x.age < ?1 |
+| After | findByStartDateAfter | … where x.startDate > ?1 |
+| Before | findByStartDateBefore | … where x.startDate < ?1 |
+| IsNull, Null | findByAge(Is)Null | … where x.age is null |
+| OrderBy | findByAgeOrderByLastnameDesc | … where x.age = ?1 order by x.lastname desc |
+| Not | findByLastnameNot | … where x.lastname <> ?1 |
+        
+[공식문서](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
 ---
 <Br><Br>

@@ -112,7 +112,7 @@ Model-View-Controller로 나누어진 디자인 패턴
 <Br><br>
 
 #### 🤔 프론트 컨트롤러 패턴이란 무엇인가요?
-프론트 컨트롤러란, 뷰에서 들어오는 모든 요청을 담당하여 웹 어플리케이션을 실행하는 모든 요청을 일괄적으로 처리할 수 있도록 해주는 디자인 패턴 입니다.
+프론트 컨트롤러란, 뷰에서 들어오는 모든 요청을 담당하여 웹 어플리케이션을 실행하는 모든 요청을 일괄적으로 처리할 수 있도록 해주는 디자인 패턴 입니다.     
 ![image](https://user-images.githubusercontent.com/42319300/153901444-5b4ebf17-4f91-4e5d-8c99-045566f72a91.png)
 <Br><br>
 
@@ -128,7 +128,7 @@ Dispatcher Servlet이란, Spring MVC에서 프론트 컨트롤러 패턴을 구�
 7. 받아낸 View 페이지 파일에 Model을 보낸 후 클라이언트에게 보낼 페이지를 완성시켜 받아냅니다.
 8. 완성된 View 파일을 클라이언트에 response하여 화면에 출력합니다.
 
-![image](https://user-images.githubusercontent.com/42319300/153902623-5aa34db5-749b-4a9f-bade-81eaa2ae5ab3.png)
+![image](https://user-images.githubusercontent.com/42319300/153902623-5aa34db5-749b-4a9f-bade-81eaa2ae5ab3.png)      
 <Br><br>
 
 #### 🤔  Spring Web MVC에서 요청 마다 Thread가 생성되어 Controller를 통해 요청을 수행할텐데,  어떻게 1개의 Controller만 생성될 수 있을까요?

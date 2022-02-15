@@ -16,6 +16,7 @@
 POJO란, Plan Old Java Object의 약자로, 다른 클래스나 인터페이스를 상속받지 않은, 기본적인 기능만 가진 자바객체를 말합니다.       
 POJO는 객체지향적 원리에 충실하고, 특정 규약과 환경에 종속되지 않게 재활용 될 수 있게 설계된 객체를 말합니다.       
 POJO를 사용할때의 이점은, 종속된 코드를 분리함으로 코드의 간결함과 자동화 테스트의 유리하고 유지보수성을 높일 수 있습니다.
+<br><br>
 
 #### 🤔 Spring Framework에서 POJO는 무엇이 될 수 있을까요?
 Spring은 가장 대표적인 POJO프레임워크이며, POJO란 객체지향적인 원리에 충실한 방식으로 설계된 자바 객체입니다.
@@ -254,6 +255,7 @@ public class Advice {
 #### 🤔 프록시 패턴이란?
 
 어떤 객체에 대한 접근을 제어하거나 부가기능을 추가하는 용도로 실제 객체를 대신하는 객체를 제공하는 패턴입니다.
+<Br><br>
 
 #### 🤔 프록시 패턴 동작 원리에 대해서 설명해주세요.
 
@@ -277,18 +279,134 @@ public class Advice {
 
 ## Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.
 ### 핵심답변
+- 첫 번째로, Servlet Filter를 사용하여 커스텀한 CORS 설정하는 방법이 있습니다.
+- 두 번째로, Controller 클래스에 @Crossorigin 어노테이션을 통해 해결할 수 있습니다. 
+- 세 번째로,WebMvcConfiguer를 구현한 Configuration 클래스를 만들어서 addCorsMappings()를 재정의할 수도 있습니다. 
+- 마지막으로, Spring Security에서 CorsConfigurationSource를 Bean으로 등록하고 config에 추가해줌으로써 해결할 수 있습니다.
+<br><br>
+
+#### 🤔 CORS에러가 나는 이유가 무엇인가요?
+CORS(Cross-Origin-Resource-Sharing)는 Origin이 다른 경우(Cross-Oirgin) 리소스를 공유한다는 것을 의미합니다.       
+하지만 웹브라우저는 원래 동일 출처 원칙(Same Origin Policy)를 보안상 기본으로 합니다.
+
+따라서 CORS에러는, 동일한 출처의 Origin, 즉 스키마, Host, Port가 같아야만 리소스를 공유할 수 있다는 보안 정책 때문에 발생합니다.
 
 <Br><Br>
+#### 🤔 CORS 에러를 해결하기 위한 방법을 자세히 설명해주세요
+#### 1️⃣ Servlet Filter를 사용하여 커스텀한 CORS 설정하는 방법      
+서버의 응답을 보내기 전에 Access-Control-Allow-Origin 헤더를 싣는 필터를 작성하는 방법입니다.
+1. 빈으로 등록된 CorsFilter 클래스를 생성합니다.
+2. 해당 클래스에 doFilter를 직접 오버라이드해서 Options 메서드에 response로 Access-Control-Allow-Origin헤더에 허용된 Origin이라는 코드를 작성합니다.
 
+<Details>
+<summary>예시코드</summary>
+
+```Java
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class CorsFilter implements Filter {
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5500");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods","*");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers",
+                "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+        if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }else {
+            chain.doFilter(req, res);
+        }
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}
+```
+</Details>
+
+#### 2️⃣ Controller 클래스에 @Crossorigin 어노테이션을 활용하는 방법
+- Controller 클래스 상단이나 Controller Mapping 메소드 상단에 CrossOrigin(origins="도메인 url")을 어노테이션으로 작성하는 방법입니다.
+- CorsFilter를 직접 구현해서 사용하는 것 보다, 어노테이션만 붙히면 되기에 더 간편하게 사용할 수 있습니다.
+
+<details><summary>예시코드</summary>
+
+```java
+@CrossOrigin(origins = "http://127.0.0.1:5500/")  // 컨트롤러 클래스의 상단
+@RequiredArgsConstructor
+@RestController
+public class ArticleRestController {
+
+    public final ArticleRepository articleRepository;
+    public final ArticleService articleService;
+    public final LocationDistance location;
+
+    @CrossOrigin(origins = "http://127.0.0.1:5500/")  // 컨트롤러 맵핑 메소드 상단
+    @GetMapping("/api/articles/{query}")
+    public ResponseEntity<List<Article>> getArticles (@PathVariable("query") String query) {
+        List<Article> articles = articleRepository.findAllByTitleContains(query);
+        return ResponseEntity.ok().body(articles);
+    }
+}
+```
+</details>
+
+<br>
+
+#### 3️⃣ WebMvcConfig를 구현한 Configuration 클래스를 만드는 방법
+- WebMvcConfig 클래스를 활용하는 방법입니다. 
+- WebMvcConfiguer를 implement한 클래스를 만들고, @Configuration 어노테이션으로 어플리케이션에 연결하는 방법입니다. 
+- allowedOrigins, allowedMethods 메서드를 통해 cors를 설정해줄 수 있습니다.
+- 간단한 코드로 전체범위의 CORS를 설정해 준다는 장점이 있습니다.
+
+<details><summary>예시코드</summary>
+
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5500", "http://127.0.0.1:5500")
+                .allowedMethods("POST", "PUT", "GET", "HEAD", "OPTIONS", "DELETE");
+    }
+}
+```
+</details>
+
+<Br><Br>
 ## Bean에 대해 설명해보세요.
 ### 핵심답변
 
 <Br><Br>
 #### 🤔 Spring Bean이란 무엇인가요?
+<Br><Br>
 
 #### 🤔 스프링 Bean의 생성 과정을 설명해주세요.
+<Br><Br>
+
 #### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
+<Br><Br>
+
 #### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
+<Br><Br>
 
 ## Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.
 ### 핵심답변
@@ -304,21 +422,36 @@ public class Advice {
 <br><br>
 #### 🤔 Spring Boot의 예외처리의 내부 구현은 어떻게 되어 있나요?
 
-
+<Br><Br>
 ## DTO를 사용하는 이유?**
 ### 핵심답변
 
 <Br><Br>
 #### 🤔 DAO와 DTO의 차이를 설명해주세요
+<Br><Br>
+
 ## Filter와 Interceptor 차이
+### 핵심답변
+<Br><Br>
+
 #### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 
+<Br><Br>
 ## Spring Application을 구동할 때 메서드를 실행시키는 방법에 대해 설명해주세요.
+### 핵심답변
 
+<Br><Br>
 ## JPA
 
 ## JPA란?
+### 핵심답변
+
+<Br><Br>
 #### 🤔 JPA를 사용할 때의 이점에 대해서 설명해주세요.
+<Br><Br>
 #### 🤔 JPA 영속성 컨텍스트의 이점(5가지)를 설명해주세요.
+<Br><Br>
 #### 🤔 JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
+<Br><Br>
 #### 🤔 JPA를 사용할 때 쿼리를 사용하는 방법에 대해서 설명해주세요.
+<Br><Br>

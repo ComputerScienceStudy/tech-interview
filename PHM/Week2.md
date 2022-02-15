@@ -11,12 +11,16 @@
 ## 스프링 프레임워크의 특징
 ### 핵심답변
 
-#### 🤔 POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요?
+## POJO란 무엇인가요?
+### 핵심답변
 POJO란, Plan Old Java Object의 약자로, 다른 클래스나 인터페이스를 상속받지 않은, 기본적인 기능만 가진 자바객체를 말합니다.       
-POJO의 특징으로는, 특정 규약(Contract)에 종속되지 않아야하며(JAVA언어와 꼭 필요한 API외에 종속되지 않아야한다.), 특정환경에 종속되지 않고 객체지향원리에 충실해야한다가 있습니다.      
-POJO를 사용하는 이유로는, 종속된 코드를 분리함으로 코드의 간결함과 자동화 테스트의 유리, 객체지향적 설걔의 자유로운 사용이 있습니다.       
+POJO는 객체지향적 원리에 충실하고, 특정 규약과 환경에 종속되지 않게 재활용 될 수 있게 설계된 객체를 말합니다.       
+POJO를 사용할때의 이점은, 종속된 코드를 분리함으로 코드의 간결함과 자동화 테스트의 유리하고 유지보수성을 높일 수 있습니다.
 
-Spring은 가장 대표적인 POJO프레임워크이며, POJO란 객체지향적인 원리에 충실한 방식으로 설걔된 오브젝트입니다.     
+#### 🤔 Spring Framework에서 POJO는 무엇이 될 수 있을까요?
+Spring은 가장 대표적인 POJO프레임워크이며, POJO란 객체지향적인 원리에 충실한 방식으로 설계된 자바 객체입니다.
+Spring에서는 도메인과 비지니스 로직을 수행하는 대상이 POJO가 될 수 있습니다.
+
 <Br>
 참고      
 [POJO에 대하여](https://limmmee.tistory.com/8)
@@ -108,9 +112,18 @@ setter 메소드를 사용해 의존성을 주입해 주지 않아도, 메인 �
 ## MVC 패턴이란?
 ### 핵심답변
 
-Model-View-Controller로 나누어진 디자인 패턴
-<Br><br>
+Model-View-Controller로 나누어진 디자인 패턴입니다.
+- Model은, 어플리케이션에서 사용되는 데이터를 다룹니다.
+- View는, 데이터의 시각화로, 모델이 처리한 데이터를 받아 이것을 기반으로 사용자가 보는 페이지를 구성합니다.
+- Controller는, 사용자의 요청을 해석하여 처리하고, 그 결과를 반환해줍니다. Model과 View사이를 연결해주며, 데이터의흐름을 제어합니다.
 
+<Br><br>
+#### 🤔 MVC 패턴을 사용하는 이유는 무엇일까요?
+
+MVC 패턴을 사용하여, 특정기준에 따라 모듈을 분리하여 모듈화해놓기 때문에,     
+책임이 구분되어 있어, 유지보수 및 코드의 수정을 편하게 할 수 있습니다.
+
+<br><Br>
 #### 🤔 프론트 컨트롤러 패턴이란 무엇인가요?
 프론트 컨트롤러란, 뷰에서 들어오는 모든 요청을 담당하여 웹 어플리케이션을 실행하는 모든 요청을 일괄적으로 처리할 수 있도록 해주는 디자인 패턴 입니다.     
 ![image](https://user-images.githubusercontent.com/42319300/153901444-5b4ebf17-4f91-4e5d-8c99-045566f72a91.png)
@@ -138,37 +151,174 @@ Dispatcher Servlet이란, Spring MVC에서 프론트 컨트롤러 패턴을 구�
 #### 🤔 AOP(Aspect Oriented Programming)란 무엇일까요?
 AOP란 Aspect Oriented Programming, 관점 지향 프로그래밍을 의미합니다.   
 관점지향이란, 어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 각각 모듈화하는 프로그래밍 기법을 의미합니다.   
-따라서 AOP는 핵심기능과 부가기능을 나누어서 설계, 구현하는 것을 의미합니다.
-
+따라서 AOP는 핵심기능과 부가기능을 나누어서 설계, 구현하는 것을 의미합니다.        
+<br>
 ![image](https://user-images.githubusercontent.com/42319300/153905949-7ab73ff7-59a3-4445-a994-5cd39f439a61.png)
+
+<br><br>
+
+#### 🤔 AOP 기술을 적용하는 이유가 뭔가요?
+필수적이지만 반복적으로 사용되는 코드, log 출력이나, 예외처리 같은 부분을 모듈화 시켜, 리팩토링과 유지보수에 이점을 주기 때문입니다.       
+스프링에서 AOP를 사용하게 되면, 개발 코드에서는 비지니스 로직에 집중할 수 있고, 런타임 실행 시 부가기능을 비지니스 로직 앞과, 뒤 원하는 지점에서
+공통 관심사를 수행하게 하여 중복코드를 줄일 수 있습니다.
+
+<br><br>
+
+#### 🤔 AOP가 적용되는 위치는 어떻게 제어하나요?
+
+스프링 AOP에서는 Advice가 적용되는 5가지 시점을 제공합니다.
+1. @Around() : 첫번째로, Around() 어노테이션은 핵심기능 전과 후 모두 실행됨을 의미합니다.
+2. @Before() : Before() 어노테이션은 핵심기능 호출전에 실행됨을 의미합니다.
+3. @After() : 세번째로, After() 어노테이션은 '핵심기능'의 수행 성공 여부와 상관없이 수행 후 언제나 실행됨을 의미합니다.
+4. @AfterReturning() : AfterReturning()은 '핵심기능'의 호출 성공시에만 실행될 것임을 의미합니다.
+5. @AfterThrowing() : 마지막으로, AfterThrowing()은 '핵심기능' 호출 실패 시, 즉 예외(Exception) 발생한 경우만 동작할 것을 의미합니다.
+
+<br>
+
+<details><summary>예시 코드</summary>
+
+```java
+@Aspect
+@Component
+public class Advice {
+
+	/*
+	 * Before : 클래스의 메소드 실행 전
+	 * within : BoardController 클래스를 지정
+	 */
+	@Before("within (com.wipia.study.controller.BoardController)")
+	public void beforeAdvice() {
+		System.out.println("BoardController Before");
+	}
+	
+	/*
+	 * After : 메소드 실행 후
+	 * execution : getBoardList 메소드 지정 * 로 모든 메소드 지정 가능
+	 * 접근지정자 : 생략 가능 ex) public, private
+	 * * : 변환 타입
+	 * 
+	 */
+	@After("execution(* com.wipia.study.controller.BoardController.getBoardList(..))")
+	public void afterAdvice() {
+		System.out.println("after getBoardList");
+	}
+	
+	/*
+	 * AfterThrowing : 예외 발생 시
+	 * 모든 클래스에서 메소드 호출 에러가 발생했을 때 동작
+	 */
+	@AfterThrowing(pointcut="execution(* com.wipia*..*.*(..))", throwing="e")
+	public void afterThrowingAdvice(Exception e) {
+		System.out.println("에러다 : "+e);
+	}
+	
+	/*
+	 * 모든 메소드 실행시 얼마나 걸리는지 시간 출력
+	 */
+	@Around("execution (* com.wipia..*.*(..))")
+	public Object time(ProceedingJoinPoint pjp) {
+		
+		long start = System.currentTimeMillis();
+		
+		System.out.println("--- Target : "+pjp.getTarget());
+		System.out.println("--- Parameter : "+Arrays.toString(pjp.getArgs()));
+		
+		Object result = null;
+		
+		try {
+			result=pjp.proceed();
+		}catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
+		long end = System.currentTimeMillis();
+		System.out.println("--- Time : "+(end-start));
+		
+		return result;
+	}
+
+}
+```
+
+</details>
+
+<br><br>
+
+#### 🤔 AOP의 특징에 대해서 설명부탁드립니다.
+
+- 프록시 패턴 기반이기 때문에, 접근 제어가 가능합니다.
+- 프록시가 호출을 인터셉터해서 핵심 로직 전과 후에 부가기능을 수행할 수 있습니다.
+- 핵심 기능의 메소드가 호출되는 런타임 시점에만 부가 기능을 적용할 수 있습니다.
+<br><br>
+#### 🤔 프록시 패턴이란?
+
+어떤 객체에 대한 접근을 제어하거나 부가기능을 추가하는 용도로 실제 객체를 대신하는 객체를 제공하는 패턴입니다.
+
+#### 🤔 프록시 패턴 동작 원리에 대해서 설명해주세요.
+
+클라이언트가 인터페이스 타입으로 프록시 객체를 사용하게 되고, 프록시는 핵심 기능을 갖는 실제 객체를 감싸서 클라이언트의 요청을 처리하게 됩니다. 이런 특징 덕분에 프록시 패턴은 접근을 제어할 수 있고 부가 기능을 추가할 수 있게 됩니다.
+
+<br><Br>
+
+#### 🤔 AOP의 주요 개념들에 대해 설명해주세요
+- Aspect : 흩어진 관심사를 모듈화 한 것입니다. 주로 부가기능을 모듈화함을 의미합니다.
+- Target : Aspect를 적용하는 곳울 의미합니다. Target은 주로 클래스, 메서드 등이 됩니다.
+- Advice : 실질적으로 어떤 일을 해야할 지에 대한 것을 의미하빈다.Advice는 실질적인 부가기능을 담은 구현체입니다.
+- JoinPoint : Advice가 적용될 위치, 끼어들 수 있는 지점, 메서드 진입 지점, 생성자 호출 시점, 필드에서 값을 꺼내올 때의 시점을 말합니다. 앱을 실행할 때 특정 작업이 시작되는 시점입니다.
+- PointCut : JoinPoint가 적용되는 대상, Adivice가 실행될 지점을 설정합니다.
+
 <br>
 
 참고    
-[AOP란](https://thalals.tistory.com/271)
+[AOP란 - (AOP, Spring AOP, AOP 어노테이션)](https://thalals.tistory.com/271)
 
+<Br><br>
 #### 🤔 Autowiring 에 대해서 설명해주세요
 
 ## Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.
+### 핵심답변
+
+<Br><Br>
 
 ## Bean에 대해 설명해보세요.
-    - **Spring Bean이란 무엇인가요?**
-    - **스프링 Bean의 생성 과정을 설명해주세요.**
-    - **스프링 Bean의 Scope에 대해서 설명해주세요.**
-    - **Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.**
-- **Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.**
-- Spring에서 데이터를 받는 방식(과정)과 종류에 대해서 설명해주세요.
-- **Spring에서 예외처리하는 방법에 대해서 설명해주세요.**
-    - Spring Boot의 예외처리의 내부 구현은 어떻게 되어 있나요?
-- **DTO를 사용하는 이유?**
-    - DAO와 DTO의 차이를 설명해주세요
-- **Filter와 Interceptor 차이**
-    - **Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?**
-- Spring Application을 구동할 때 메서드를 실행시키는 방법에 대해 설명해주세요.
+### 핵심답변
+
+<Br><Br>
+#### 🤔 Spring Bean이란 무엇인가요?
+
+#### 🤔 스프링 Bean의 생성 과정을 설명해주세요.
+#### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
+#### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
+
+## Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.
+### 핵심답변
+
+<br><br>
+## Spring에서 데이터를 받는 방식(과정)과 종류에 대해서 설명해주세요.
+### 핵심답변
+
+<br><br>
+## Spring에서 예외처리하는 방법에 대해서 설명해주세요.
+### 핵심답변
+
+<br><br>
+#### 🤔 Spring Boot의 예외처리의 내부 구현은 어떻게 되어 있나요?
+
+
+## DTO를 사용하는 이유?**
+### 핵심답변
+
+<Br><Br>
+#### 🤔 DAO와 DTO의 차이를 설명해주세요
+## Filter와 Interceptor 차이
+#### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
+
+## Spring Application을 구동할 때 메서드를 실행시키는 방법에 대해 설명해주세요.
 
 ## JPA
 
-- JPA란?
-- **JPA를 사용할 때의 이점에 대해서 설명해주세요.**
-- JPA 영속성 컨텍스트의 이점(5가지)를 설명해주세요.
-- **JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.**
-- JPA를 사용할 때 쿼리를 사용하는 방법에 대해서 설명해주세요.
+## JPA란?
+#### 🤔 JPA를 사용할 때의 이점에 대해서 설명해주세요.
+#### 🤔 JPA 영속성 컨텍스트의 이점(5가지)를 설명해주세요.
+#### 🤔 JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
+#### 🤔 JPA를 사용할 때 쿼리를 사용하는 방법에 대해서 설명해주세요.

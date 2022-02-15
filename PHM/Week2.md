@@ -472,17 +472,52 @@ Getter Setter같은 엑세스 함수를 사용하면, 위와같은 데이터 무
 <br><br>
 ## Spring에서 예외처리하는 방법에 대해서 설명해주세요.
 ### 핵심답변
+스프링에서 예외를 처리하는 방법은 3가지가 있습니다.
+1. 메소드 단에서, try/catch문 사용하기
+2. 컨트롤러단에서 @ExceptionHandler 이용하기
+3. 커스텀 Exception 클래스를 만들어 Global 레벨에서 컨트롤러 이후 Client에게 전달되기 전에 처리하는 AOP 방식
+
+<br><br>
+#### 🤔 ExceptionHandler는 무엇인가요
+스프링에서 @ExceptionHandler 어노테이션을 사용하면, 특정 예외 클래스를 지정해주면, 해당 예외가 발생했을 때 메서드에서 정의한 로직을 처리할 수 있습니다.
+
+AOP 관점에서 @RestControllerAdvice 어노테이션을 클래스에 선언하게 되면, 컨틀롤러 단에서 일어나는 모든 에러에 대해
+전역적인 처리가 가능합니다.      
+ExceptionHandler를 사용하면 전역적으로 일어나는 에러 중 특정 에러 클래스에를 지정하여 로직을 처리해줄 수 있습니다.
+
 
 <br><br>
 #### 🤔 Spring Boot의 예외처리의 내부 구현은 어떻게 되어 있나요?
 
+
+> [AOP와 @RestControllerAdvice를 이용한 ErrorHandling](https://thalals.tistory.com/272)
+
 <Br><Br>
 ## Filter와 Interceptor 차이
 ### 핵심답변
+우선, Filter는 웹 컨텍스트 영역에서 실행되며, Interceptor는 스프링 컨텍스트 영역에서 실행됩니다.      
+Filter는 Dispathcer Servlet 이전에 실행되어, 자원의 요청이나 나가는 응답을 변경하거나, 여러가지 체크할 수 있습니다.    
+주로 Filter는 공통된 보안 및 인증,인가의 역할로 사용됩니다.(ex Spring Security)     
+
+Interceptor는 Controller에 대한 요청의 작업 전,후로 해당 요청을 가로채어 실행 됩니다.    
+Filter 스프링 외부 영역에서 실행하며, 스프링영역과 무관한 자원에 대한 처리를 하지만 인터셉터는 스프링 컨텍스트 내부에서 Controller에 대한 요청과 응답에 대해 처리 합니다.
+주로 세부적인 내부 처리가 필요할때 사용됩니다.
+
+<br>
+
+![image](https://user-images.githubusercontent.com/42319300/154099803-e8e45066-4a36-4890-bc58-8122695f94a3.png)
+
+<br><br>
+#### 🤔 Interceptor와 AOP의 차이
+Filter와 Interceptor는 Servlet 단에서 실행되며, AOP는 프록시 단위로 실행이 됩니다.      
+따라서 AOP는 메소드 전후의 지점에 자유롭게 설정이 가능합니다.      
+Interceptor와 Filter는 주소로 대상을 구분해서 걸러내야하는 반면, AOP는 주소, 파라미터, 애노테이션 등 다양한 방법으로 대상을 지정할 수 있다.
+
 <Br><Br>
 
 #### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
-
+Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 ErrorController에서 처리해야 합니다.    
+하지만 Interceptor는 DispatcherServlet 내부에 존재하기 때문에 @ControllerAdvice를 적용해서 처리할 수 있습니다.
 <Br><Br>
 ## Spring Application을 구동할 때 메서드를 실행시키는 방법에 대해 설명해주세요.
 ### 핵심답변
@@ -498,7 +533,8 @@ DTO를 사용하여, 간결하게 원하는 정보만을 제공해주거나
 <Br><Br>
 #### 🤔 DAO와 DTO의 차이를 설명해주세요
 DTO는, 데이터 전송 객체의 약자로서, 데이터를 담아 보내는 객체입니다.    
-DAO는, 데이터에 접근하는 객체로서, 데이터의 
+DAO는, 데이터에 접근하는 객체로서, 데이터베이스에 접근하는 로직과, 비지니스 로직을 분리하기 위한 객체로 사용됩니다.
+
 <Br><Br>
 
 <Br><Br>

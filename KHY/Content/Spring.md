@@ -610,10 +610,12 @@ https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#
 
 ## Filter와 Interceptor 차이
 ### 핵심답변
-
+Filter는 Servlet Filter로써 javax.servlet 스펙에 포함되는 클래스입니다.       
+Interceptor는 Spring MVC 스펙에 포함되어 있는 클래스입니다.
 <br><br>
 #### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
-
+Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 ErrorController에서 처리해야 합니다.                       
+하지만 Interceptor는 DispatcherServlet 내부에 존재하기 때문에 @ControllerAdvice를 적용해서 처리할 수 있습니다.
 
 <br><br>
 #### 🤔
@@ -695,7 +697,7 @@ N + 1 문제의 원인은 다음과 같습니다.
 
 <br><br>
 #### 📚 유익했던 자료
-- [JPA N+1 발생원인과 해결방법](https://github.com/cheese10yun/blog-sample/tree/master/jpa-n-plus-1)
+- [JPA N+1 발생원인과 해결방법](https://cheese10yun.github.io/jpa-nplus-1/)
 
 ---
 <br><br>

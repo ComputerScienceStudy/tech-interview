@@ -364,13 +364,12 @@ AOP란 Aspect Oriented Programming, 관점 지향 프로그래밍을 의미합�
 따라서 AOP는 핵심기능과 부가기능을 나누어서 설계, 구현하는 것을 의미합니다.
 
 <img src="https://user-images.githubusercontent.com/42319300/153905949-7ab73ff7-59a3-4445-a994-5cd39f439a61.png" width="60%" height="60%">
-<br><br>
+<br>
 
 #### 🤔 AOP 기술을 적용하는 이유가 뭔가요?
 필수적이지만 반복적으로 사용되는 코드, log 출력이나, 예외처리 같은 부분을 모듈화 시켜, 리팩토링과 유지보수에 이점을 주기 때문입니다.       
 스프링에서 AOP를 사용하게 되면, 개발 코드에서는 비지니스 로직에 집중할 수 있고, 런타임 실행 시 부가기능을 비지니스 로직 앞과, 뒤 원하는 지점에서
 공통 관심사를 수행하게 하여 중복코드를 줄일 수 있습니다.
-
 <br><br>
 
 #### 🤔 AOP가 적용되는 위치는 어떻게 제어하나요?
@@ -382,7 +381,6 @@ AOP란 Aspect Oriented Programming, 관점 지향 프로그래밍을 의미합�
 4. @AfterReturning() : AfterReturning()은 '핵심기능'의 호출 성공시에만 실행될 것임을 의미합니다.
 5. @AfterThrowing() : 마지막으로, AfterThrowing()은 '핵심기능' 호출 실패 시, 즉 예외(Exception) 발생한 경우만 동작할 것을 의미합니다.
 
-<br>
 
 <details><summary>예시 코드</summary>
 
@@ -451,7 +449,7 @@ public class Advice {
 
 </details>
 
-<br><br>
+<br>
 
 #### 🤔 AOP의 특징에 대해서 설명부탁드립니다.
 
@@ -476,6 +474,8 @@ public class Advice {
 - Advice : 실질적으로 어떤 일을 해야할 지에 대한 것을 의미하빈다.Advice는 실질적인 부가기능을 담은 구현체입니다.
 - JoinPoint : Advice가 적용될 위치, 끼어들 수 있는 지점, 메서드 진입 지점, 생성자 호출 시점, 필드에서 값을 꺼내올 때의 시점을 말합니다. 앱을 실행할 때 특정 작업이 시작되는 시점입니다.
 - PointCut : JoinPoint가 적용되는 대상, Adivice가 실행될 지점을 설정합니다.
+
+---
 <br><br>
 
 
@@ -541,6 +541,8 @@ public class CorsFilter implements Filter {
 }
 ```
 </Details>
+
+<br>
 
 #### 2️⃣ Controller 클래스에 @Crossorigin 어노테이션을 활용하는 방법
 - Controller 클래스 상단이나 Controller Mapping 메소드 상단에 CrossOrigin(origins="도메인 url")을 어노테이션으로 작성하는 방법입니다.
@@ -813,16 +815,16 @@ DisptatcherServlet 밖에서 발생하는 예외로 HandlerExceptionResolver의 
 
 필터는 Dispatcher Servlet에 요청이 전달되기 전과 후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리할 수 있는 기능을 제공해줍니다.          
 반면 인터셉터는 Spring이 제공하는 기술로써, Dispatcher Servlet이 컨트롤러를 호출하기 전, 후로 끼어들기 때문에 스프링의 영역 내부에서 Controller(Handler)에 관한 요청과 응답에 대해 처리해줍니다.
-
 <br><br>
+
 #### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. <br>Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 Interceptor는 DispatcherServlet 내부에 존재하기 때문에 HandlerExceptionResolver를 사용해서 예외를 처리할 수가 있습니다.
 
 하지만, Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 Web Application 레벨에서 처리해주어야 합니다.       
 대표적인 방법으로는 Filter 내부에서 예외를 처리하기 위한 필터를 따로 둬서 try-catch문을 사용하여 처리하는 방식을 둘 수가 있습니다.
 또한, HandlerExceptionResolver를 빈으로 주입받아 @ExceptionHandler에서 처리하는 방법이 있습니다.
-
 <br><br>
+
 #### 🤔 Filter와 Interceptor는 어떤 경우에 사용될 수 있을까요?
 Filter와 Interceptor는 공통 업무를 프로그램 흐름의 앞, 중간, 뒤에 추가하여 자동으로 처리할 때 사용합니다.
 
@@ -909,11 +911,11 @@ JPA는 자동으로 쿼리를 생성해주기 때문에, 통계처리와 같은 
     
 #### 🤔 JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
 
-N+1 문제가 발생하는 이유는, JPA는 JPQL을 생성하여 실행하게 되는데,JPQL은 엔티티 객체와 필드 이름을 갖고 쿼리를 만들기 때문에 객체의 연관관계 매핑에 의해서 관계가 맺어진 다른 객체들이 함께 조회되기 때문에 발생합니다.
+N+1 문제가 발생하는 이유는, JPA는 JPQL을 생성하여 실행하게 되는데, JPQL은 엔티티 객체와 필드 이름을 갖고 쿼리를 만들기 때문에 객체의 연관관계 매핑에 의해서 관계가 맺어진 다른 객체들이 함께 조회되기 때문에 발생합니다.
 
-즉시로딩의 경우, 모든객체를 불러오기에 당연히 N+1 문제가 발생하고,지연로딩의 경우에도, 객체를 조회하고, 반복문으로 연관된 관계의 매핑을 조회할때 N+1 문제가 발생합니다.
+즉시로딩의 경우, 모든객체를 불러오기에 당연히 N+1 문제가 발생하고, 지연로딩의 경우에도, 객체를 조회하고, 반복문으로 연관된 관계의 매핑을 조회할때 N+1 문제가 발생합니다.
 
-지연로딩으로 한번 한번의 쿼리문으로 조회되어 불러온 객체가 있지만,지연로딩의 경우, 연관된 매핑관계에있는 객체의 정보는 불러오지 않기 때문에, 해당 객체의 정보로 조건문을 사용하여 쿼리문을 별도로 생성하여 값을 불러와 데이터의 개수만큼의 N개의 쿼리문이 추가로 발생되어집니다.
+지연로딩으로 한번 한번의 쿼리문으로 조회되어 불러온 객체가 있지만, 지연로딩의 경우, 연관된 매핑관계에있는 객체의 정보는 불러오지 않기 때문에, 해당 객체의 정보로 조건문을 사용하여 쿼리문을 별도로 생성하여 값을 불러와 데이터의 개수만큼의 N개의 쿼리문이 추가로 발생되어집니다.
 
 ```java
 @Transactional
@@ -944,7 +946,8 @@ Hibernate: select commentlis0_.post_id as post_id6_0_0_, commentlis0_.comment_id
 
 Comment 정보를 조회하면, Post에 대한 조회는 이미 끝난 상태라서 JOIN으로 쿼리가 생성이 안 됩니다.
 
-단지 Post에 대한 정보 ID로 조회할 수밖에 없어서 where comment.postId=? 형식으로 JPQL 쿼리를 생성합니다. 이로 인해 매번 조회 쿼리가 생성이 되어 N 번 실행하는 이슈가 발생합니다.
+단지 Post에 대한 정보 ID로 조회할 수밖에 없어서 `where comment.postId=?` 형식으로 JPQL 쿼리를 생성합니다.          
+이로 인해 매번 조회 쿼리가 생성이 되어 N 번 실행하는 이슈가 발생합니다.
 <br><br>
 
 #### 🤔 N+1 해결 방법

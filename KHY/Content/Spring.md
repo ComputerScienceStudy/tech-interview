@@ -393,7 +393,7 @@ public class ArticleRestController {
 ```
 1번 방법에 비해, 코드가 간결하고, 어노테이션 형태라 사용할 곳에 붙여 쓰면 되어 편리합니다.     
 메소드 단위로 어노테이션을 사용할 수 있는 것은 AWS Lambda로 API를 개발할 때 유용할 것 같습니다.      
-<br><br>
+<br>
 #### 3️⃣ WebMvcConfig를 구현한 Configuration 클래스를 만드는 방법
 WebMvcConfig 클래스를 활용하는 방법입니다.   
 WebMvcConfiguer를 implement한 클래스를 만들고, @Configuration 어노테이션으로 어플리케이션에 연결하는 방법입니다.      
@@ -555,9 +555,9 @@ try {
 Checked Exception 같은 경우에는 예외를 반드시 감싸야 하므로 이러한 경우에는 try catch문을 사용해야하는데요.      
 Checked Exception을 try catch로 잡고 해당 복구를 하는 것이 좋습니다.       
 하지만 그러한 경우는 흔하지 않으며 Checked Exception이 발생하면 더 구체적인 Unchecked Exception을 발생시키고 예외에 대한 메시지를 명확하게 전달하는 것이 효과적이기 때문입니다.               
-<br><br>
+<br>
 #### 🤔 Controller의 @ExceptionHandler와 ControllerAdvice의 @ExceptionHandler중 높은 우선순위는?
-- Controller의 @ExceptionHandler가 먼저입니다.
+Controller의 @ExceptionHandler가 먼저입니다.
 <br><br>
 #### 🤔 스프링 예외 발생 위치는 어디에 있고, 각각 처리 방법은 무엇인가요?
 스프링의 처리과정을 보면 예외가 발생하는 부분은 크게 두가지로 나눌 수 있습니다.       
@@ -626,20 +626,47 @@ public class FilterChainExceptionHandler extends OncePerRequestFilter {
   }
 }
 ```
-<br><br>
+<br>
+
 #### 🤔 HandlerExceptionResolver에 대해 구체적으로 설명해주세요.
 HandlerExceptionResolver는 컨트롤러 작업 중 발생한 예외를 어떻게 처리할 지 결정하는 전략입니다.       
 앞서 설명드린 @ExceptionHandler 어노테이션을 활용하여 예외를 처리하는 방법과 @ControllerAdvice 어노테이션을 활용하여 예외를 처리하는 방법은 HandlerExceptionResolver를 이용한 예외 처리 방법입니다.
 
+Dispatcher Servlet에 기본적으로 3개의 HandlerExceptionResolver가 등록 되어있습니다.
 
-https://joont92.github.io/spring/HandlerExceptionResolver-LocaleResolver-MultipartResolver/
-https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#handlerexceptionresolver%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%B2%98%EB%A6%AC
+1. ExceptionHandlerExceptionResolver
+2. ResponseStatusExceptionResolver
+3. DefaultHandlerExceptionResolver
+<br>순으로 Resolver가 실행됩니다.
+
+<img width="500" src="https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/image-20180831234615081.png">
+
+- ExceptionHandlerExceptionResolver
+  - 위에서 사용한 @ExceptionHandler 어노테이션에 대한 Resolver 클래스입니다.
+- ResponseStatusExceptionResolver
+  - ResponseStatusExceptionResolver는 예외에 대한 Http 응답을 설정해 줄 수 있습니다. 특정 예외가 발생하였을 때 , 단순히 500 (internal-server-error) 대신 더 구체적인 응답 상태값을 전달 해 줄 수 있습니다.
+   ```java
+    //@ExceptionHandler 어노테이션과 함께 사용할 수 있다.
+    //구체적인 응답 코드를 줄 뿐 아니라, 간단한 사유도 전달 할 수 있다.
+    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Permission Denied")
+    @ExceptionHandler(value=DemoException.class)
+    public String handleDemoException(DemoException e) {
+        log.error(e.getMessage());
+        return "/error/403";
+    }
+   ```
+- DefaultHandlerExceptionResolver
+  - DispatcherServlet에 디폴트로 등록 된 위의 2가지 HandlerExceptionResolver에서 예외처리를 하지 못하는 경우, 마지막으로 DefaultHandlerExceptionResolver에서 예외처리를 해줍니다.
+  - DefaultHandlerExceptionResolver에서는 내부적으로 Spring 표준 예외처리를 해줍니다. 각 상황에 걸맞는 응답 코드를 리턴해 주는 역할을 합니다.
+    - Request URL에 맞는 Controller를 못찾는 경우  → 404 Not Found
+    - Controller 메소드 실행 중 예외가 발생하는 경우 → 500 Internal Server error
+    - Controller의 파라미터 형식이 잘못된 경우 → 400 Bad Request
 <br><br>
 #### 📚 유익한 자료
 - [Flow of Spring Exception Handling](https://terasolunaorg.github.io/guideline/5.3.0.RELEASE/en/ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html#exception-handling-basic-flow-label)
 - [How to manage exceptions thrown in filters in Spring?](https://stackoverflow.com/questions/34595605/how-to-manage-exceptions-thrown-in-filters-in-spring)
 - [HandlerExceptionResolver를 이용한 처리](https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#%EC%98%88%EC%99%B8exception-%EC%B2%98%EB%A6%AC%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C)
-- [[spring] HandlerExceptionResolver, LocaleResolver, MulitpartResolver](https://joont92.github.io/spring/HandlerExceptionResolver-LocaleResolver-MultipartResolver/)
+
 ---
 <br><br>
 
@@ -652,16 +679,16 @@ https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#
 
 필터는 Dispatcher Servlet에 요청이 전달되기 전과 후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리할 수 있는 기능을 제공해줍니다.          
 반면 인터셉터는 Spring이 제공하는 기술로써, Dispatcher Servlet이 컨트롤러를 호출하기 전, 후로 끼어들기 때문에 스프링의 영역 내부에서 Controller(Handler)에 관한 요청과 응답에 대해 처리해줍니다.
-
 <br><br>
+
 #### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. <br>Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 Interceptor는 DispatcherServlet 내부에 존재하기 때문에 HandlerExceptionResolver를 사용해서 예외를 처리할 수가 있습니다.     
 
 하지만, Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 Web Application 레벨에서 처리해주어야 합니다.       
 대표적인 방법으로는 Filter 내부에서 예외를 처리하기 위한 필터를 따로 둬서 try-catch문을 사용하여 처리하는 방식을 둘 수가 있습니다.
 또한, HandlerExceptionResolver를 빈으로 주입받아 @ExceptionHandler에서 처리하는 방법이 있습니다.
-
 <br><br>
+
 #### 🤔 Filter와 Interceptor는 어떤 경우에 사용될 수 있을까요?
 Filter와 Interceptor는 공통 업무를 프로그램 흐름의 앞, 중간, 뒤에 추가하여 자동으로 처리할 때 사용합니다.               
 
@@ -698,9 +725,11 @@ Filter와 Interceptor는 공통 업무를 프로그램 흐름의 앞, 중간, �
 모델은 서비스 로직과 관련이 없기 때문에 모델에 에러메세지를 담기에는 애매합니다. <br>
 이런 경우 DTO에 에러 메세지 필드를 선언하고 에러 메세지를 포함시키면 됩니다.
 <br><br>
+
 #### 🤔
 
 <br><br>
+
 #### 🤔
 
 <br><br>

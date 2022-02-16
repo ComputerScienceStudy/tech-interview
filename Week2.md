@@ -922,7 +922,7 @@ JPA는 자동으로 쿼리를 생성해주기 때문에, 통계처리와 같은 
     - flush()는 1차캐시를 지우지 않고, 쿼리를 DB에 날려 DB와 싱크는 맞추는 역할을 하고
     - 쿼리를 보내고난 후 Commit()을 하게 됩니다.
     - 트랜잭션의 커밋은 이 flush()와 commit() 2가지 일을 하게 됩니다.
-    -
+   
 
     ![https://user-images.githubusercontent.com/42319300/154107978-2f0aafeb-ada3-414a-a55d-8211e2ffed17.png](https://user-images.githubusercontent.com/42319300/154107978-2f0aafeb-ada3-414a-a55d-8211e2ffed17.png)
 

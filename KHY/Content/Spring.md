@@ -218,11 +218,17 @@ Servlet을 이용해서 웹 요청을 다루게 되면, 개발자들이 처리 �
 이때, 모든 요청을 처리하는 프론트 컨트롤러는 Dispatcher Servlet입니다.
 <br><br>
 #### 🤔 Spring Web MVC에서 요청 마다 Thread가 생성되어 Controller를 통해 요청을 수행할텐데, 어떻게 1개의 Controller만 생성될 수 있을까요?
+Controller 객체 하나를 생성하면 객체 자체는 Heap에 생성되지만, 해당 Class의 정보는 메소드 영역에 저장됩니다.           
+모든 Thread는 객체의 Binary Code 정보를 공유할 수 있습니다.              
+공유되는 정보를 사용하기 위하여 굳이 Controller 객체를 사용하고 있는 쓰레드나 Controller 객체 자체가 Block될 필요가 없습니다.
+왜냐하면, 객체 내부적으로 상태를 갖는 것이 없으니, 내부의 상태를 변경할 일이 없고 그저 메소드에 대한 정보만 ‘같이 공유해서’ 쓰면 되기 때문입니다.    
 
+Controller가 내부적으로 상태를 갖는 것이 없으니 메소드 호출만 하면 되기 때문에 굳이 동기화할 이유가 없고, 그저 처리 로직만 ‘공유되어’ 사용되는 것이기 때문에 몇 십만개의 요청이 들어오든 상관없습니다.               
 <br><br>
 #### 📚 유익한 자료
 - [[10분 테코톡] 🐶 코기의 Servlet vs Spring](https://www.youtube.com/watch?v=calGCwG_B4Y&list=PLgXGHBqgT2TvpJ_p9L_yZKPifgdBOzdVH&index=63&t=50s)
 - [ServletContainer와 SpringContainer는 무엇이 다른가?](https://jypthemiracle.medium.com/servletcontainer와-springcontainer는-무엇이-다른가-626d27a80fe5)
+- [[Java] Stateless Object](https://kyeoneee.tistory.com/54)
 
 ---
 <br><br>
@@ -258,16 +264,29 @@ Spring Web MVC의 Dispatcher Servlet의 동작 원리는 다음과 같습니다.
 <br><br>
 #### 🤔 인터셉터는 무엇인가요?
 스프링 MVC 모듈에서 인터셉터를 이용해서 컨트롤러가 요청을 처리하기 전 혹은 후에 대한 로직을 추가할 수 있습니다.         
-컨트롤러가 실행되기 전에 인터셉터를 실행할 수 있음으로 주로 특정 URI에 대한 공통 로직 적용이 필요한 경우에 유용합니다.
+컨트롤러가 실행되기 전에 인터셉터를 실행할 수 있음으로 주로 특정 요청에 대한 공통 로직 적용이 필요한 경우에 유용합니다.
 <br><br>
-#### 🤔 DispatherServlet 구성 요소
-- HanderMapping
-  - 요청을 처리할 핸들러를 찾는 인터페이스 
-- HandlerAdapter 
-  - HandlerMapping이 찾아낸 핸들러를 처리하는 인터페이스
-  - 스프링 MVC 확장력의 핵심 (Why? 컨트롤러가 실행되기 전 Intercepter를 실행해서 특정 URI에 대한 공통 로직 적용할 수 있기 때문이다.)
-- ViewResolver
-  - 뷰 이름에 해당하는 뷰를 찾아내는 인터페이스
+#### 🤔 DispatcherServlet 구성 요소
+DispatcherServlet은 요청에 대응할 수 있는 Controller, ViewResolver, HandlerMapping과 같은 스프링 빈을 구성합니다.          
+
+* DispatcherSerlvet의 기본 전략
+  * DispachersServlet.propertes 설정을 따라간다.
+* MutilpartResolver
+  * 파일 업로드 요청 처리에 필요한 인터페이스
+  * HttpServletRequest를 MutilpartHttpServletRequest로 변환해주어 요청이 담고 있는 field을 꺼낼수 있는 API 제공한다.
+* LocaleResolver
+  * 클라이언트의 위치 정보를 파악하는 인터페이스
+  * 기본 전략은 요청 accept-language를 보고 판단한다.
+* HanderMapping
+  * 요청을 처리할 핸들러를 찾는 인터페이스
+* HandlerAdapter
+  * HandlerMapping이 찾아낸 핸들러를 처리하는 인터페이스
+  * 스프링 MVC 확장력의 핵심 <br>(여기서, controller를 호출하는데, controller가 실행되기 전 Interceptor를 실행해서 특정 요청에 한 공통 로직 적용할 수 있기 때문이다.)
+* ViewResolver
+  * 뷰 이름에 해당하는 뷰를 찾아내는 인터페이스
+* FlashMapManager
+  * FlashMap 인스턴스를 가져오고 저장하는 인터페이스
+  * FlashMap은 주로 리다이렉션을 사용할 때 요청 매개변수를 사용하지 않고 데이터를 전달하고 정리할 때 사용한다.
 <br><br>
 #### 📚 유익한 자료
 - [Spring MVC의 핵심 객체 DispatcherServlet에 대한 모든 것(DispatcherServlet이 하는 역할 정리, 동작 프로세스)](https://jeong-pro.tistory.com/225)
@@ -636,7 +655,7 @@ https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#
 반면 인터셉터는 Spring이 제공하는 기술로써, Dispatcher Servlet이 컨트롤러를 호출하기 전, 후로 끼어들기 때문에 스프링의 영역 내부에서 Controller(Handler)에 관한 요청과 응답에 대해 처리해줍니다.
 
 <br><br>
-#### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
+#### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. <br>Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 Interceptor는 DispatcherServlet 내부에 존재하기 때문에 HandlerExceptionResolver를 사용해서 예외를 처리할 수가 있습니다.     
 
 하지만, Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 Web Application 레벨에서 처리해주어야 합니다.       

@@ -481,6 +481,7 @@ TestController내에서 발생하는 TestException에 대해서 예외가 발생
 - Controller 메서드 내의 하위 서비스 (Service, Repository등등)에서 예외가 발생하더라도, 중간에 처리하지 않는 이상 Controller단까지 예외가 던져지게 되고 `@ExceptionHandler`가 예외를 처리하게 된다.
   - Checked Exception, Runtime Exception 상관 없이 Controller 단까지 예외를 throw하면 처리가 가능하다.
 <br>
+
 #### 2. Global Level에서 처리 - @ControllerAdvice                     
 두번째로, 만약 하나의 Controller말고 여러 Controller에서 발생하는 예외를 처리하려면 @ControllerAdvice를 사용해야 합니다.          
 @ControllerAdvice는 DispatcherServlet에서 발생하는 예외만 처리할 수 있습니다. 필터에서 발생하는 예외는 따로 처리해주지 않으면 처리가 불가능 합니다.
@@ -508,6 +509,7 @@ public class GlobalExceptionHandler {
 ```
 - 위의 GlobalExceptionHandler 클래스는 Controller에서 발생하는 예외를 전역적으로 처리해준다.
 <br>
+
 #### 3. Method Level에서 처리 - try/catch     
 세번째로, try catch문을 사용하여, 메서드 단위에서 처리해주는 방법이 있습니다.
 - try catch는 최대한 지양하는 패턴입니다. 왜냐하면, 이미 예외가 발생했음에도 불가하고 다음 로직을 실행하게 되기 때문입니다.          
@@ -616,13 +618,10 @@ https://joont92.github.io/spring/HandlerExceptionResolver-LocaleResolver-Multipa
 https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#handlerexceptionresolver%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%B2%98%EB%A6%AC
 <br><br>
 #### 📚 유익한 자료
-###### Flow of Spring Exception Handling
 - [Flow of Spring Exception Handling](https://terasolunaorg.github.io/guideline/5.3.0.RELEASE/en/ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html#exception-handling-basic-flow-label)
-###### How to manage exceptions in filters 
 - [How to manage exceptions thrown in filters in Spring?](https://stackoverflow.com/questions/34595605/how-to-manage-exceptions-thrown-in-filters-in-spring)
-###### HandlerExceptionResolver
 - [HandlerExceptionResolver를 이용한 처리](https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#%EC%98%88%EC%99%B8exception-%EC%B2%98%EB%A6%AC%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C)
-- [[spring] HandlerExceptionResolver, LocaleResolve, MulitpartResolver](https://joont92.github.io/spring/HandlerExceptionResolver-LocaleResolver-MultipartResolver/)
+- [[spring] HandlerExceptionResolver, LocaleResolver, MulitpartResolver](https://joont92.github.io/spring/HandlerExceptionResolver-LocaleResolver-MultipartResolver/)
 ---
 <br><br>
 

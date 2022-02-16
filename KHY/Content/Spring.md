@@ -537,9 +537,9 @@ try {
 Checked Exception 같은 경우에는 예외를 반드시 감싸야 하므로 이러한 경우에는 try catch문을 사용해야하는데요.      
 Checked Exception을 try catch로 잡고 해당 복구를 하는 것이 좋습니다.       
 하지만 그러한 경우는 흔하지 않으며 Checked Exception이 발생하면 더 구체적인 Unchecked Exception을 발생시키고 예외에 대한 메시지를 명확하게 전달하는 것이 효과적이기 때문입니다.               
-
-#### 🤔 Controller의 `@ExceptionHandler`와 ControllerAdvice의 `@ExceptionHandler`중 높은 우선순위는?
-- Controller의 `@ExceptionHandler`가 먼저입니다.
+<br><br>
+#### 🤔 Controller의 @ExceptionHandler와 ControllerAdvice의 @ExceptionHandler중 높은 우선순위는?
+- Controller의 @ExceptionHandler가 먼저입니다.
 <br><br>
 #### 🤔 스프링 예외 발생 위치는 어디에 있고, 각각 처리 방법은 무엇인가요?
 스프링의 처리과정을 보면 예외가 발생하는 부분은 크게 두가지로 나눌 수 있습니다.       
@@ -633,19 +633,33 @@ https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#
 <img width="500" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSz6DV%2Fbtq9zjRpUGv%2F68Fw4fZtDwaNCZiCFx57oK%2Fimg.png">
 
 필터는 Dispatcher Servlet에 요청이 전달되기 전과 후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리할 수 있는 기능을 제공해줍니다.          
-반면 인터셉터는 Spring이 제공하는 기술로써, Dispatcher Servlet이 컨트롤러를 호출하기 전과 후에 요청과 응답을 참조하거나 가공할 수 있는 기능을 제공합니다.
+반면 인터셉터는 Spring이 제공하는 기술로써, Dispatcher Servlet이 컨트롤러를 호출하기 전, 후로 끼어들기 때문에 스프링의 영역 내부에서 Controller(Handler)에 관한 요청과 응답에 대해 처리해줍니다.
 
 <br><br>
 #### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
-Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 ErrorController에서 처리해야 합니다.                       
-하지만 Interceptor는 DispatcherServlet 내부에 존재하기 때문에 @ControllerAdvice를 적용해서 처리할 수 있습니다.
+Interceptor는 DispatcherServlet 내부에 존재하기 때문에 HandlerExceptionResolver를 사용해서 예외를 처리할 수가 있습니다.     
+
+하지만, Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 Web Application 레벨에서 처리해주어야 합니다.       
+대표적인 방법으로는 Filter 내부에서 예외를 처리하기 위한 필터를 따로 둬서 try-catch문을 사용하여 처리하는 방식을 둘 수가 있습니다.
+또한, HandlerExceptionResolver를 빈으로 주입받아 @ExceptionHandler에서 처리하는 방법이 있습니다.
 
 <br><br>
 #### 🤔 Filter와 Interceptor는 어떤 경우에 사용될 수 있을까요?
+Filter와 Interceptor는 공통 업무를 프로그램 흐름의 앞, 중간, 뒤에 추가하여 자동으로 처리할 때 사용합니다.               
 
+자바 웹 개발을 하다보면, 공통적으로 처리해야 할 업무들이 많습니다.                
+예를 들어 로그인 관련(세션 체크)처리, 권한 체크, XSS(Cross site script)방어, 페이지 인코딩 변환 등이 있습니다.         
+공통업무에 관련된 코드를 모든 페이지 마다 작성 해야한다면 중복된 코드가 많아지게 되고 프로젝트 단위가 커질수록 서버에 부하를 줄 수도있으며, 소스 관리도 되지 않습니다.     
 
+즉, 공통 부분은 빼서 따로 관리하는게 좋습니다.     
+이러한 공통업무를 프로그램 흐름의 앞, 중간, 뒤에 추가하여, 자동으로 처리하기 위해, Filter와 Interceptor를 활용할 수 있습니다.          
+
+- Filter는 전체적인 Request단에서 어떤 처리가 필요할 때 사용할 수 있습니다.
+  - 인증, 이미지 변환, 데이터 압축, 암호화 필터, XML 컨텐츠를 변형하는 XSLT 필터, URL 및 기타정보를 캐시하는 필터, 문자 인코딩
+- Interceptor는 세션 및 쿠키 체크와 같이 http 프로토콜 단위로 처리해야 하는 업무가 있을 때 사용할 수 있습니다.
 <br><br>
 #### 📚 유익한 자료
+[Spring Filter, Interceptor, AOP](https://baek-kim-dev.site/61)
 
 ---
 <br><br>

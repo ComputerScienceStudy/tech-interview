@@ -550,11 +550,12 @@ try {
     throw new XXX비즈니스로직예외(e);
 }
 ```
-<br><br>
+<br>
+
 #### 🤔 왜 try catch 문을 사용하게 된다면 더 구체적인 Exception을 발생시키는 것이 좋은가요?
-Checked Exception 같은 경우에는 예외를 반드시 감싸야 하므로 이러한 경우에는 try catch문을 사용해야하는데요.      
+Checked Exception 같은 경우에는 예외를 반드시 감싸야 하므로 이러한 경우에는 try catch문을 사용해야합니다.      
 Checked Exception을 try catch로 잡고 해당 복구를 하는 것이 좋습니다.       
-하지만 그러한 경우는 흔하지 않으며 Checked Exception이 발생하면 더 구체적인 Unchecked Exception을 발생시키고 예외에 대한 메시지를 명확하게 전달하는 것이 효과적이기 때문입니다.               
+하지만 복구하는 경우는 흔하지 않습니다. 복구할 수 없는 경우 더 구체적인 Unchecked Exception을 발생시키고 예외에 대한 메시지를 명확하게 전달하는 것이 효과적입니다.               
 <br>
 #### 🤔 Controller의 @ExceptionHandler와 ControllerAdvice의 @ExceptionHandler중 높은 우선순위는?
 Controller의 @ExceptionHandler가 먼저입니다.

@@ -542,12 +542,24 @@ DAO는, 데이터에 접근하는 객체로서, 데이터베이스에 접근하�
 
 ## JPA란?
 ### 핵심답변
-JPA란 Java Persistance API의 약자로, 자바에서 데이터를 DBMS에 영구히 기록할 수 있는 환경을 제공하는 API입니다.
+JPA란 Java Persistance API의 약자로 JAVA ORM 표준 기술입니다.       
+자바에서 데이터를 DBMS에 영구히 기록할 수 있는 환경을 제공하는 API입니다.
+
+<Br><Br>
+#### 🤔 ORM이란 무엇인가요
+객체와 관계형 데이터베이스를 매핑해주는 것으로 쿼리문 작성 없이 객체를 데이터베이스에 직접 저장할 수 있게 도와주는 기술입니다.
+
 
 <Br><Br>
 #### 🤔 JPA를 사용할 때의 이점에 대해서 설명해주세요.
 JPA는 ORM기술이기 때문에 RDBMS에 연결하여 데이터를 직접 조작할 필요없이, 자바코드로 표현하여 객체 중심으로 개발할 수 있다는 장점이 있습니다.
 그로인해 JPA에 익숙하다면 생산성이 높아진다는 장점을 가지고 있습니다.     
+
+정리하자면, 생산성, 유지보수성, DB접근 최소화로인한 성능 최적화(영속성 컨텍스트), 패러다임 불일치 해결, 데이터 접근 추상화와 벤더 독립성이 있습니다.
+<Br><Br>
+#### 🤔 JPA의 단점은 무엇인가요
+JPA는 자동으로 쿼리를 생성해주기 때문에, 통계처리와 같은 복잡한 쿼리보다 실시간 쿼리에 최적화 되어있씁니다.      
+따라서, 미세하고 복잡한 쿼리문을 사용해야할 때는 Mybatis와 같은 Mapper방식을 사용하는 것이 더 효율적일 수 있습니다.
 
 <Br><Br>
 #### 🤔 JPA 영속성 컨텍스트의 이점(5가지)를 설명해주세요.
@@ -590,7 +602,87 @@ JPA는 ORM기술이기 때문에 RDBMS에 연결하여 데이터를 직접 조�
 > [JPA 영속성 컨텍스트](https://ict-nroo.tistory.com/130)
 <Br><Br>
 #### 🤔 JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
-[JPA는-왜-지연-로딩을-사용할까](https://velog.io/@bread_dd/JPA%EB%8A%94-%EC%99%9C-%EC%A7%80%EC%97%B0-%EB%A1%9C%EB%94%A9%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%A0%EA%B9%8C)
+N+1 문제가 발생하는 이유는, JPA는 JPQL을 생성하여 실행하게 되는데,     
+JPQL은 엔티티 객체와 필드 이름을 갖고 쿼리를 만들기 때문에 객체의 연관관계 매핑에 의해서 관계가 맺어진 다른 객체들이 함께 조회되기 때문에 발생합니다.     
+
+즉시로딩의 경우, 모든객체를 불러오기에 당연히 N+1 문제가 발생하고,         
+지연로딩의 경우에도, 객체를 조회하고, 반복문으로 연관된 관계의 매핑을 조회할때 N+1 문제가 발생합니다.
+
+지연로딩으로 한번 한번의 쿼리문으로 조회되어 불러온 객체가 있지만,       
+지연로딩의 경우, 연관된 매핑관계에있는 객체의 정보는 불러오지 않기 때문에, 해당 객체의 정보로 조건문을 사용하여 쿼리문을 별도로 생성하여 값을 불러와
+데이터의 개수만큼의 N개의 쿼리문이 추가로 발생되어집니다.
+
+<Br>
+
+```java
+@Transactional
+@Test
+public void test_N1_문제_발생_지연로딩설정_loop으로_조회하는_경우() throws JsonProcessingException {
+  savePostWithComments(4, 2);
+  List<Post> posts = postRepository.findAll(); //(1) N+1 발생하지 않는다
+
+  List<Comment> commentList;
+  for (Post post : posts) {
+    commentList = post.getCommentList();
+    log.info("post author: {}", commentList.size()); //(2) N+1 발생한다
+  }
+}
+```
+```hiveql
+Hibernate: select post0_.post_id as post_id1_1_, post0_.create_dt as create_d2_1_, post0_.updated_dt as updated_3_1_, post0_.author as author4_1_, post0_.content as content5_1_, post0_.like_count as like_cou6_1_, post0_.title as title7_1_ from post post0_
+
+Hibernate: select commentlis0_.post_id as post_id6_0_0_, commentlis0_.comment_id as comment_1_0_0_, commentlis0_.comment_id as comment_1_0_1_, commentlis0_.create_dt as create_d2_0_1_, commentlis0_.updated_dt as updated_3_0_1_, commentlis0_.author as author4_0_1_, commentlis0_.content as content5_0_1_, commentlis0_.post_id as post_id6_0_1_ from comment commentlis0_ where commentlis0_.post_id=?
+
+Hibernate: select commentlis0_.post_id as post_id6_0_0_, commentlis0_.comment_id as comment_1_0_0_, commentlis0_.comment_id as comment_1_0_1_, commentlis0_.create_dt as create_d2_0_1_, commentlis0_.updated_dt as updated_3_0_1_, commentlis0_.author as author4_0_1_, commentlis0_.content as content5_0_1_, commentlis0_.post_id as post_id6_0_1_ from comment commentlis0_ where commentlis0_.post_id=?
+
+Hibernate: select commentlis0_.post_id as post_id6_0_0_, commentlis0_.comment_id as comment_1_0_0_, commentlis0_.comment_id as comment_1_0_1_, commentlis0_.create_dt as create_d2_0_1_, commentlis0_.updated_dt as updated_3_0_1_, commentlis0_.author as author4_0_1_, commentlis0_.content as content5_0_1_, commentlis0_.post_id as post_id6_0_1_ from comment commentlis0_ where commentlis0_.post_id=?
+
+Hibernate: select commentlis0_.post_id as post_id6_0_0_, commentlis0_.comment_id as comment_1_0_0_, commentlis0_.comment_id as comment_1_0_1_, commentlis0_.create_dt as create_d2_0_1_, commentlis0_.updated_dt as updated_3_0_1_, commentlis0_.author as author4_0_1_, commentlis0_.content as content5_0_1_, commentlis0_.post_id as post_id6_0_1_ from comment commentlis0_ where commentlis0_.post_id=?
+```
+
+<br>
+Comment 정보를 조회하면, Post에 대한 조회는 이미 끝난 상태라서 JOIN으로 쿼리가 생성이 안 됩니다.         
+
+단지 Post에 대한 정보 ID로 조회할 수밖에 없어서 where comment.postId=? 형식으로 JPQL 쿼리를 생성합니다. 이로 인해 매번 조회 쿼리가 생성이 되어 N 번 실행하는 이슈가 발생합니다.
+
+<Br><Br>
+#### 🤔 N+1 해결 방법
+지연로딩시, N+1 문제의 해결방법으로는,     
+패치 조인(fetch join), EntityGraph, Batch Size 지정 + 즉시 로딩 3가지가 있습니다.
+
+1. fetch join
+    - JPQL에 fetch join 키워드를 사용해서 join 대상을 함께 조회할 수 있습니다.
+    - 지연로딩을 이용해서 객체를 조회 시, 함께불러오길 원하는 연관관계의 객체를 join해서 같이 불러오는 방식 입니다.
+    - ```java
+        @Repository
+        public interface PostRepository extends JpaRepository<Post, Long> {
+             @Query("select p from Post p left join fetch p.commentList")
+             List<Post> findAllWithFetchJoin();
+        }
+      ```
+2. EntityGraph
+   - @EntityGraph JPQL에서 fetch join을 하게 되면 하드코딩해야하는 단점이 있습니다. 이를 보완하기 위해 엔티티그래프 어노테이션을 사용할 수 있습니다.
+   - ```java
+        @EntityGraph(attributePaths = {"articles"}, type = EntityGraphType.FETCH)
+        @Query("select distinct u from User u left join u.articles")
+        List<User> findAllEntityGraph();
+     ```
+3. Batch Size 지정 + 즉시 로딩
+   - JPQL 페치 조인 대신 Batch 크기를 지정하는 방법도 있습니다. @BatchSize 어노테이션에 size를 지정하고 fetch 타입은 즉시로 설정합니다.
+   - ```java
+        @Table(name = "post")
+        public class Post extends DateAudit {
+        ...(생략)...
+    
+        @JsonIgnore //JSON 변환시 무한 루프 방지용
+        @BatchSize(size = 2) //batch size를 지정한다
+        @OneToMany(mappedBy = "post", fetch = FetchType.EAGER) //즉시로딩으로 변경한다
+             private List<Comment> commentList = Lists.newArrayList();
+       }
+     ```
+
+>[JPA는-왜-지연-로딩을-사용할까](https://velog.io/@bread_dd/JPA%EB%8A%94-%EC%99%9C-%EC%A7%80%EC%97%B0-%EB%A1%9C%EB%94%A9%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%A0%EA%B9%8C)     
+[JPA n+1 문제해결 방법](https://blog.advenoh.pe.kr/database/JPA-N1-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95/)
 
 <Br><Br>
 #### 🤔 JPA를 사용할 때 쿼리를 사용하는 방법에 대해서 설명해주세요.

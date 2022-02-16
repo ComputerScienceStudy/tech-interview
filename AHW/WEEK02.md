@@ -428,12 +428,48 @@ CORS(Cross-Origin-Resource-Sharing)는 Origin이 다른 경우(Cross-Oirgin) 리
 [](https://devkingdom.tistory.com/118)
 
 ---
-- Filter와 Interceptor 차이
-  - Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
+- **Filter와 Interceptor 차이**
+  - 실행되는 시점이 다르다
+	1. Filter
+		- 디스패처 서블릿(Dispatcher Servlet)에 요청이 전달되기 전/후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리할 수 있는 기능을 제공
+	2. Interceptor
+		- 디스패처 서블릿(Dispatcher Servlet)이 컨트롤러를 호출하기 전과 후에 요청과 응답을 참조하거나 가공할 수 있는 기능을 제공
+  - `Filter`는 Web Application에 등록하고, `Intercptor`는 Spring의 Context에 등록을 한다
+
+[](https://mangkyu.tistory.com/173)
+
+- **Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?**
+	- 실행 시점이 다르기 때문에 가장 큰 영향을 받는 것이 바로 예외처리이다.
+	- `Filter`에서 예외가 발생하면 Web Application에서 처리해야 하고, `Interceptor`에서 예외가 발생하면 실행 시점이 Spring의 ServletDispatcher 내에 있기 때문에 @ControllerAdvice에서 @ExceptionHandler를 사용해서 예외를 처리를 할 수 있다.
+[](https://devdavelee.tistory.com/25)
 
 ---
-- DTO를 사용하는 이유
+- **DTO를 사용하는 이유**
+	- DTO(Data Transfer Object, 데이터 전송 객체)는 프로세스 간에 데이터를 전달하는 객체이다
+	- 외부와 통신하는 프로그램에게 있어 호출은 큰 비용이며, 이를 줄이고 더욱 효율적으로 값을 전달하기 위해 데이터를 모아 한 번에 전달하는 방법이 고안되었고, 이 때 이 클래스를 DTO라고 한다. 즉, 통신의 횟수를 감소시키고 로직을 효율적으로 하기 위해 사용한다.
+	- 데이터를 묶어서 하나의 요청으로 보내면 검증과 로직 처리 역시 한 번에 할 수 있다
+	- 안정성과 수행시간 모두 묶어 보내는 쪽이 유리하다
+[](https://kafcamus.tistory.com/13)
 
+---
 ### JPA
-- JPA를 사용할 때의 이점에 대해서 설명해주세요.
-- JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
+- **JPA를 사용할 때의 이점에 대해서 설명해주세요.**
+	1. 생산성
+		- 쿼리를 직접 생성하는 것이 아니라, 만들어진 객체로 데이터베이스를 다루기 때문에 객체 중심으로 개발 가능
+	2. 유지보수
+		- SQL을 직접적으로 작성하지 않고 엔티티 필드가 되는 객체를 다뤄서 데이터베이스를 동작시키기 때문에 유지보수가 더욱 간결하다
+		`WHY?` 쿼리가 수정되면 그에 따라서 그를 담을 DTO 필드도 모두 변경이 되야 하지만, JPA를 사용하게 되면 단순히 엔티티 클래스 정보만 변경하면 쉽게 관리가 가능하기 때문
+	3. 성능
+		- 일반적인 Spring의 encache 기능처럼 동일한 쿼리에 대한 캐시 기능을 사용하기 때문에 더욱 높은 성능적 효율성
+
+💡 **제약사항 및 단점**
+JPA(Java Persistence Api)는 통계처리와 같이 복잡한 쿼리보다는 실시간 처리용 쿼리에 더 최적화되어 있다.
+물론 JPA에서 제공하는 Native query기능을 사용할 수 있지만 통계처럼 복잡하고 미세하게 쿼리 작업이 필요하다면 Mybatis와 같은 Mapper 방식을 사용하는 것이 더 효율적일 수 있다.
+Spring에서 JPA와 Mybatis를 혼용해서 사용할 수 있기 때문에 필요에 따라 적절한 방식으로 선택해가면서 사용하면 될 것 같다.
+
+[wedul](https://wedul.site/506)
+
+---
+- **JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.**
+[JPA N+1 발생원인과 해결 방법](https://www.popit.kr/jpa-n1-%EB%B0%9C%EC%83%9D%EC%9B%90%EC%9D%B8%EA%B3%BC-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EB%B2%95/)
+[JPA N+1) 문제 완전 정리](https://galid1.tistory.com/800)

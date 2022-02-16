@@ -785,10 +785,45 @@ AOP 관점에서 @RestControllerAdvice 어노테이션을 클래스에 선언하
 ExceptionHandler를 사용하면 전역적으로 일어나는 에러 중 특정 에러 클래스에 지정하여 로직을 처리할 수 있습니다.
 <br><br>
 
-#### 🤔 Controller의 @ExceptionHandler와 ControllerAdvice의 @ExceptionHandler 중 우선순위게 높은것은 무엇인가요?
+#### 🤔 Controller의 @ExceptionHandler와 ControllerAdvice의 @ExceptionHandler 중 우선순위가 높은것은 무엇인가요?
 
 Controller의 @ExceptionHandler가 먼저입니다.
 <br><br>
+
+#### 🤔 HandlerExceptionResolver에 대해 구체적으로 설명해주세요.
+HandlerExceptionResolver는 컨트롤러 작업 중 발생한 예외를 어떻게 처리할 지 결정하는 전략입니다.       
+앞서 설명드린 @ExceptionHandler 어노테이션을 활용하여 예외를 처리하는 방법과 @ControllerAdvice 어노테이션을 사용하여 커스텀한 Exception 클래스를 만들어 줌으로써, Global Level에서 예외를 처리하는 방법은 HandlerExceptionResolver를 이용한 예외 처리 방법입니다.
+
+Dispatcher Servlet에 기본적으로 3개의 HandlerExceptionResolver가 등록 되어있습니다.
+
+1. ExceptionHandlerExceptionResolver
+2. ResponseStatusExceptionResolver
+3. DefaultHandlerExceptionResolver
+   <br>순으로 Resolver가 실행됩니다.
+
+<img width="500" src="https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/image-20180831234615081.png">
+
+- ExceptionHandlerExceptionResolver
+    - 위에서 사용한 @ExceptionHandler 어노테이션에 대한 Resolver 클래스입니다.
+- ResponseStatusExceptionResolver
+    - ResponseStatusExceptionResolver는 예외에 대한 Http 응답을 설정해 줄 수 있습니다. 특정 예외가 발생하였을 때 , 단순히 500 (internal-server-error) 대신 더 구체적인 응답 상태값을 전달 해 줄 수 있습니다.
+   ```java
+    //@ExceptionHandler 어노테이션과 함께 사용할 수 있다.
+    //구체적인 응답 코드를 줄 뿐 아니라, 간단한 사유도 전달 할 수 있다.
+    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Permission Denied")
+    @ExceptionHandler(value=DemoException.class)
+    public String handleDemoException(DemoException e) {
+        log.error(e.getMessage());
+        return "/error/403";
+    }
+   ```
+- DefaultHandlerExceptionResolver
+    - DispatcherServlet에 디폴트로 등록 된 위의 2가지 HandlerExceptionResolver에서 예외처리를 하지 못하는 경우, 마지막으로 DefaultHandlerExceptionResolver에서 예외처리를 해줍니다.
+    - DefaultHandlerExceptionResolver에서는 내부적으로 Spring 표준 예외처리를 해줍니다. 각 상황에 걸맞는 응답 코드를 리턴해 주는 역할을 합니다.
+        - Request URL에 맞는 Controller를 못찾는 경우  → 404 Not Found
+        - Controller 메소드 실행 중 예외가 발생하는 경우 → 500 Internal Server error
+        - Controller의 파라미터 형식이 잘못된 경우 → 400 Bad Request
+          <br><br>
 
 #### 🤔 Filter에서 발생하는 예외처리는 어떻게 해결하나요?
 

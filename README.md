@@ -12,7 +12,7 @@
 - Generic의 개념
 - ThreadLocal이 무엇이고 언제 활용되는지
 
-## Spring Framework
+## [Spring Framework](https://github.com/ComputerScienceStudy/tech-interview/blob/main/Week2.md)
 ### Spring
 - POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요?
 - Spring DI/IoC는 어떻게 동작하나요?

@@ -121,21 +121,317 @@
       - [](https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/)
 ---
 - **AOP(Aspect Oriented Programming)란 무엇일까요?**
+  - AOP란 Aspect Oriented Programming, 관점 지향 프로그래밍을 의미합니다. 관점지향이란, 어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 각각 모듈화하는 프로그래밍 기법을 의미합니다. 따라서 AOP는 핵심기능과 부가기능을 나누어서 설계, 구현하는 것을 의미합니다.
+  - ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/83f575d7-dd75-40eb-9973-0b7fbb0920c7/Untitled.png)
+
+### **🤔 AOP 기술을 적용하는 이유가 뭔가요?**
+
+필수적이지만 반복적으로 사용되는 코드, log 출력이나, 예외처리 같은 부분을 모듈화 시켜, 리팩토링과 유지보수에 이점을 주기 때문입니다.스프링에서 AOP를 사용하게 되면, 개발 코드에서는 비지니스 로직에 집중할 수 있고, 런타임 실행 시 부가기능을 비지니스 로직 앞과, 뒤 원하는 지점에서 공통 관심사를 수행하게 하여 중복코드를 줄일 수 있습니다.
+
+### **🤔 AOP가 적용되는 위치는 어떻게 제어하나요?**
+
+스프링 AOP에서는 Advice가 적용되는 5가지 시점을 제공합니다.
+
+1. @Around() : 첫번째로, Around() 어노테이션은 핵심기능 전과 후 모두 실행됨을 의미합니다.
+2. @Before() : Before() 어노테이션은 핵심기능 호출전에 실행됨을 의미합니다.
+3. @After() : 세번째로, After() 어노테이션은 '핵심기능'의 수행 성공 여부와 상관없이 수행 후 언제나 실행됨을 의미합니다.
+4. @AfterReturning() : AfterReturning()은 '핵심기능'의 호출 성공시에만 실행될 것임을 의미합니다.
+5. @AfterThrowing() : 마지막으로, AfterThrowing()은 '핵심기능' 호출 실패 시, 즉 예외(Exception) 발생한 경우만 동작할 것을 의미합니다.
+  
+  - 예시코드:
+```java
+@Aspect
+@Component
+public class Advice {
+
+	/*
+	 * Before : 클래스의 메소드 실행 전
+	 * within : BoardController 클래스를 지정
+	 */
+	@Before("within (com.wipia.study.controller.BoardController)")
+	public void beforeAdvice() {
+		System.out.println("BoardController Before");
+	}
+	
+	/*
+	 * After : 메소드 실행 후
+	 * execution : getBoardList 메소드 지정 * 로 모든 메소드 지정 가능
+	 * 접근지정자 : 생략 가능 ex) public, private
+	 * * : 변환 타입
+	 * 
+	 */
+	@After("execution(* com.wipia.study.controller.BoardController.getBoardList(..))")
+	public void afterAdvice() {
+		System.out.println("after getBoardList");
+	}
+	
+	/*
+	 * AfterThrowing : 예외 발생 시
+	 * 모든 클래스에서 메소드 호출 에러가 발생했을 때 동작
+	 */
+	@AfterThrowing(pointcut="execution(* com.wipia*..*.*(..))", throwing="e")
+	public void afterThrowingAdvice(Exception e) {
+		System.out.println("에러다 : "+e);
+	}
+	
+	/*
+	 * 모든 메소드 실행시 얼마나 걸리는지 시간 출력
+	 */
+	@Around("execution (* com.wipia..*.*(..))")
+	public Object time(ProceedingJoinPoint pjp) {
+		
+		long start = System.currentTimeMillis();
+		
+		System.out.println("--- Target : "+pjp.getTarget());
+		System.out.println("--- Parameter : "+Arrays.toString(pjp.getArgs()));
+		
+		Object result = null;
+		
+		try {
+			result=pjp.proceed();
+		}catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
+		long end = System.currentTimeMillis();
+		System.out.println("--- Time : "+(end-start));
+		
+		return result;
+	}
+
+}
+```
+
+### **🤔 AOP의 특징에 대해서 설명부탁드립니다.**
+
+- 프록시 패턴 기반이기 때문에, 접근 제어가 가능합니다.
+- 프록시가 호출을 인터셉터해서 핵심 로직 전과 후에 부가기능을 수행할 수 있습니다.
+- 핵심 기능의 메소드가 호출되는 런타임 시점에만 부가 기능을 적용할 수 있습니다.
+
+### **🤔 프록시 패턴이란?**
+
+어떤 객체에 대한 접근을 제어하거나 부가기능을 추가하는 용도로 실제 객체를 대신하는 객체를 제공하는 패턴입니다.
+
+### **🤔 프록시 패턴 동작 원리에 대해서 설명해주세요.**
+
+클라이언트가 인터페이스 타입으로 프록시 객체를 사용하게 되고, 프록시는 핵심 기능을 갖는 실제 객체를 감싸서 클라이언트의 요청을 처리하게 됩니다. 이런 특징 덕분에 프록시 패턴은 접근을 제어할 수 있고 부가 기능을 추가할 수 있게 됩니다.
+
+### **🤔 AOP의 주요 개념들에 대해 설명해주세요**
+
+- Aspect : 흩어진 관심사를 모듈화 한 것입니다. 주로 부가기능을 모듈화함을 의미합니다.
+- Target : Aspect를 적용하는 곳울 의미합니다. Target은 주로 클래스, 메서드 등이 됩니다.
+- Advice : 실질적으로 어떤 일을 해야할 지에 대한 것을 의미하빈다.Advice는 실질적인 부가기능을 담은 구현체입니다.
+- JoinPoint : Advice가 적용될 위치, 끼어들 수 있는 지점, 메서드 진입 지점, 생성자 호출 시점, 필드에서 값을 꺼내올 때의 시점을 말합니다. 앱을 실행할 때 특정 작업이 시작되는 시점입니다.
+- PointCut : JoinPoint가 적용되는 대상, Adivice가 실행될 지점을 설정합니다.
 
 ---
 - **Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.**
+### **핵심답변**
+
+- 첫 번째로, Servlet Filter를 사용하여 커스텀한 CORS 설정하는 방법이 있습니다.
+- 두 번째로, Controller 클래스에 @Crossorigin 어노테이션을 통해 해결할 수 있습니다.
+- 세 번째로,WebMvcConfiguer를 구현한 Configuration 클래스를 만들어서 addCorsMappings()를 재정의할 수도 있습니다.
+- 마지막으로, Spring Security에서 CorsConfigurationSource를 Bean으로 등록하고 config에 추가해줌으로써 해결할 수 있습니다.
+
+### **🤔 CORS에러가 나는 이유가 무엇인가요?**
+
+CORS(Cross-Origin-Resource-Sharing)는 Origin이 다른 경우(Cross-Oirgin) 리소스를 공유한다는 것을 의미합니다.하지만 웹브라우저는 원래 동일 출처 원칙(Same Origin Policy)를 보안상 기본으로 합니다.
+
+따라서 CORS에러는, 동일한 출처의 Origin, 즉 스키마, Host, Port가 같아야만 리소스를 공유할 수 있다는 보안 정책 때문에 발생합니다.
+
+### **🤔 CORS 에러를 해결하기 위한 방법을 자세히 설명해주세요**
+
+### **1️⃣ Servlet Filter를 사용하여 커스텀한 CORS 설정하는 방법**
+
+서버의 응답을 보내기 전에 Access-Control-Allow-Origin 헤더를 싣는 필터를 작성하는 방법입니다.
+
+1. 빈으로 등록된 CorsFilter 클래스를 생성합니다.
+2. 해당 클래스에 doFilter를 직접 오버라이드해서 Options 메서드에 response로 Access-Control-Allow-Origin헤더에 허용된 Origin이라는 코드를 작성합니다.
+- 예시코드
+    
+    ```java
+    @Component
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public class CorsFilter implements Filter {
+    
+        @Override
+        public void init(FilterConfig filterConfig) throws ServletException {
+        }
+    
+        @Override
+        public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+            HttpServletRequest request = (HttpServletRequest) req;
+            HttpServletResponse response = (HttpServletResponse) res;
+    
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:5500");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Methods","*");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers",
+                    "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    
+            if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+                response.setStatus(HttpServletResponse.SC_OK);
+            }else {
+                chain.doFilter(req, res);
+            }
+        }
+    
+        @Override
+        public void destroy() {
+    
+        }
+    }
+    ```
+    
+
+### **2️⃣ Controller 클래스에 @Crossorigin 어노테이션을 활용하는 방법**
+
+- Controller 클래스 상단이나 Controller Mapping 메소드 상단에 CrossOrigin(origins="도메인 url")을 어노테이션으로 작성하는 방법입니다.
+- CorsFilter를 직접 구현해서 사용하는 것 보다, 어노테이션만 붙히면 되기에 더 간편하게 사용할 수 있습니다.
+- 예시코드
+    
+    ```java
+    @CrossOrigin(origins = "http://127.0.0.1:5500/")  // 컨트롤러 클래스의 상단
+    @RequiredArgsConstructor
+    @RestController
+    public class ArticleRestController {
+    
+        public final ArticleRepository articleRepository;
+        public final ArticleService articleService;
+        public final LocationDistance location;
+    
+        @CrossOrigin(origins = "http://127.0.0.1:5500/")  // 컨트롤러 맵핑 메소드 상단
+        @GetMapping("/api/articles/{query}")
+        public ResponseEntity<List<Article>> getArticles (@PathVariable("query") String query) {
+            List<Article> articles = articleRepository.findAllByTitleContains(query);
+            return ResponseEntity.ok().body(articles);
+        }
+    }
+    ```
+    
+
+### **3️⃣ WebMvcConfig를 구현한 Configuration 클래스를 만드는 방법**
+
+- WebMvcConfig 클래스를 활용하는 방법입니다.
+- WebMvcConfiguer를 implement한 클래스를 만들고, @Configuration 어노테이션으로 어플리케이션에 연결하는 방법입니다.
+- allowedOrigins, allowedMethods 메서드를 통해 cors를 설정해줄 수 있습니다.
+- 간단한 코드로 전체범위의 CORS를 설정해 준다는 장점이 있습니다.
+- 예시코드
+
+    ```java
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.web.servlet.config.annotation.CorsRegistry;
+    import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+    
+    @Configuration
+    public class WebConfig implements WebMvcConfigurer {
+    
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**")
+                    .allowedOrigins("http://localhost:5500", "http://127.0.0.1:5500")
+                    .allowedMethods("POST", "PUT", "GET", "HEAD", "OPTIONS", "DELETE");
+        }
+    }
+    ```
 
 ---
-- Bean에 대해 설명해보세요.
-  - Spring Bean이란 무엇인가요?
-    - 스프링에서는 객체를 Bean이라고 부르며, 프로젝트가 실행될때 사용자가 Bean으로 관리하는 객체들의 생성과 소멸에 관련된 작업을 자동적으로 수행해주는데 객체가 생성되는 곳을 스프링에서는 Bean 컨테이너라고 부른다
-  - 스프링 Bean의 생성 과정을 설명해주세요.
-  - 스프링 Bean의 Scope에 대해서 설명해주세요.
-  - Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
+- **Bean에 대해 설명해보세요.**
+  - **Spring Bean이란 무엇인가요?**
+    - Spring IoC 컨테이너에 의해 인스턴스화, 관리, 생성되는 자바 객체
+    - ApplicationContext가 알고있는 객체, 즉 ApplicationContext가 만들어서 그 안에 담고있는 객체
+    - 따라서, 기존의 Java Programming에서처럼 Class를 생성하고 new 연산자로 생성된 객체가 아니라 Spring에서 `ApplicationContext.getBean()`과 같은 메소드를 사용하여 생성된 객체 
+      
+  - **스프링 Bean의 생성 과정을 설명해주세요.**
+    - 객체 생성 -> 의존 설정 -> 초기화 -> 사용 -> 소멸 순서의 라이프 사이클을 지닌다.
+    1. 객체 생성
+      - 스프링 컨테이너가 초기화 될 때 먼저 빈 객체를 설정 정보에 맞추어 생성
+    2. 의존 설정
+    3. 초기화
+      - 의존 관계를 설정한 뒤에 해당 프로세스가 완료되면 빈 객체가 지정한 메소드를 호출해서 초기화
+    4. 사용
+    5. 소멸
+      - 객체를 사용한 뒤 컨테이너가 종료 될 때 빈이 지정한 메소드를 호출해 소멸 과정을 진행 
+[](https://takoyummy.tistory.com/91)
+
+  - **스프링 Bean의 Scope에 대해서 설명해주세요.**
+    - Bean이 존재하는 범위이며, 기본적으로 모든 bean을 singleton으로 생성하여 관리한다.
+    - 구체적으로는 애플리케이션 구동 시 JVM 안에서 Spring이 bean마다 하나의 객체를 생성하는 것을 의미
+    - 그래서 개발자들은 Spring을 통해서 bean을 제공받으면 언제나 주입받은 bean은 동일한 객체라는 가정하에서 개발
+    - prototype bean은 의존성 관계의 bean에 주입될 때 새로운 객체가 생성되어 주입된다
+    
+    1. `singleton` : 스프링 컨테이너의 시작과 종료까지 단 하나의 객체만 사용하는 방식
+      ![image](https://user-images.githubusercontent.com/90819869/154178392-70e96c18-6a96-4b26-9ec9-8430aa7f491b.png)
+    2. `prototype` : 모든 요청에서 새로운 객체를 생성하는 방식
+      ![image](https://user-images.githubusercontent.com/90819869/154178422-3304cff2-d566-482f-b191-68c10613fc3f.png)
+ [](https://gmlwjd9405.github.io/2018/11/10/spring-beans.html)
+ 
+  - **Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.**
+    1. **`@Bean`**
+      -  @Bean은 개발자가 직접 제어가 불가능한 외부 라이브러리를 사용할 때 사용한다.
+      -  @Configuration을 선언한 클래스 내부에서 사용해준다.
+      -  즉, 개발자가 작성한 메소드를 통해 반환되는 객체를 Bean으로 만든다.
+      
+      < 개발자가 직접 제어가 불가능한 외부 라이브러리를 사용한 경우 >
+      ```java
+      @Configuration
+      public class ExampleConfig {
+
+          @Bean
+          public ArrayList<String> array(){
+            return new ArrayList<String>();
+          }
+      }
+      ```
+
+      < 개발자가 만들어준 클래스를 import해 사용한 경우 >
+         ```java
+        @Configuration
+        public class ExampleConfig {
+
+            @Bean(name="mybean")
+            public Product aaa(){
+                  Battery p1 = new Battery("AAA", 2.5);
+                  p1.setRechargeable(true);
+                  return p1;
+            }
+        }
+          ```
+
+    2. **`@Component`**
+      - @Component는 개발자가 직접 작성한 Class를 Bean으로 등록 할 수 있게 만들어 준다.
+      - 즉, 개발자가 작성한 class를 Bean으로 만든다.
+      ```java
+      @Component(value="mybean")
+      public class Example {
+        puiblic Example(){
+            System.out.println("Hello world");
+          }
+      }
+    ```
+[](https://withseungryu.tistory.com/64)
+
+---
 - Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.
+  - 객체의 무결성을 보장하기 위해 사용한다
+  - `Getter` : 본 필드의 값을 숨긴 채 내부에서 가공된 값을 꺼낼 수 있다.
+  - `Setter` : 필드를 private로 만들어 외부의 접근을 제한한 후, Setter를 사용해 전달받은 값을 내부에서 가공해 필드에 넣어주는 방식을 사용한다.
+[](https://thiago6.tistory.com/75)
+
+---
 - Spring에서 예외처리하는 방법에 대해서 설명해주세요.
+![image](https://user-images.githubusercontent.com/90819869/154179980-61e486a0-42ad-412f-a0cb-09ece90c51fb.png)
+  1. `메서드 레벨` : 메서드 단위에서 try/catch를 통해 처리
+  2. `컨트롤러 레벨` : 컨트롤러단에서 @ExceptionHandler를 이용해서 처리
+  3. `글로벌 레벨` : 컨트롤러 이후 Client에게 전달되기 직전 처리
+[](https://devkingdom.tistory.com/118)
+
+---
 - Filter와 Interceptor 차이
   - Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
+
+---
 - DTO를 사용하는 이유
 
 ### JPA

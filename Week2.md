@@ -343,7 +343,7 @@ DispatcherServlet은 요청에 대응할 수 있는 Controller, ViewResolver, Ha
     * 요청을 처리할 핸들러를 찾는 인터페이스
 * HandlerAdapter
     * HandlerMapping이 찾아낸 핸들러를 처리하는 인터페이스
-    * 스프링 MVC 확장력의 핵심 <br>(여기서, controller를 호출하는데, controller가 실행되기 전 Interceptor를 실행해서 특정 요청에 한 공통 로직 적용할 수 있기 때문이다.)
+    * 스프링 MVC 확장력의 핵심 <br>(여기서, controller를 호출하는데, controller가 실행되기 전 Interceptor를 실행해서 특정 요청에 대한 공통 로직 적용할 수 있기 때문이다.)
 * ViewResolver
     * 뷰 이름에 해당하는 뷰를 찾아내는 인터페이스
 * FlashMapManager

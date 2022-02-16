@@ -57,7 +57,7 @@ annotation으로 메세지 수신을 선언하고 method parameter를 통해 수
 이를 이용하면 POJO 프로그래밍의 장점을 그대로 살려 엔터프라이즈 애플리케이션의 핵심 로직을 객체 지향적인 POJO 기반으로 깔끔하게 구현하고            
 동시에 엔터프라이즈 환경에 각종 서비스와 기술적인 필요를 POJO 방식으로 만들어진 코드에 적용할 수 있습니다.
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [Plain old Java Object](https://en.wikipedia.org/wiki/Plain_old_Java_object)
 - [당신의 코드는 POJO하신가요?](https://www.youtube.com/watch?v=5NcqgXgmmjg&t=2863s)
 ---
@@ -92,7 +92,7 @@ DI는 외부의 독립적인 존재가 객체를 생성한 후 이를 전달해�
 의존 관계를 관리하는 것이고, 객체가 변경을 받아들일 수 있게 의존 관계를 정리하는 기술이라고 할 수 있습니다.          
 외부에서 의존 관계 대상을 해결한 후 이를 사용하는 객체 쪽으로 주입하기에 DI라고 부릅니다.
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [IoC, DI란 무엇일까](https://biggwang.github.io/2019/08/31/Spring/IoC,%20DI%EB%9E%80%20%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C/)
 - [의존성 주입(Dependency Injection, DI)이란? 및 Spring이 의존성 주입을 지원하는 이유 - (1/2)](https://mangkyu.tistory.com/150)
 
@@ -117,7 +117,7 @@ DI는 세가지 방법이 있습니다. 생성자 삽입, Setter를 이용한 �
 <br><br>
 #### 🤔 Setter 주입은 언제 사용할까요?
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [세 가지 DI 컨테이너로 향하는 저녁 산책](https://www.nextree.co.kr/p11247/)
 - [DI 기초](https://github.com/cheese10yun/TIL/blob/master/Spring/IoC/DI-%EA%B8%B0%EC%B4%88.md)
 - [스프링 - 생성자 주입을 사용해야 하는 이유, 필드인젝션이 좋지 않은 이유](https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/)
@@ -178,7 +178,7 @@ Controller는 Model을 통해 데이터를 가져오고, 해당 데이터를 바
 - 예시
   - HTML, JSON, XML, JSP, Thymleaf 등
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [[10분 테코톡] 🐝범블비의 MVC Pattern](https://www.youtube.com/watch?v=es1ckjHOzTI&list=PLgXGHBqgT2TvpJ_p9L_yZKPifgdBOzdVH&index=138&t=369s)
 
 ---
@@ -220,8 +220,9 @@ Servlet을 이용해서 웹 요청을 다루게 되면, 개발자들이 처리 �
 #### 🤔 Spring Web MVC에서 요청 마다 Thread가 생성되어 Controller를 통해 요청을 수행할텐데, 어떻게 1개의 Controller만 생성될 수 있을까요?
 
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [[10분 테코톡] 🐶 코기의 Servlet vs Spring](https://www.youtube.com/watch?v=calGCwG_B4Y&list=PLgXGHBqgT2TvpJ_p9L_yZKPifgdBOzdVH&index=63&t=50s)
+- [ServletContainer와 SpringContainer는 무엇이 다른가?](https://jypthemiracle.medium.com/servletcontainer와-springcontainer는-무엇이-다른가-626d27a80fe5)
 
 ---
 <br><br>
@@ -268,7 +269,7 @@ Spring Web MVC의 Dispatcher Servlet의 동작 원리는 다음과 같습니다.
 - ViewResolver
   - 뷰 이름에 해당하는 뷰를 찾아내는 인터페이스
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [Spring MVC의 핵심 객체 DispatcherServlet에 대한 모든 것(DispatcherServlet이 하는 역할 정리, 동작 프로세스)](https://jeong-pro.tistory.com/225)
 - [스프링 MVC](https://github.com/cheese10yun/TIL/blob/master/Spring/mvc/mvc-basic.md)
 - [Spring MVC 흐름](https://github.com/cheese10yun/TIL/blob/master/Spring/mvc/mvc-flow.md)
@@ -291,7 +292,7 @@ Spring Web MVC의 Dispatcher Servlet의 동작 원리는 다음과 같습니다.
 #### 🤔
 
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - 클린 코드 11장 시스템
 
 ---
@@ -398,7 +399,7 @@ public class WebConfig implements WebMvcConfigurer {
 프로젝트 때, 3번 방법을 활용했습니다.    
 간단한 코드로 전체 범위의 CORS를 설정해줄 수 있어서 선택했습니다.
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [CORS를 해결하는 3가지 방법](https://wonit.tistory.com/572)
 - [CORS는 왜 이렇게 우리를 힘들게 하는걸까?](https://evan-moon.github.io/2020/05/21/about-cors/)
 
@@ -418,7 +419,7 @@ public class WebConfig implements WebMvcConfigurer {
 #### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
 
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 
 
 ---
@@ -434,7 +435,7 @@ public class WebConfig implements WebMvcConfigurer {
 #### 🤔
 
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 
 
 ---
@@ -442,11 +443,12 @@ public class WebConfig implements WebMvcConfigurer {
 
 ## Spring에서 예외처리하는 방법에 대해서 설명해주세요.
 ### 핵심답변
-스프링에서 예외처리는 크게 3가지로 나눌 수 있습니다.                
-정확히는 DispatcherServlet에서 발생하는 예외를 HandlerExceptionResolver가 처리하는 처리 방법들입니다.             
-Controller Level에서 처리하는 방법, Global Level에서 처리하는 방법, Method Level에서 처리하는 방법이 있습니다.       
-<br><br>
-#### 1. Controller Level에서 처리 - @ExceptionHandler       
+스프링에서 예외처리는 크게 3가지로 나눌 수 있습니다.               
+Controller Level에서 처리하는 방법, Global Level에서 처리하는 방법, Method Level에서 처리하는 방법이 있습니다.         
+위의 방법들은 DispatcherServlet 내부에서 발생하는 예외를 HandlerExceptionResolver가 처리하는 처리 방법들입니다.             
+<br>
+#### 1. Controller Level에서 처리 - @ExceptionHandler
+첫번째로, Controller Level에서 처리하려면,     
 @ExceptionHandler 어노테이션을 통해 Controller의 메서드에서 throw된 Exception에 대한 공통적인 처리를 할 수 있습니다.     
 ###### 예시
 ```java
@@ -478,14 +480,14 @@ TestController내에서 발생하는 TestException에 대해서 예외가 발생
 
 - Controller 메서드 내의 하위 서비스 (Service, Repository등등)에서 예외가 발생하더라도, 중간에 처리하지 않는 이상 Controller단까지 예외가 던져지게 되고 `@ExceptionHandler`가 예외를 처리하게 된다.
   - Checked Exception, Runtime Exception 상관 없이 Controller 단까지 예외를 throw하면 처리가 가능하다.
-<br><br>
+<br>
 #### 2. Global Level에서 처리 - @ControllerAdvice                     
-만약 하나의 Controller말고 여러 Controller에서 발생하는 예외를 처리하려면 @ControllerAdvice를 사용해야 합니다.          
+두번째로, 만약 하나의 Controller말고 여러 Controller에서 발생하는 예외를 처리하려면 @ControllerAdvice를 사용해야 합니다.          
 @ControllerAdvice는 DispatcherServlet에서 발생하는 예외만 처리할 수 있습니다. 필터에서 발생하는 예외는 따로 처리해주지 않으면 처리가 불가능 합니다.
 
 ###### 종류
-- @ControllerAdvice
-  -모든 Controller에서 발생하는 예외를 처리할 수 있게 해주는 애노테이션
+- @ControllerAdvice 
+  - 모든 Controller에서 발생하는 예외를 처리할 수 있게 해주는 어노테이션
   - DispatcherServlet에서 발생하는 예외를 전역적으로 처리해준다.
 - @RestControllerAdvice
   - @ControllerAdvice + @ResponseBody
@@ -504,12 +506,13 @@ public class GlobalExceptionHandler {
     }
 }
 ```
-- Controller에서 발생하는 예외를 전역적으로 처리해준다.
-<br><br>
+- 위의 GlobalExceptionHandler 클래스는 Controller에서 발생하는 예외를 전역적으로 처리해준다.
+<br>
 #### 3. Method Level에서 처리 - try/catch     
-try catch를 최대한 지양하는 패턴입니다. 왜냐하면, 이미 예외가 발생했음에도 불가하고 다음 로직을 실행하게 되기 때문입니다.          
-하지만, Checked Exception 같은 경우에는 예외를 반드시 감싸야 하므로 이러한 경우에는 try catch를 사용해야 합니다. <br>
-try catch를 사용하게 된다면 더 구체적인 Exception을 발생시키는 것이 좋습니다.      
+세번째로, try catch문을 사용하여, 메서드 단위에서 처리해주는 방법이 있습니다.
+- try catch는 최대한 지양하는 패턴입니다. 왜냐하면, 이미 예외가 발생했음에도 불가하고 다음 로직을 실행하게 되기 때문입니다.          
+- 하지만, Checked Exception 같은 경우에는 예외를 반드시 감싸야 하므로 이러한 경우에는 try catch문을 사용해야 합니다. <br>
+- try catch를 사용하게 된다면 더 구체적인 Exception을 발생시키는 것이 좋습니다.      
 
 ###### 예시
 ```java
@@ -528,6 +531,11 @@ try {
 }
 ```
 <br><br>
+#### 🤔 왜 try catch 문을 사용하게 된다면 더 구체적인 Exception을 발생시키는 것이 좋은가요?
+Checked Exception 같은 경우에는 예외를 반드시 감싸야 하므로 이러한 경우에는 try catch문을 사용해야하는데요.      
+Checked Exception을 try catch로 잡고 해당 복구를 하는 것이 좋습니다.       
+하지만 그러한 경우는 흔하지 않으며 Checked Exception이 발생하면 더 구체적인 Unchecked Exception을 발생시키고 예외에 대한 메시지를 명확하게 전달하는 것이 효과적이기 때문입니다.               
+
 #### 🤔 Controller의 `@ExceptionHandler`와 ControllerAdvice의 `@ExceptionHandler`중 높은 우선순위는?
 - Controller의 `@ExceptionHandler`가 먼저입니다.
 <br><br>
@@ -536,25 +544,24 @@ try {
 
 <img width="600" src="https://terasolunaorg.github.io/guideline/5.3.0.RELEASE/en/_images/exception-handling-description-target.png">
 
-Dispatcher Servlet내에서 발생하는 예외 (Controller, Service, Repository등등)와 <br>
-Dispatcher Servlet전의 서블릿 (Filter)에서 발생하는 예외가 있습니다. <br>
+Dispatcher Servlet 내에서 발생하는 예외 (Controller, Service, Repository 등)와 <br>
+Dispatcher Servlet 전의 서블릿 (Filter)에서 발생하는 예외가 있습니다. <br>
 
 ###### DispatcherServlet 예외
 DispatcherServlet내에서 발생하는 예외는 내부에서 자체적으로 해결할 수 있습니다.
-바로 HandlerExceptionResolver를 사용한 예외 전략입니다.      
+바로 HandlerExceptionResolver를 사용한 예외 전략입니다.                
 
 ###### Filter 예외
 클라이언트의 요청을 DispatcherServlet 밖에서 처리하는 도중 예외가 발생하면 DispatcherServlet이 예외를 처리해줄 수 없습니다.           
-즉, HandlerExceptionResolver의 처리를 받을 수 없습니다.
-처리 못하는 이유는 DispatcherServlet에서 처리하기도 전에 예외가 발생되기 때문입니다.
+즉, HandlerExceptionResolver의 처리를 받을 수 없습니다.           
+처리 못하는 이유는 DispatcherServlet에서 처리하기도 전에 예외가 발생되기 때문입니다.         
 Filter 예외가 발생하면, Web Application 레벨에서 처리해줘야 합니다.          
 
 Web Application 레벨에서 처리해줄 수 있는 방법은 크게 3가지가 있습니다.      
-1. web.xml에 error-page를 잘 등록해줘서 에러를 사용자에게 응답
-2. Filter 내부에서 예외를 처리하기 위한 필터를 따로 둬서 try-catch문을 사용하여 예외 처리 
-<br>실제 시큐리티 인가 처리중 예외가 발생하면 ExceptionTranslationFilter에게 예외를 던져 처리한다. (try-catch)
-3. Filter 내부에서 try-catch 구문을 통해 예외 발생 시, HandlerExceptionResolver를 빈으로 주입받아 @ExceptionHandler에서 처리하는 방법
-<br>즉, 필터에서 발생하는 예외를 DispatcherServlet의 예외 처리기인 HandlerExceptionResolver에 보내서 처리하는 방식이다.
+1. `web.xml에 error-page를 잘 등록`해줘서 에러를 사용자에게 응답하는 방법이 있습니다.
+2. Filter 내부에서 `예외를 처리하기 위한 필터를 따로 둬서` try-catch문을 사용하여 예외 처리하는 방법이 있습니다. 
+<br>실제 시큐리티 인가 처리 중 예외가 발생하면 `예외를 처리하기 위한 필터`에게 예외를 던져 처리합니다. 
+<br>이때 필터는 try-catch문을 사용하여, 예외 처리합니다.
 ```java
 // 자바 시큐리티 설정
 @Configuration
@@ -566,13 +573,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      	// 필터 앞에 FilterExceptionHandler를 추가해준다.
+      	// xxx필터 앞에 FilterChainExceptionHandler를 추가해준다.
+        // FilterChainExceptionHandler는 예외를 처리하기 위한 필터다.
         http
             .addFilterBefore(filterChainExceptionHandler, xxx.class) 
             (...)
     }
 }
 ```
+3. Filter 내부에서 try-catch 구문을 통해 `예외 발생 시, HandlerExceptionResolver를 빈으로 주입받아 @ExceptionHandler에서 처리하는 방법`이 있습니다.
+<br>즉, 필터에서 발생하는 예외를 DispatcherServlet의 예외 처리기인 HandlerExceptionResolver에 보내서 처리하는 방식입니다.
+
 ```java
 @Component
 public class FilterChainExceptionHandler extends OncePerRequestFilter {
@@ -597,32 +608,45 @@ public class FilterChainExceptionHandler extends OncePerRequestFilter {
 ```
 <br><br>
 #### 🤔 HandlerExceptionResolver에 대해 구체적으로 설명해주세요.
+HandlerExceptionResolver는 컨트롤러 작업 중 발생한 예외를 어떻게 처리할 지 결정하는 전략입니다.       
+앞서 설명드린 @ExceptionHandler 어노테이션을 활용하여 예외를 처리하는 방법과 @ControllerAdvice 어노테이션을 활용하여 예외를 처리하는 방법은 HandlerExceptionResolver를 이용한 예외 처리 방법입니다.
+
+
 https://joont92.github.io/spring/HandlerExceptionResolver-LocaleResolver-MultipartResolver/
 https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#handlerexceptionresolver%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%B2%98%EB%A6%AC
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
+###### Flow of Spring Exception Handling
+- [Flow of Spring Exception Handling](https://terasolunaorg.github.io/guideline/5.3.0.RELEASE/en/ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html#exception-handling-basic-flow-label)
+###### How to manage exceptions in filters 
 - [How to manage exceptions thrown in filters in Spring?](https://stackoverflow.com/questions/34595605/how-to-manage-exceptions-thrown-in-filters-in-spring)
-- [Spring Handle Exception](https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#%EC%98%88%EC%99%B8exception-%EC%B2%98%EB%A6%AC%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C)
-- [Spring Framework 5.3.13 API. "ControllerAdvice"](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html)
-- 토비의 스프링 3.1
+###### HandlerExceptionResolver
+- [HandlerExceptionResolver를 이용한 처리](https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#%EC%98%88%EC%99%B8exception-%EC%B2%98%EB%A6%AC%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C)
+- [[spring] HandlerExceptionResolver, LocaleResolve, MulitpartResolver](https://joont92.github.io/spring/HandlerExceptionResolver-LocaleResolver-MultipartResolver/)
 ---
 <br><br>
 
 ## Filter와 Interceptor 차이
 ### 핵심답변
-Filter는 Servlet Filter로써 javax.servlet 스펙에 포함되는 클래스입니다.       
-Interceptor는 Spring MVC 스펙에 포함되어 있는 클래스입니다.
+필터는 Servlet Filter로써 javax.servlet 스펙에 포함되는 클래스입니다.              
+인터셉터는 Spring MVC 스펙에 포함되어 있는 클래스입니다.     
+
+<img width="500" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSz6DV%2Fbtq9zjRpUGv%2F68Fw4fZtDwaNCZiCFx57oK%2Fimg.png">
+
+필터는 Dispatcher Servlet에 요청이 전달되기 전과 후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리할 수 있는 기능을 제공해줍니다.          
+반면 인터셉터는 Spring이 제공하는 기술로써, Dispatcher Servlet이 컨트롤러를 호출하기 전과 후에 요청과 응답을 참조하거나 가공할 수 있는 기능을 제공합니다.
+
 <br><br>
 #### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 ErrorController에서 처리해야 합니다.                       
 하지만 Interceptor는 DispatcherServlet 내부에 존재하기 때문에 @ControllerAdvice를 적용해서 처리할 수 있습니다.
 
 <br><br>
-#### 🤔
+#### 🤔 Filter와 Interceptor는 어떤 경우에 사용될 수 있을까요?
+
 
 <br><br>
-#### 📚 유익했던 자료
-- [Exception Handling](https://terasolunaorg.github.io/guideline/5.3.0.RELEASE/en/ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html#exception-handling-basic-flow-label)
+#### 📚 유익한 자료
 
 ---
 <br><br>
@@ -649,7 +673,7 @@ Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했
 #### 🤔
 
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [DTO란 무엇인가, VO와의 비교](https://kafcamus.tistory.com/13)
 - [Entity, DTO, 그 사이의 ModelMapper 이야기](https://yonguri.tistory.com/m/entry/Entity-DTO-%EA%B7%B8-%EC%82%AC%EC%9D%B4%EC%9D%98-ModelMapper-%EC%9D%B4%EC%95%BC%EA%B8%B0)
 
@@ -670,7 +694,7 @@ JPA를 사용했을 때는 필드가 변경 시, 필드만 변경해주면 됩�
 #### 🤔
 
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 
 
 ---
@@ -696,120 +720,8 @@ N + 1 문제의 원인은 다음과 같습니다.
 #### 🤔
 
 <br><br>
-#### 📚 유익했던 자료
+#### 📚 유익한 자료
 - [JPA N+1 발생원인과 해결방법](https://cheese10yun.github.io/jpa-nplus-1/)
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
 
 ---
 <br><br>

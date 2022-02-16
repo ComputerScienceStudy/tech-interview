@@ -59,7 +59,7 @@ annotation으로 메세지 수신을 선언하고 method parameter를 통해 수
 <br><br>
 #### 📚 유익했던 자료
 - [Plain old Java Object](https://en.wikipedia.org/wiki/Plain_old_Java_object)
-
+- [당신의 코드는 POJO하신가요?](https://www.youtube.com/watch?v=5NcqgXgmmjg&t=2863s)
 ---
 <br><br>
 
@@ -120,8 +120,8 @@ DI는 세가지 방법이 있습니다. 생성자 삽입, Setter를 이용한 �
 #### 📚 유익했던 자료
 - [세 가지 DI 컨테이너로 향하는 저녁 산책](https://www.nextree.co.kr/p11247/)
 - [DI 기초](https://github.com/cheese10yun/TIL/blob/master/Spring/IoC/DI-%EA%B8%B0%EC%B4%88.md)
+- [스프링 - 생성자 주입을 사용해야 하는 이유, 필드인젝션이 좋지 않은 이유](https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/)
 - [다양한 의존성 주입 방법과 생성자 주입을 사용해야 하는 이유 - (2/2)](https://mangkyu.tistory.com/125)
-
 ---
 <br><br>
 
@@ -405,7 +405,26 @@ public class WebConfig implements WebMvcConfigurer {
 ---
 <br><br>
 
-## 
+## Spring Bean이란 무엇인가요?
+### 핵심답변
+
+<br><br>
+#### 🤔 스프링 Bean의 생성 과정을 설명해주세요.
+
+<br><br>
+#### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
+
+<br><br>
+#### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
+
+<br><br>
+#### 📚 유익했던 자료
+
+
+---
+<br><br>
+
+## Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.
 ### 핵심답변
 
 <br><br>
@@ -421,9 +440,227 @@ public class WebConfig implements WebMvcConfigurer {
 ---
 <br><br>
 
-## 
+## Spring에서 예외처리하는 방법에 대해서 설명해주세요.
+### 핵심답변
+스프링에서 예외처리는 크게 3가지로 나눌 수 있습니다.                
+정확히는 DispatcherServlet에서 발생하는 예외를 HandlerExceptionResolver가 처리하는 처리 방법들입니다.             
+Controller Level에서 처리하는 방법, Global Level에서 처리하는 방법, Method Level에서 처리하는 방법이 있습니다.       
+<br><br>
+#### 1. Controller Level에서 처리 - @ExceptionHandler       
+@ExceptionHandler 어노테이션을 통해 Controller의 메서드에서 throw된 Exception에 대한 공통적인 처리를 할 수 있습니다.     
+###### 예시
+```java
+@RestController
+public class TestController {
+
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    // 예외 핸들러
+    @ExceptionHandler(value = TestException.class)
+    public String controllerExceptionHandler(Exception e) {
+        logger.error(e.getMessage());
+        return "/error/404";
+    }
+
+    @GetMapping("hello1")
+    public String hello1() {
+        throw new TestException("hello1 에러 "); // 강제로 예외 발생
+    }
+
+    @GetMapping("hello2")
+    public String hello2() {
+        throw new TestException("hello2 에러 "); // 강제로 예외 발생
+    }
+}
+```
+
+TestController내에서 발생하는 TestException에 대해서 예외가 발생하면 `controllerExceptionHandler`메서드에서 모두 처리해준다.
+
+- Controller 메서드 내의 하위 서비스 (Service, Repository등등)에서 예외가 발생하더라도, 중간에 처리하지 않는 이상 Controller단까지 예외가 던져지게 되고 `@ExceptionHandler`가 예외를 처리하게 된다.
+  - Checked Exception, Runtime Exception 상관 없이 Controller 단까지 예외를 throw하면 처리가 가능하다.
+<br><br>
+#### 2. Global Level에서 처리 - @ControllerAdvice                     
+만약 하나의 Controller말고 여러 Controller에서 발생하는 예외를 처리하려면 @ControllerAdvice를 사용해야 합니다.          
+@ControllerAdvice는 DispatcherServlet에서 발생하는 예외만 처리할 수 있습니다. 필터에서 발생하는 예외는 따로 처리해주지 않으면 처리가 불가능 합니다.
+
+###### 종류
+- @ControllerAdvice
+  -모든 Controller에서 발생하는 예외를 처리할 수 있게 해주는 애노테이션
+  - DispatcherServlet에서 발생하는 예외를 전역적으로 처리해준다.
+- @RestControllerAdvice
+  - @ControllerAdvice + @ResponseBody
+  
+###### 예시
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @ExceptionHandler(value = TestException.class)
+    public String testExceptionHandler(Exception e) {
+        logger.error(e.getMessage());
+        return "/error/404";
+    }
+}
+```
+- Controller에서 발생하는 예외를 전역적으로 처리해준다.
+<br><br>
+#### 3. Method Level에서 처리 - try/catch     
+try catch를 최대한 지양하는 패턴입니다. 왜냐하면, 이미 예외가 발생했음에도 불가하고 다음 로직을 실행하게 되기 때문입니다.          
+하지만, Checked Exception 같은 경우에는 예외를 반드시 감싸야 하므로 이러한 경우에는 try catch를 사용해야 합니다. <br>
+try catch를 사용하게 된다면 더 구체적인 Exception을 발생시키는 것이 좋습니다.      
+
+###### 예시
+```java
+try {
+    // 비즈니스 로직 수행...
+}catch (Exception e){
+    e.printStackTrace();
+}
+```
+```java
+try {
+    // 비즈니스 로직 수행...
+}catch (Exception e){
+    e.printStackTrace();
+    throw new XXX비즈니스로직예외(e);
+}
+```
+<br><br>
+#### 🤔 Controller의 `@ExceptionHandler`와 ControllerAdvice의 `@ExceptionHandler`중 높은 우선순위는?
+- Controller의 `@ExceptionHandler`가 먼저입니다.
+<br><br>
+#### 🤔 스프링 예외 발생 위치는 어디에 있고, 각각 처리 방법은 무엇인가요?
+스프링의 처리과정을 보면 예외가 발생하는 부분은 크게 두가지로 나눌 수 있습니다.       
+
+<img width="600" src="https://terasolunaorg.github.io/guideline/5.3.0.RELEASE/en/_images/exception-handling-description-target.png">
+
+Dispatcher Servlet내에서 발생하는 예외 (Controller, Service, Repository등등)와 <br>
+Dispatcher Servlet전의 서블릿 (Filter)에서 발생하는 예외가 있습니다. <br>
+
+###### DispatcherServlet 예외
+DispatcherServlet내에서 발생하는 예외는 내부에서 자체적으로 해결할 수 있습니다.
+바로 HandlerExceptionResolver를 사용한 예외 전략입니다.      
+
+###### Filter 예외
+클라이언트의 요청을 DispatcherServlet 밖에서 처리하는 도중 예외가 발생하면 DispatcherServlet이 예외를 처리해줄 수 없습니다.           
+즉, HandlerExceptionResolver의 처리를 받을 수 없습니다.
+처리 못하는 이유는 DispatcherServlet에서 처리하기도 전에 예외가 발생되기 때문입니다.
+Filter 예외가 발생하면, Web Application 레벨에서 처리해줘야 합니다.          
+
+Web Application 레벨에서 처리해줄 수 있는 방법은 크게 3가지가 있습니다.      
+1. web.xml에 error-page를 잘 등록해줘서 에러를 사용자에게 응답
+2. Filter 내부에서 예외를 처리하기 위한 필터를 따로 둬서 try-catch문을 사용하여 예외 처리 
+<br>실제 시큐리티 인가 처리중 예외가 발생하면 ExceptionTranslationFilter에게 예외를 던져 처리한다. (try-catch)
+3. Filter 내부에서 try-catch 구문을 통해 예외 발생 시, HandlerExceptionResolver를 빈으로 주입받아 @ExceptionHandler에서 처리하는 방법
+<br>즉, 필터에서 발생하는 예외를 DispatcherServlet의 예외 처리기인 HandlerExceptionResolver에 보내서 처리하는 방식이다.
+```java
+// 자바 시큐리티 설정
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private FilterChainExceptionHandler filterChainExceptionHandler;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+      	// 필터 앞에 FilterExceptionHandler를 추가해준다.
+        http
+            .addFilterBefore(filterChainExceptionHandler, xxx.class) 
+            (...)
+    }
+}
+```
+```java
+@Component
+public class FilterChainExceptionHandler extends OncePerRequestFilter {
+  private final Logger log = LoggerFactory.getLogger(getClass());
+
+  @Autowired
+  private HandlerExceptionResolver resolver; // HandlerExceptionResolver를 빈으로 주입 받는다.
+
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    throws ServletException, IOException {
+
+    // 다음 필터를 호출하기 전에 doFilter를 try/catch문으로 감싼다.
+    try {
+      filterChain.doFilter(request, response);
+    } catch (Exception e) {
+      log.error("Spring Security Filter Chain Exception:", e);
+      resolver.resolveException(request, response, null, e);
+    }
+  }
+}
+```
+<br><br>
+#### 🤔 HandlerExceptionResolver에 대해 구체적으로 설명해주세요.
+https://joont92.github.io/spring/HandlerExceptionResolver-LocaleResolver-MultipartResolver/
+https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#handlerexceptionresolver%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%B2%98%EB%A6%AC
+<br><br>
+#### 📚 유익했던 자료
+- [How to manage exceptions thrown in filters in Spring?](https://stackoverflow.com/questions/34595605/how-to-manage-exceptions-thrown-in-filters-in-spring)
+- [Spring Handle Exception](https://jaehun2841.github.io/2018/08/30/2018-08-25-spring-mvc-handle-exception/#%EC%98%88%EC%99%B8exception-%EC%B2%98%EB%A6%AC%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C)
+- [Spring Framework 5.3.13 API. "ControllerAdvice"](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html)
+- 토비의 스프링 3.1
+---
+<br><br>
+
+## Filter와 Interceptor 차이
 ### 핵심답변
 
+<br><br>
+#### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
+
+
+<br><br>
+#### 🤔
+
+<br><br>
+#### 📚 유익했던 자료
+- [Exception Handling](https://terasolunaorg.github.io/guideline/5.3.0.RELEASE/en/ArchitectureInDetail/WebApplicationDetail/ExceptionHandling.html#exception-handling-basic-flow-label)
+
+---
+<br><br>
+
+## DTO를 사용하는 이유
+### 핵심답변
+
+데이터를 주고 받을 때, DTO를 사용하는 이유는 다음과 같습니다.
+1. 첫번째는 비즈니스 로직의 캡슐화 입니다.          
+기존 클래스를 사용하지 않고 데이터를 DTO를 사용하여, 비즈니스 로직의 캡슐화를 할 수 있습니다.<br>
+기존 클래스를 통해 데이터를 통신하면, 외부 사용자에게 데이터베이스의 스키마 형태, 데이터베이스의 구조, 서비스 내부 로직을 유출 될 수 있습니다.<br>
+대표적인 예로, JPA를 사용할 때, 모델은 데이터베이스의 테이블 구조와 매우 유사합니다.<br>
+이때, DTO는 변수의 접근자를 private로 설정하고 public한 getter함수, setter함수를 만들어 캡슐화 할 수 있습니다.
+
+2. 두번째는 클라이언언트에게 필요한 정보를 Model이 전부 담을 수 없을 때 사용합니다.    
+가장 대표적으로 에러 메세지가 있습니다.<br>
+서비스 실행 도중 사용자 측에 에러가 발생하면, 에러 메세지를 담아 전송해주어야 합니다.<br>
+모델은 서비스 로직과 관련이 없기 때문에 모델에 에러메세지를 담기에는 애매합니다. <br>
+이런 경우 DTO에 에러 메세지 필드를 선언하고 에러 메세지를 포함시키면 됩니다.
+<br><br>
+#### 🤔
+
+<br><br>
+#### 🤔
+
+<br><br>
+#### 📚 유익했던 자료
+- [DTO란 무엇인가, VO와의 비교](https://kafcamus.tistory.com/13)
+- [Entity, DTO, 그 사이의 ModelMapper 이야기](https://yonguri.tistory.com/m/entry/Entity-DTO-%EA%B7%B8-%EC%82%AC%EC%9D%B4%EC%9D%98-ModelMapper-%EC%9D%B4%EC%95%BC%EA%B8%B0)
+
+---
+<br><br>
+
+## JPA를 사용할 때의 이점에 대해서 설명해주세요.
+### 핵심답변
+JPA가 있다면, 자바 언어로 구현하다가, 갑자기 SQL로 구현해주지 않아도 됩니다.      
+JPA를 통해 SQL을 자바로 만들 수 있고, 그 결과 유지보수가 쉽습니다.      
+
+JPA를 사용하지 않았을 때는 필드 변경 시, 모든 SQL을 수정해야 했습니다.      
+JPA를 사용했을 때는 필드가 변경 시, 필드만 변경해주면 됩니다. SQL은 JPA가 처리하기 때문에 손댈 것이 없습니다.
 <br><br>
 #### 🤔
 
@@ -437,82 +674,28 @@ public class WebConfig implements WebMvcConfigurer {
 ---
 <br><br>
 
-## 
+## JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
 ### 핵심답변
+JPA에서 발생하는 케이스들은 2가지 입니다. 즉시로딩 N+1과 지연로딩 N+1입니다.      
+N + 1 문제의 원인은 다음과 같습니다.   
+즉시 로딩의 경우,
+지연 로딩의 경우,
+
+해결방법은 다음과 같습니다.
+###### 1. Join Fetch
+첫번째 방법은 Join Fetch를 사용하는 것입니다.
+###### 2. @EntityGraph
+두번째 방법은 EntityGraph 어노테이션을 사용하는 것입니다.
 
 <br><br>
-#### 🤔
+#### 🤔 설명해주신 해결 방법의 한계점은 무엇이 있을까요?
 
 <br><br>
 #### 🤔
 
 <br><br>
 #### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
-
----
-<br><br>
-
-## 
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익했던 자료
-
+- [JPA N+1 발생원인과 해결방법](https://github.com/cheese10yun/blog-sample/tree/master/jpa-n-plus-1)
 
 ---
 <br><br>

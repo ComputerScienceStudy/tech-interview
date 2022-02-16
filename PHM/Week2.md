@@ -392,7 +392,10 @@ public class WebConfig implements WebMvcConfigurer {
 <Br><Br>
 ## Bean에 대해 설명해보세요.
 ### 핵심답변
-Spring Bean이란, IOC 컨테이너가 관리하는 자바 객체를 이야기합니다.
+Java에서 Bean은 데이터 표현을 목적으로 Java로 클래스로 이루어진 인스턴스입니다.
+
+
+Spring에서 Bean이란, IOC 컨테이너가 관리하는 자바 객체를 이야기합니다.
 스프링 빈을 등록하는 방법은     
 1. 컴포넌트 스캔을 사용하여 @Component 어노테이션으로 빈을 등록하거나       
 2. @Configuration 과 @Bean 어노테이션을 사용하여 자바 코드를 직접 등록하는 방법        
@@ -418,6 +421,8 @@ Bean의 생명주기는
 <Br><Br>
 
 #### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
+Scope란 Bean이 존재하고 관리되는 범위를 말합니다.        
+
 스프링에서 Bean의 Scope는 별다른 설정이 없으면, Singleton Scope로 설정 됩니다.        
 싱글톤방식으로 설정이되면, 스프링이 bean마다 하나의 객체를 생성해주고, 스프링을 통해 Bean을 제공받으면,     
 제공받은 Bean은 언제나 같은 객체임을 의미합니다.

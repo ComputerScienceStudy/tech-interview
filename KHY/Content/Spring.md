@@ -94,7 +94,6 @@ DI는 외부의 독립적인 존재가 객체를 생성한 후 이를 전달해�
 <br><br>
 #### 📚 유익한 자료
 - [IoC, DI란 무엇일까](https://biggwang.github.io/2019/08/31/Spring/IoC,%20DI%EB%9E%80%20%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C/)
-- [의존성 주입(Dependency Injection, DI)이란? 및 Spring이 의존성 주입을 지원하는 이유 - (1/2)](https://mangkyu.tistory.com/150)
 
 ---
 <br><br>
@@ -121,7 +120,7 @@ DI는 세가지 방법이 있습니다. 생성자 삽입, Setter를 이용한 �
 - [세 가지 DI 컨테이너로 향하는 저녁 산책](https://www.nextree.co.kr/p11247/)
 - [DI 기초](https://github.com/cheese10yun/TIL/blob/master/Spring/IoC/DI-%EA%B8%B0%EC%B4%88.md)
 - [스프링 - 생성자 주입을 사용해야 하는 이유, 필드인젝션이 좋지 않은 이유](https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/)
-- [다양한 의존성 주입 방법과 생성자 주입을 사용해야 하는 이유 - (2/2)](https://mangkyu.tistory.com/125)
+
 ---
 <br><br>
 
@@ -281,7 +280,7 @@ DispatcherServlet은 요청에 대응할 수 있는 Controller, ViewResolver, Ha
   * 요청을 처리할 핸들러를 찾는 인터페이스
 * HandlerAdapter
   * HandlerMapping이 찾아낸 핸들러를 처리하는 인터페이스
-  * 스프링 MVC 확장력의 핵심 <br>(여기서, controller를 호출하는데, controller가 실행되기 전 Interceptor를 실행해서 특정 요청에 한 공통 로직 적용할 수 있기 때문이다.)
+  * 스프링 MVC 확장력의 핵심 <br>(여기서, controller를 호출하는데, controller가 실행되기 전 Interceptor를 실행해서 특정 요청에 대한 공통 로직 적용할 수 있기 때문이다.)
 * ViewResolver
   * 뷰 이름에 해당하는 뷰를 찾아내는 인터페이스
 * FlashMapManager

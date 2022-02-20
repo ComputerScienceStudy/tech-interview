@@ -545,3 +545,182 @@ private Set<Question> questions = emptySet();
 ---
 
 [https://velog.io/@jinyoungchoi95/JPA-모든-N1-발생-케이스과-해결책](https://velog.io/@jinyoungchoi95/JPA-%EB%AA%A8%EB%93%A0-N1-%EB%B0%9C%EC%83%9D-%EC%BC%80%EC%9D%B4%EC%8A%A4%EA%B3%BC-%ED%95%B4%EA%B2%B0%EC%B1%85)
+
+
+## 2주차 추가 예상 답변
+
+### POJO와 Java bean, Spring bean는 같은 것들인가요?
+
+---
+
+**핵심답변**
+
+POJO는 평범한 자바 객체, 즉 언어에 의해 강제되는 것 외에 특별한 제한이 없는 객체를 의미하고, Java Bean은 POJO라는 범주 안에 존재하는데, 특정 형태의 클래스를 가르키는 뜻으로 필드가 private로 구성되고 getter와 setter를 통해서만 접근하며 전달 인자가 없는 생성자를 갖는 형태의 클래스를 의미합니다.
+
+그리고 Spring Bean은 스프링에서 IoC컨테이너가 관리하여 스프링에 의해 생성되고, 라이프 사이클을 수행하며 의존성 주입이 일어나는 Java 객체를 의미합니다. 
+
+| POJO | JAVA Bean |
+| --- | --- |
+| JAVA 언어에 의해 강제되는 것 외에는 특별한 제한이 없습니다. | 몇 가지 제한 사항이 있는 특수 POJO입니다. |
+| 그것은 회원에 대한 많은 통제를 제공하지 않습니다. | 그것은 회원에 대한 완전한 제어를 제공합니다. |
+| 직렬화 가능한 인터페이스를 구현할 수 있습니다. | 직렬화 가능한 인터페이스를 구현해야 합니다. |
+| 필드는 이름으로 액세스할 수 있습니다. | 필드는 getter 및 setter에서만 액세스할 수 있습니다. |
+| 필드는 모든 가시성을 가질 수 있습니다. | 필드는 비공개 가시성만 있습니다. |
+| 인수가 없는 생성자가 있을 수도 있고 없을 수도 있습니다. | 인수가 없는 생성자가 있어야 합니다. |
+| 구성원에 대한 제한을 제공하지 않고 사용자에게 앤티티에 대한 완전한 액세스 권한을 부여하고 싶지 않을 때 사용됩니다. | 사용자에게 앤티티를 제공하지만 앤티티의 일부만 제공하려는 경우에 사용됩니다. |
+
+---
+
+### IoC가 무엇인지는 아시는 것 같은데, IoC가 필요한 이유는 무엇인가요? 왜 외부에서 제어 흐름을 관리해야하죠?
+
+---
+
+**핵심답변**
+
+IoC가 필요한 이유는 객체지향 원칙을 잘 지키기 위해 존재합니다.
+
+이 원칙을 기반으로 역할과 관심을 분리해 응집도를 높이고 결합도를 낮출 수 있기 때문입니다.
+
+즉, 클래스내에서 클래스를 직접 생성하게 되어 두 클래스간의 변경 사항이 생길 경우 서로에게 많은 영향이 끼치겠지만, 외부에서 제어 흐름을 통해 클래스에 주입해주게 되면 사용하면 두 클래스 간의 의존성이 줄어들게 됩니다. 이러한 방식은 객체지향 프로그램을 만드는 것을 지원합니다.
+
+---
+
+### 1. BeanFactory와 ApplicationContext는 각각 무엇인가요?
+
+---
+
+**핵심답변**
+
+빅 팩토리는 빈을 생성하고 의존관계를 설정하는 기능을 담당하는 가장 기본적인 IoC 컨테이너이자 클래스를 말합니다.
+
+애플리케이션컨텍스는 빈 팩토리를 상속받고있어 빈 팩토리의 기능에 추가적으로 트랜잭션 관리나 메시지 기반의 다국어 처리 기능과 같은 기능들이 탑재된 인터페이스입니다.
+
+즉, 어플리케이션컨텍스는 빈을 생성하고 관계를 설정하는 작업을 하는 빈 팩토리보다 더  확장된 버전이라고 할 수 있습니다.
+
+- Bean Factory
+    - 빈 인스턴스화/관계설정
+- ApplicationContext
+    - 빈 인스턴스화/관계설정
+    - 자동 BeanPostProcessor 등록
+    - 자동 BeanFactoryPostProcessor 등록
+    - 편리한 MessageSource 액세스
+    - 애플리케이션 이벤트 게시
+
+---
+
+### Dispatcher Servlet은 어느 시점에 생성되나요?
+
+---
+
+**핵심답변**
+
+DispatcherServlet은 하나의 서블릿이며 톰캣이 실행될 때, 웹 컨테이너가 web.xml 배포기술자 파일을 통해 웹 애플리케이션의 서블릿 컨텍스트를 초기화하는 시점에 생성됩니다.
+
+옵션에 따라 lazy loading 혹은 pre loading방식으로 생성됩니다.
+
+lazy loading의 경우 처음에는 서블릿 컨테이너에 디스패처 서블릿 인스턴스가 존재하지 않으며, 최초의 요청을 받을 때, 객체를 생성하고 이후에는 싱글톤으로 활용합니다.
+
+Pre loading의 경우 서블릿 컨텍스트를 초기화하는 시점에 미리 디스패처 서블릿 인스턴스를 생성합니다.
+
+추가
+
+서블릿 3.0버전 이후부터는 web.xml 없이도 서블릿 컨텍스트 초기화 작업이 가능해 졌습니다.
+
+이러한 이유로 스프링 부트에서 web.xml이 없는 이유가 여기 있으며, WebApplicationInitializer 인터페이스를 구현하면 해당 클래스를 찾아 초기화 작업을 위임하는 역할을 수행해줍니다.
+
+---
+
+### Dispatcher Servlet이 Controller 객체를 직접 메모리에 생성하나요?
+
+---
+
+**핵심답변**
+
+아닙니다. Controller 객체는 Bean으로써 Spring IoC컨테이너에 담겨있고 객체에 대한 정보를 HandlerMapping에서 저장하고 있어, HandlerMapping에서 컨트롤러에 대한 정보를 찾고, 디스패처 서블릿이 해당 객체로 요청을 보내게 됩니다.
+
+- 직접 생성하지 않는다면 무엇이 그 역할을 수행하나요
+
+HandlerMapping에서 Controller에 대한 객체 정보를 담고 있어, 해당 인터페이스에서 컨트롤러 정보를 디스패처 서블릿에게 제공합니다.
+
+---
+
+### DispatcherServlet이 생성된 이후의 과정은 잘 알고 계신 것 같은데, 웹 어플리케이션이 실행된 이후부터 DispatcherServlet이 생성되기전까지 Spring framework가 어떤 준비를 하는지 설명해주실 수 있나요?
+
+---
+
+**핵심답변**
+
+1. 웹 어플리케이션이 실행되면, Tomcat에 의해 web.xml이 Loading됩니다.
+2. web.xml에 등록되어 있는 ContextLoaderListener (Java Class) 생성됩니다.
+    
+    ContextLoaderListener 클래스는 ServletContextListener 인터페이스를 구현하고 있으며, ApplicationContext를 생성하는 역할을 수행합니다. Servlet의 생명주기를 관리해줍니다.
+    
+3. 생성된 ContextLoaderListener는 root-context.xml을 Loading합니다.
+    
+    ContextLoaderListener 객체는 src/main/resources 소스 폴더에 있는 applicationContext.xml 파일을 로딩하여 스프링 컨테이너를 구동하는데 이를 Root 컨테이너라고 합니다.
+    
+4. root-context.xml에 등록되어 있는 Spring Container가 구동됩니다.
+    
+    root-context.xml에는 주로 view 지원을 제외한 공통 bean을 설정합니다.
+    
+    예) spring properties 파일을 로컬과 서버용으로 구분지을 때 여기서 propery value를 설정해줍니다.
+    
+5. 클러이언트로부터 최초의 웹 어플리케이션 요청이 오면, DispatcherServlet이 생성됩니다.
+
+![image](https://user-images.githubusercontent.com/82690689/154847968-adde9e4f-9f89-45f6-838f-62759a384d19.png)
+
+[https://javannspring.tistory.com/231](https://javannspring.tistory.com/231)
+
+---
+
+### 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?(어렵)
+
+---
+
+**핵심답변**
+
+프로젝트에는 스프링 시큐리티를 기반으로 사용자 인증을 구현하였는데, 스프링 시큐리티 자체가 Servlet Filter와 Spring AOP를 기반하여 구현했기에, AOP를 활용했다고 볼 수 있을 것 같습니다.
+
+하지만, 실질적으로 프로젝트에 권한에 대한 기능을 추가하지 않았기 때문에, AOP를 활요해서 구현하지는 않았습니다.
+
+*****Secure Object, AbstractSecurityInterceptor****
+
+[https://shortstories.gitbooks.io/studybook/content/spring-security.html](https://shortstories.gitbooks.io/studybook/content/spring-security.html)
+
+---
+
+### 트랜잭셔널 어노테이션은 AOP를 활용한 기능인가요?
+
+---
+
+**핵심답변**
+
+네 그렇습니다. 트랜잭션 어노테이션 기능의 연결과 커밋, 롤백 등과 같은 공통 코드를 AOP를 통해 대신 처리하게 해줍니다.
+
+---
+
+### Spring framework로 웹 어플리케이션을 개발할 때 Bean Scope 중 프로토타입 스코프는 어떤 경우에 활용하면 좋을까요?
+
+---
+
+**핵심답변**
+
+프로토타입 스코프로 설정하게 될 경우, 요청할 때마다 매번 새로운 오브젝트를 생성해주고 IoC컨테이너에서는 DI 이후 초기화 까지만 제공하고 더이상 관리를 하지 않습니다. 이러한 이유로 new로 오브젝트를 생성하는 것을 대신하여 사용하거나 컨테이너의 DI기능을 사용해야하는 경우 활용할 수 있습니다.
+
+---
+
+### DTO를 사용하는 이유(피드백 보강 하기)
+
+---
+
+**핵심답변**
+
+- ****직렬화(Serialize)****
+
+프로그램의 object에 담긴 데이터를 어떤 외부 파일에 write 및 전송하는 것
+
+- ****역직렬화(Deserialize)****
+
+어떤 외부 파일의 데이터를 프로그램 내의 object로 read 해오는 것
+
+---

@@ -37,6 +37,49 @@
 - Filter와 Interceptor 차이
   - Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 - DTO를 사용하는 이유
+
+## [3주차](https://github.com/ComputerScienceStudy/tech-interview/blob/main/STW/Week3.md)
+
+### DB
+#### SQL vs NoSQL
+ - DB를 사용하는 이유는 뭔가요?
+ - SQL과 NoSQL에 대해 설명해 주세요
+ - 어떤 경우에 SQL을 사용하면 좋을까요?
+ - 반대로, 어떤 경우에 NoSQL을 사용하면 좋을까요?
+ - SQL Injection이란 무엇이고, 어떻게 대처 하는지 말해주세요
+ - SQL Join의 종류에 대해 말해주세요.
+ - DB Transaction이란 무엇인가요?
+    - 트랜잭션의 특징 4가지를 말해주세요.
+    - 트랜잭션 Rollback은 어떤 경우에 하나요?
+    - DBMS는 어떻게 트랜잭션을 관리할까요?
+    - Lock이란 무엇이고, 종류에는 어떤 것들이 있죠?
+    - 트랜잭션을 사용할 때 주의할 점은 무엇이 있을까요? 
+ - ACID란 무엇일까요?  
+ - Key란 무엇이고, 종류에는 어떤 것들이 있을까요?
+ - Redis란 무엇일까요?
+    - Radis는 Ram에 저장되는데, 휘발성 부분은 어떻게 처리하나요?
+ - 정규화에 대해 설명해 주세요.
 ### JPA
+- JPA란 무엇인가요?
+  - ORM이란?
 - JPA를 사용할 때의 이점에 대해서 설명해주세요.
+- JPA 영속성 컨텍스트의 이점에 대해서 설명해주세요.
 - JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
+
+### Web
+- URL, URI, URN의 차이는 무엇인가요?
+- RESTful API란 무엇인가요?
+  - Restful한 설계란 어떤 의미인가요?
+  - REST의 특징, 구성, 목표
+- 브라우저의 기본적인 구조를 말해주세요.
+  - Chrome을 실행해 주소창에 특정 URL을 입력했을때의 작동 과정을 설명해보세요.
+- 세션과 쿠키, 캐시의 차이점
+- 
+
+### Network
+- HTTP의 GET과 POST를 비교해보세요
+- HTTP와 HTTPS는 어떤 차이가 있나요?
+  - HTTP의 문제점
+- HTTP 프로토콜을 이용한 클라이언트-서버간 Request/Response 매커니즘
+- TCP와 UDP의 차이점에 대해 말해보세요.
+- TCP 3-way-handshake란 무엇일까요?

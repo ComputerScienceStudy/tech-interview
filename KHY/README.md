@@ -1,5 +1,8 @@
 # Tech Interview
 ## [Java](https://github.com/ComputerScienceStudy/tech-interview/blob/main/KHY/Content/Java.md)
+<details>
+<summary>목차</summary>
+
 - JVM 동작 과정/원리
 - GC(Garbage Collector)의 종류와 동작 과정/원리
 - Java 언어 기초
@@ -23,9 +26,12 @@
     - Checked Exception과 Unchecked Exception에 대해 설명해주세요. 스프링 트랜잭션 추상화에서 rollback 대상은 무엇일까요?
     - 자바의 동시성 이슈(공유자원 접근)에 대해 설명해주세요. 
     - 자바에서 null을 안전하게 다루는 방법에 대해 설명해주세요.
-
+</details>
+    
 ## [Spring Framework](https://github.com/ComputerScienceStudy/tech-interview/blob/main/KHY/Content/Spring.md)
-### Spring
+<details>
+<summary>목차</summary>
+
 - POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요?
 - Spring DI/IoC는 어떻게 동작하나요?
   - IoC 컨테이너의 역할은 무엇이 있을까요?
@@ -47,6 +53,79 @@
 - Filter와 Interceptor 차이
   - Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 - DTO를 사용하는 이유
-### JPA
-- JPA를 사용할 때의 이점에 대해서 설명해주세요.
-- JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
+</details>
+
+
+## [Database, Web, Network](https://github.com/ComputerScienceStudy/tech-interview/blob/main/KHY/Content/DB%20Web%20Network.md)
+<details>
+<summary>목차</summary>
+
+### Database
+- RDBMS vs NOSQL에 대해서 설명해주세요.
+- 인덱스
+  - 데이터베이스에서  index를 만들면 내부적으로 어떤동작이 이루어지는지 설명해주시고 장단점에 대해 설명해주세요.
+  - 데이터베이스에서 index를 만들면 성능이 빨라지게 되는 이유를 설명해주세요.
+  - hash index를 사용했을 때의 단점과 이유를 설명하세요.
+  - 인덱스에 왜 해쉬 보다 B Tree를 쓰는가?
+- 트랜잭션
+  - 트랜잭션에 대해서 설명해주세요.
+  - ACID에 대해서 설명해주세요.
+  - 트랜잭션 격리 수준(Transaction Isolation Levels)에 대해서 설명해주세요.
+  - DBMS는 어떻게 트랜잭션을 관리할까요?
+- Nomalization 이 무엇인가요? Denormalization은 무엇이고, 언제 시행하게 되는지 설명해주세요.
+- Elastic Search
+  - Elastic Search에 대해서 간단히 설명해주세요. 
+  - Elastic Search의 인덱스구조와 RDBMS의 인덱스 구조의 차이에 대해 설명해주세요. 
+  - Elastic Search의 키워드 검색과 RDBMS의 LIKE 검색의 차이에 대해 설명해주세요.
+- JPA
+  - ORM이란?
+  - JPA를 사용할 때의 이점에 대해서 설명해주세요.
+  - JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
+  - JPA 영속성 컨텍스트의 이점(5가지)을 설명해주세요.
+  - JPA 영속성 컨텍슽트 주의점은 무엇인가요?
+  - 양방향 매핑을 피해야 하는 이유
+  - 순환 관계는 언제 발생하고, 순환 관계를 피하기 위해서 어떻게 처리했는가?
+  - JPA는 트랜잭션을 어떻게 처리하는가?
+    - JPA는 로그 기법에 대해 어떻게 처리하는가/
+    - JPA는 트랜잭션 Lock에 대해 어떻게 처리하는가?
+
+### Web
+- 쿠키와 세션
+  - 쿠키와 세션의 필요성
+  - 쿠키와 세션은 언제 사용한요?
+- 세션 기반 인증 방식과 토큰 기반 인증 방식의 차이
+- JWT 
+  - JWT에 대해서 간단히 설명해주세요.
+  - JWT를 사용한 이유와 장점은 무엇인가요?
+  - JWT 단점은 무엇인가요?
+- 웹 서버와 WAS의 차이점
+- 웹 공격 패턴과 방어 방법
+  - SQL Injection에 대해서 간단히 설명해주세요.
+- Challenge
+  - 웹 사이트를 제작했는데 고해상도 이미지를 많이 사용하여 페이지 로딩 속도가 느립니다. 최적화 하는 방법에 대해서 모두 설명하세요.
+  - 브라운이 새로운 검색 엔진을 개발하려고 합니다. 어떻게 설계 및 개발 것인지 아는 지식을 모두 동원하여 설명하세요.
+
+### Network
+- 웹 브라우저에서 URI에 구글닷컴을 쳤을 때 발생하는 일들을 아는 대로 설명해주세요.<br>
+  DNS 서버, HTTP 프로토콜(80포트), HTTPS 프로토콜(443포트), DOM, IP, PORT 등등의 용어를 사용해서
+- 사용자가 웹브라우저를 통해 서버에 이미지를 요청해서 사용자에게 보여주기까지 과정을 설명하세요.
+- OSI 7계층
+  - OSI 7계층에 대해서 설명하세요. (각각 알려진 유명 프로토콜)
+  - OSI 7계층과 그 존재 이유, TCP/IP 4계층에 대해 설명해보세요.
+  - 웹 서버 소프트웨어(Apache, Nginx)는 OSI 7계층 중 어디서 작동하는지 설명해보세요.
+- DNS에 대해서 설명하세요.
+- HTTP
+  - HTTP와 HTTPS의 차이를 설명하세요.
+  - HTTPS에 대해서 설명하고 SSL Handshake에 대해서 설명해보세요.
+  - GET과 POST의 차이점에 대해서 설명해보세요.
+  - HTTP 프로토콜의 특징
+  - HTTP 1.1 VS 2.0
+  - HTTP 응답코드
+- TCP와 UDP의 차이점에 대해서 설명해보세요.
+- 3 way hand shake에 대해서 설명하세요.
+- RESTful이란 무엇이며, 이것에 대해서 아는대로 설명해보세요.
+- CORS란 무엇이며 이것에 대해서 설명해보세요.
+- 로드 밸런서에 대해서 설명해주세요.
+- 방화벽이란? 라우터와 방화벽 차이
+
+</details>

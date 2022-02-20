@@ -576,3 +576,55 @@ OrderBy, Not 등이 있습니다.
 [공식문서](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation)
 ---
 <Br><Br>
+
+--- 
+<Br><Br>
+# 피드백 반영 자료 조사
+
+# POJO
+### 예상 추가질문
+1. POJO와 Java bean, Spring bean는 같은 것들인가요?     
+👉 아닙니다. POJO는 단어 그 자체로는 단순한 자바 객체(Plain Old Java Object)를 의미하지만, 객체 자체를 나타낸다기보다 객체지향적인 설계원칙에 충실하도록 개발되어 있는지, 테스트 코드 개발의 용이성이 있는지를 나타내는 조건에 가깝습니다. 예컨대 getter/setter를 가진 단순한 자바 오브젝트는 의존성이 없고 테스트가 용이한 특성을 가지고 있으므로 POJO라고 할 수 있습니다. 
+
+# DI/IoC
+### 예상 추가질문
+1. IoC가 무엇인지는 아시는 것 같은데, IoC가 필요한 이유는 무엇인가요? 왜 외부에서 제어 흐름을 관리해야하죠?     
+👉 객체 지향 원칙을 잘 지키기 위해 IoC가 필요합니다. 객체를 관리하는 프레임워크와 개발자가 개발해야 하는 필수 비즈니스 로직을 분리하여 결합도는 낮추고 응집도를 높여줄 수 있기 때문입니다. 이렇게 되면 변경해야 하는 사항에 유연하게 대처할 수 있게 되기 때문에 제어를 역전시켜 준 것입니다.
+2. BeanFactory와 ApplicationContext는 각각 무엇인가요?      
+👉  BeanFactory는 빈을 생성하고 의존 관계를 주입하는 기능을 담당하는 가장 기본적인 IoC 컨테이너, 클래스를 뜻합니다.     
+👉 ApplicationContext란 BeanFactory를 구현하고 있는, BeanFactory의 확장된 버전이라고 이해할 수 있습니다. BeanFactory의 모든 기능을 포함하고 있으면서 Environment(Profile과 Source 설정, properties 값 불러오기 가능)나, MessageSource(메세지 설정파일을 localizing하는 i18n)을 제공하는 인터페이스)와 같은 추가 기능을 사용할 수 있으므로 특별한 이유가 없다면 BeanFactory보다 ApplicationContext를 사용하는 것이 더 바람직합니다.
+
+# MVC - Dispatcher Servlet 동작 원리
+### 예상 추가질문
+1. Dispatcher Servlet은 어느 시점에 생성되나요?     
+👉 Tomcat이 실행되어 web.xml파일을 통해 서블릿 컨텍스트를 초기화하는 시점에 옵션에 따라 lazy loading(클라이언트로부터 최초로 요청을 받을 때 서블릿 컨테이너는 DispatcherServlet에 대한 객체를 생성하고 다음 요청부터는 싱글톤으로 활용) 혹은 pre loading(서블릿 컨텍스트를 초기화하는 시점에 미리 DispatcherServlet 인스턴스를 생성) 방식으로 생성됩니다.
+
+2. Dispatcher Servlet이 Controller 객체를 직접 메모리에 생성하나요? 직접 생성하지 않는다면 무엇이 그 역할을 수행하나요?       
+👉 
+3. DispatcherServlet이 생성된 이후의 과정은 잘 알고 계신 것 같은데, 웹 어플리케이션이 실행된 이후부터 DispatcherServlet이 생성되기전까지 Spring framework가 어떤 준비를 하는지 설명해주실 수 있나요?        
+👉 Tomcat(WAS)에 의해 web.xml이 로딩 -> web.xml에 등록된 ContextLoaderListener(Java Class) 생성 -> 생성된  ContextLoaderListener는 root-context.xml을 로딩 -> root-context.xml에 등록된 Spring Container가 구동 -> 클라이언트로부터 웹 어플리케이션 요청 -> DispatcherServlet이 생성됨
+# AOP
+### 예상 추가질문
+1. 프로젝트에서 AOP를 활용한 부분이 있으실까요?
+    - 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?
+    - 그럼 @Transactional 어노테이션은 AOP를 활용한 기능인가요?
+2. 만약 프로젝트의 모든 Entity에서 Entity 생성시간과 수정시간 필드를 사용한다면, 이 필드를 한 곳에서 관리할 수 있는 방법이 있을까요? Spring framework를 사용하는 환경입니다.        
+👉 JPA Auditing을 사용하여 생성시간과 수정 시간을 자동화 할 수 있습니다. Domain 패키지에 BaseTimeEntity 클래스를 작성하고, 생성 및 수정 시간을 자동화 하고 싶은 Entity 클래스에 상속시킨 후 스프링 부트의 Main함수 클래스에 @EnableJpaAudting을 선언해 주면 됩니다. 
+
+# Bean
+### 예상 추가질문
+1. Spring framework로 웹 어플리케이션을 개발할 때 Bean Scope 중 프로토타입 스코프는 어떤 경우에 활용하면 좋을까요?      
+👉 프로토타입 스코프는 컨테이너에 빈을 요청할 때마다 매번 새로운 객체를 생성합니다. 또한 IoC 기본원칙을 따르지 않기에 생성 후 초기화와 DI까지는 이루어지지만 그 이후에는 컨테이너가 더이상 Bean Object를 관리하지 않습니다. 따라서 매번 새로운 객체가 필요하면서 DI를 통해 다른 Bean을 사용해야 할 경우 프로토타입 스코프를 활용할 수 있습니다. 예컨대 여러 사람이 같은 객체를 사용해야 하는 경우 요청시마다 Bean 객체가 생성되기 때문에 데이터 변경이나 충돌 현상을 방지할 수 있습니다.
+
+# DTO
+### 예상 추가질문
+1. DTO 활용시의 Serialize/Deserialize와 ObjectMapper에 대해서
+ - Serialize/Deserialize를 하는 이유        
+ 👉 직렬화는 자바 시스템 내부에서 사용되는 객체 또는 데이터를 외부 자바 시스템에서도 사용할 수 있도록 바이트(byte) 형태로 데이터를 변환하는 기술입니다. 이를 스트림화 한다고도 하는데, 데이터, 패킷 등을 일련의 연속성을 갖는 흐름으로 만들어 데이터가 잘 넘어갈 수 있도록 만들어주는 것입니다.  
+객체(Object) 또는 데이터 (Data) -> 직렬화 -> Byte       
+👉 역직렬화는 바이트로 변환된 데이터를 다시 객체로 변환하는 기술입니다.     
+Byte -> 역직렬화 -> 객체(Object) 또는 데이터 (Data)
+ - ObjectMapper     
+ 👉 JSON 컨텐츠를 Java 객체로 deserialize하거나, Java 객체를 JSON으로 serialization할 때 사용하는 Jackson 라이브러리의 클래스.
+2. DTO로 넘긴 데이터가 어떻게 JSON 형식으로 변환되고, JSON 데이터가 어떻게 객체에 매핑되는지, 그 과정에서 어떤 라이브러리가 관여하는지.
+

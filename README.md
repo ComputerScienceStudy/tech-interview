@@ -35,7 +35,3 @@
 - Filter와 Interceptor 차이
   - Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 - DTO를 사용하는 이유
-### JPA
-- JPA를 사용할 때의 이점에 대해서 설명해주세요.
-- JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
-

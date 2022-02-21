@@ -1,15 +1,19 @@
 # [2주차] Spring
 
-## Spring Framework
+## (1) Spring Framework
 
 ## 스프링 프레임워크란?
 ### 핵심답변
+Spring Framework란 자바로 동적 웹 사이트를 개발하기위한, 오픈소스(Open Source) 애플리케이션 프레임워크
 
-#### 🤔 스프링 프레임워크의 종류: Spring, Spring MVC, Spring Boot, Spring Data JPA, Spring AOP
+#### 🤔 스프링 프레임워크의 종류
+Spring, Spring MVC, Spring Boot, Spring Data JPA, Spring AOP
+![image](https://user-images.githubusercontent.com/42319300/154834347-149de5aa-9608-415c-870a-7c7c3427048d.png)
 
 <br><br>
 ## 스프링 프레임워크의 특징
 ### 핵심답변
+POJO기반의 개발, 제어의 역전(IOC/DI), 관점지향 프로그래밍(AOP) 등이 있습니다. 
 
 ## POJO란 무엇인가요?
 ### 핵심답변
@@ -22,6 +26,13 @@ POJO를 사용할때의 이점은, 종속된 코드를 분리함으로 코드의
 Spring은 가장 대표적인 POJO프레임워크이며, POJO란 객체지향적인 원리에 충실한 방식으로 설계된 자바 객체입니다.
 Spring에서는 도메인과 비지니스 로직을 수행하는 대상이 POJO가 될 수 있습니다.
 
+<br><br>
+#### **[추가 예상질문]**
+#### 🤔 POJO와 Java bean, Spring bean는 같은 것들인가요? 
+Java bean과 Spring bean은 POJO의 대상이며, Java Bean은 순수한 자바 객체,
+Spring Beandms IOC 컨테이너가 관리하는 Java 객체를 말합니다.
+
+(정확 x)
 <Br>
 
 >[POJO에 대하여](https://limmmee.tistory.com/8)
@@ -101,6 +112,19 @@ setter 메소드를 사용해 의존성을 주입해 주지 않아도, 메인 �
 스프링 어플리케이션이 구동이 되지 않습니다.      
 하지만 , 필드 주입이나, 수정자 주입은 객체 생성 후 비지니스 로직 상에서 순환참조가 일어나기 때문에 객체 생성시점에는 순환참조가 일어나는지 아닌지 발견할 수 있는 방법이 없습니다.
 
+<br><br>
+
+#### **[추가 예상질문]**
+#### 🤔  IoC가 무엇인지는 아시는 것 같은데, IoC가 필요한 이유는 무엇인가요? 왜 외부에서 제어 흐름을 관리해야하죠?
+객체를 독립시키기 위해서입니다.    
+의존성을 외부에서 주입받음으로써, 주입받은 객체의 관리를 해당 객체가 아닌, 외부 객체, 즉 원본 객체에서 모두 관리할 수 있도록 할 수 있습니다.     
+따라서, 해당 객체의 수정이 필요할때, 객체를 사용하는 모든 객체에서 수정하는게 아닌, 원본 객체에서만 수정을 할 수 있습니다.    
+이렇게됨으로써 유지보수가 편리해지고, 객체의 결합도가 낮아지게 되는 장점이 있습니다.    
+<br><br>
+
+#### 🤔  BeanFactory와 ApplicationContext는 각각 무엇인가요?
+
+BeanFactory란, 
 <br>
     
 >[IOC와 DI에 대하여](https://mo-world.tistory.com/entry/IOC%EC%99%80-DI-%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC-%EC%8A%A4%ED%94%84%EB%A7%81-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%89%BD%EA%B2%8C-%EC%84%A4%EB%AA%85)    
@@ -144,7 +168,33 @@ Dispatcher Servlet이란, Spring MVC에서 프론트 컨트롤러 패턴을 구�
 ![image](https://user-images.githubusercontent.com/42319300/153902623-5aa34db5-749b-4a9f-bade-81eaa2ae5ab3.png)      
 <Br><br>
 
+**(중요)**
 #### 🤔  Spring Web MVC에서 요청 마다 Thread가 생성되어 Controller를 통해 요청을 수행할텐데,  어떻게 1개의 Controller만 생성될 수 있을까요?
+Controller 객체 하나를 생성하면 객체 자체는 Heap에 생성되지만, 해당 Class의 정보는 메소드 영역에 저장됩니다.
+모든 Thread는 객체의 Binary Code 정보를 공유할 수 있습니다.      
+공유되는 정보를 사용하기 위하여 굳이 Controller 객체를 사용하고 있는 쓰레드나 Controller 객체 자체가 Block될 필요가 없습니다.    
+왜냐하면, 객체 내부적으로 상태를 갖는 것이 없으니, 내부의 상태를 변경할 일이 없고 그저 메소드에 대한 정보만 ‘같이 공유해서’ 쓰면 되기 때문입니다.     
+Controller가 내부적으로 상태를 갖는 것이 없으니 메소드 호출만 하면 되기 때문에 굳이 동기화할 이유가 없고, 그저 처리 로직만 ‘공유되어’ 사용되는 것이기 때문에 몇 십만개의 요청이 들어오든 상관없습니다.    
+<br><br>
+
+**[추가 예상질문]**
+#### 🤔 Dispatcher Servlet은 어느 시점에 생성되나요?
+Spring 앱이 실행되어 내부 tomcat이 실행되면서, 서블릿 컨텍스트를 초기화할때 생성 됩니다.    
+<br><br>
+
+#### 🤔 서블릿 컨텍스트란?
+서블릿 컨텍스트란, 톰캣이 실행되면서 서블릿과 서블릿 컨테이너 간 연동을 위해 사용되는 Context로,
+하나의 웹 애플리케이션마다 하나의 서블릿 컨텍스트를 가집니다.
+<br><br>
+
+#### 🤔 Dispatcher Servlet이 Controller 객체를 직접 메모리에 생성하나요?
+<br><br>
+
+#### 🤔 직접 생성하지 않는다면 무엇이 그 역할을 수행하나요?
+<br><br>
+
+#### 🤔 DispatcherServlet이 생성된 이후의 과정은 잘 알고 계신 것 같은데, 웹 어플리케이션이 실행된 이후부터 DispatcherServlet이 생성되기전까지 Spring framework가 어떤 준비를 하는지 설명해주실 수 있나요?
+<br><br>
 
 ## AOP
     
@@ -269,6 +319,52 @@ public class Advice {
 - JoinPoint : Advice가 적용될 위치, 끼어들 수 있는 지점, 메서드 진입 지점, 생성자 호출 시점, 필드에서 값을 꺼내올 때의 시점을 말합니다. 앱을 실행할 때 특정 작업이 시작되는 시점입니다.
 - PointCut : JoinPoint가 적용되는 대상, Adivice가 실행될 지점을 설정합니다.
 
+<br><Br>
+
+**[추가 예상질문]**
+#### 🤔 프로젝트에서 AOP를 활용한 부분이 있으실까요?
+저 같은 경우에는, 에러 처리를 @RestControllerAdvice 어노테이션과 @ExceptionHandler를 이용해 AOP 방식으로 전역적으로 처리할때 사용을 하였습니다.     
+
+<br><br>
+#### 🤔 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?
+사용자 인증은 Spring Security를 이용하였습니다.     
+Spring Security는 Spring MVC에 포함되지 않은 Filter의 영역입니다.      
+따라서 AOP를 활용하지 않았습니다.
+
+- 사용자 인증방식을 AOP기능을 이용한다면,AOP pointcut 기능을 이용해서 모든 요청이 서블릿으로 들어올 때 before pointcut을 걸어두어 회원정보를 검사할 수 있습니다.
+- 로깅방식또한 AOP를 이용해서 구현할 수 있습니다.
+
+<br><br>
+#### 🤔 그럼 @transactional 어노테이션은 AOP를 활용한 기능인가요?
+네, @transactional 처리가 spring AOP를 기반으로 하고있습니다.     
+따라서 프록시 기반으로 동작하며, 프록시 내부에서 내부를 호출하면 transaction이 적용하지 않습니다.      
+![image](https://user-images.githubusercontent.com/42319300/154854260-22a3dd91-b674-488f-b9f3-1e8d1ea05fd6.png)
+
+<br><br>
+#### 🤔 만약 프로젝트의 모든 Entity에서 Entity 생성시간과 수정시간 필드를 사용한다면, 이 필드를 한 곳에서 관리할 수 있는 방법이 있을까요? Spring framework를 사용하는 환경입니다.
+생성시간과, 수정시간 필드를 가지는 entity를 생성하고, 이를 상속받도록 합니다.    
+@EnableJpaAuditing를 이용해서 수정시간과 생성시간을 기록할 수 있습니다.
+```java
+/*Timestampe Entity*/
+@MappedSuperclass // 상속했을 때, 컬럼으로 인식하게 합니다. 
+@EntityListeners(AuditingEntityListener.class) // 생성/수정 시간을 자동으로 반영하도록 설정 
+public class Timestamped { 
+    @CreatedDate // 생성일자임을 나타냅니다. 
+    private LocalDateTime createdAt; 
+    
+    @LastModifiedDate // 마지막 수정일자임을 나타냅니다. 
+    private LocalDateTime modifiedAt; 
+}
+
+/*Spring Application*/
+@SpringBootApplication
+@EnableJpaAuditing
+public class MaruMaruSpartaVerSpringApplication {
+   public static void main(String[] args) {
+      SpringApplication.run(MaruMaruSpartaVerSpringApplication.class, args);
+   }
+}
+```
 <br>
 
 >[AOP란 - (AOP, Spring AOP, AOP 어노테이션)](https://thalals.tistory.com/271)
@@ -421,12 +517,15 @@ Bean의 생명주기는
 <Br><Br>
 
 #### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
-Scope란 Bean이 존재하고 관리되는 범위를 말합니다.        
+Scope란 Bean이 존재하고 관리되는 범위를 말합니다.  싱글톤, 프로토타입, request, session, application 등이 있습니다.       
 
 스프링에서 Bean의 Scope는 별다른 설정이 없으면, Singleton Scope로 설정 됩니다.        
 싱글톤방식으로 설정이되면, 스프링이 bean마다 하나의 객체를 생성해주고, 스프링을 통해 Bean을 제공받으면,     
 제공받은 Bean은 언제나 같은 객체임을 의미합니다.
-<Br><Br>
+
+반면, ProtoType Scope는 Bean의 생성과 의존 설정까지만 관여하는 매우 짧은 스코프입니다.
+따라서 모든 요청에서 새로운 객체를 생성하게 됩니다.    
+
 
 #### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
 Spring Bean을 등록하는 방법은 2가지가 있습니다.    
@@ -442,6 +541,13 @@ Spring Bean을 등록하는 방법은 2가지가 있습니다.
 Bean은 메소드에 사용하며, Component는 클래스에 사용이 됩니다.    
 개발자가 컨트롤이 불가능한 외부 라이브러리를 빈으로 등록하고 싶을 때 @Bean을 사용하며,      
 개발자가 직접 컨트롤이 가능한 내부 클래스의 경우 @Compoenet를 사용하여 스프링 빈으로 등록합니다.    
+
+<br><Br>
+
+**[추가 예상질문]**
+#### 🤔 Spring framework로 웹 어플리케이션을 개발할 때 Bean Scope 중 프로토타입 스코프는 어떤 경우에 활용하면 좋을까요?
+spring scope를 prototype으로 설정해준다면, bean으로 의존성을 주입할때마다, 새로운 객체가 반환되므로,    
+만들어진 객체 각가으 상태를 개별적으로 기억해야하는 Stateful한 상황에 쓰이면 좋을거 같습니다.
 
 <br>
 
@@ -542,6 +648,11 @@ DAO는, 데이터에 접근하는 객체로서, 데이터베이스에 접근하�
 
 <Br><Br>
 
+**[추가 예상질문]**
+#### 🤔 DTO로 넘긴 데이터가 어떻게 JSON 형식으로 변환되고, JSON 데이턱 어떻게 객체에 매핑되는지 그 과정에서 어떤 라이브러리가 관여하는지, 
+<Br><Br>
+
+#### 🤔 Serialize/Deserialize를 하는 이유는 무엇인지
 <Br><Br>
 ## JPA
 

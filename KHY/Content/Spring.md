@@ -65,15 +65,18 @@ annotation으로 메세지 수신을 선언하고 method parameter를 통해 수
 
 ## Spring DI/IoC는 어떻게 동작하나요?
 ### 핵심답변
-IoC(제어의 역전)은 프로그램의 제어 흐름을 직접 제어하는 것이 아니라 외부에서 관리하는 것으로 코드의 최종호출은 개발자가 제어하는 것이 아닌 프레임워크의 내부에서 결정된 대로 이루어집니다.       
+IoC(제어의 역전)은 프로그램의 제어 흐름을 직접 제어하는 것이 아니라 외부에서 관리하는 것으로        
+코드의 최종호출은 개발자가 제어하는 것이 아닌 프레임워크의 내부에서 결정된 대로 이루어집니다.       
 스프링에서는 스프링 컨테이너에서 객체 생성 및 관리를 합니다.
 
 DI(의존관계 주입)은 Spring 프레임워크에서 지원하는 IoC의 형태로 클래스 사이의 의존관계를 빈 설정 정보를 바탕으로 컨테이너가 자동으로 연결해줍니다.
 
-스프링에서는 스프링 컨테이너 ApplicationContext를 이용하여 설정 정보를 생성, 등록하고 필요한 객체를 생성자 혹은 setter를 통해 주입합니다.
+스프링에서는 스프링 컨테이너를 빈 팩토리를 확장해 만들어진 ApplicationContext를 사용하여, 설정 정보를 생성, 등록하고 필요한 객체를 생성자 혹은 setter를 통해 주입합니다.
 <br><br>
 #### 🤔 IoC 컨테이너의 역할은 무엇이 있을까요?
-애플리케이션 실행시점에 빈 오브젝트를 인스턴스화하고 DI 한 후에 최초로 애플리케이션을 기동할 빈 하나를 제공해줍니다.
+애플리케이션 실행시점에 빈 오브젝트를 인스턴스화하고 DI 한 후에 최초로 애플리케이션을 기동할 빈 하나를 제공해줍니다.      
+빈 생성할 때, 의존관계 주입이 일어납니다.      
+또한, 빈의 초기화, 소멸에 관한 권한을 가지고 있어, 개발자들은 비즈니스 로직에 집중할 수 있습니다.
 <br><br>
 #### 🤔 IoC를 Spring에서 왜 사용했을까요? (= IoC의 이점은 무엇인가요?)
 수많은 객체들을 편리하게 관리하고 변경에 유연한 코드 구조를 가져가기 위함입니다.    
@@ -83,7 +86,7 @@ IoC의 예시 중 하나는 개발자가 직접 객체를 관리하지 않고 �
 객체를 관리해주는 컨테이너와 그 외 내가 구현 하고자 하는 부분으로 각각 관심을 분리하면, 변경에 유연한 코드를 작성 할 수 있는 구조가 되기 때문에 제어를 역전합니다.
 <br><br>
 #### 🤔 의존관계는 무엇인가요?
-어떤 클래스가 다른 클래스에 접근할수 있는 경로를 가지거나 해당 클래스의 객체의 메소드를 호출하는 경우, 두 클래스 사이에 의존 관계가 있다고 말합니다.
+어떤 클래스가 다른 클래스에 접근할수 있는 경로를 가지거나 해당 클래스의 객체의 메소드를 호출하는 경우, 두 클래스 사이에 의존 관계가 있다고 말합니다.           
 의존 관계는 객체와 객체 사이에 협력하는데 반드시 필요합니다.      
 하지만 과도한 의존 관계 애플리케이션을 수정하기 어렵게 만듭니다.
 <br><br>
@@ -100,26 +103,122 @@ DI는 외부의 독립적인 존재가 객체를 생성한 후 이를 전달해�
 
 ## Spring IoC/DI(의존성 주입)의 방법에 대해 아는대로 설명해주세요.
 ### 핵심답변
-DI는 세가지 방법이 있습니다. 생성자 삽입, Setter를 이용한 메소드 매개 변수 삽입, 필드 주입이 있습니다.
-- 생성자 주입은 생성자 호출시점에 딱 1번만 호출되는 것을 보장하며 불변, 필수 의존관계에 사용합니다.
-- Setter주입은 선택, 변경 가능성이 있는 의존관계에 사용되며 스프링빈을 선택적으로 등록이 가능합니다.
-- 필드 주입은 `@Autowired` 를 사용하는데 외부에서 변경이 불가능하여 테스트 하기 힘듭니다.
-  <br>DI 프레임워크 없이는 작동하기 힘들며, 주로 애플리케이션과 관계없는 테스트코드나 `@Configuration` 같은 스프링 설정 목적으로 사용합니다.
-<br><br>
+DI는 세가지 방법이 있습니다. 생성자 주입, setter 주입, 필드 주입이 있습니다.
+- 생성자 주입은 객체를 생성하는 시점에 생성자를 통해 의존관계를 주입하는 것입니다.
+```java
+@Service
+@Transactional
+public class AccountService {
+    private final AccountRepository accountRepository;
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+}
+```
+- setter 주입은 객체를 생성 후 setter 메서드를 통해 의존관계를 주입하는 것입니다.
+```java
+@Service
+@Transactional
+public class AccountService {
+    private AccountRepository accountRepository;
+
+    @Autowired
+    public void setAccountRepository(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+}
+```
+- 필드 주입은 @Autowired 어노테이션을 사용해서 의존관계를 주입하는 것입니다.
+```java
+@Service
+@Transactional
+public class AccountService {
+    @Autowired
+    private AccountRepository accountRepository;
+}
+```
+<br>
+
 #### 🤔 각 DI 주입 방식의 차이점과 이점에 대해서 설명해주세요.
-<br><br>
+- 생성자 주입
+  - 생성자를 이용하여 클래스 사이의 의존 관계를 연결하는 방법입니다. 
+  - Setter 메서드를 제공하지 않음으로 간단하게 필드를 불변 값으로 지정할 수 있습니다.
+  - final 키워드로 해당 객체가 반드시 외부에서 주입 받는다는 것을 명확히 표시를 할 수 있습니다.
+  - 코드량이 많다는 문제점이 있지만, Lombok의 @RequiredArgsConstructor등을 활용하면 해결 가능합니다.
+  - Setter 주입과 필드 주입과는 다르게 의존관계를 주입하지 않는 경우에 객체를 생성할 수 없습니다. 이러한 특징 덕분에 애플리케이션 구동시에 해당 오류를 잡아낼 수 있습니다. 
+- Setter 주입
+    - Setter를 생성 후 의존성 삽입하기 떄문에 런타임시 의존관계를 주입하기 때문에 낮은 결합도를 갖는다는 장점이 있습니다.
+    - 하지만, 런타임시 의존관계를 주입하기 때문에 NullPointerException이 발생할 수 있다는 문제가 있습니다.
+    - 또한, immutable 객체가 아니기 때문에 실수할 수 있는 확률이 높습니다.
+- 필드 주입
+  - 필드 주입은 변수 선언부에 @Autowired 어노테이션을 사용하여 의존 관계를 연결하는 방법입니다. 
+  - 어노테이션을 사용하여 자동으로 의존성이 주입되기 때문에 간편하지만, 
+  - 참조 관계를 눈으로 확인하기 어렵고 Setter 주입과 마찬가지로 런타임시 의존관계를 주입해 NullPointerException이 발생할 수 있다는 문제가 있습니다.
+  <br><br>
 #### 🤔 의존성과 설정값을 생성자 인자로 주입해야 하는 이유에 대해 설명해주세요.
-모든 의존성을 생성자를 통해 주입하면, 인스턴스 생성 시 즉시 어떠한 동작을 실행할 수 있습니다.      
-또한 추가적인 설정은 필요하지 않으며, 뜻하지 않게 의존성과 설정값을 빠뜨리는 일이 발생하지 않고 테스트에도 용이합니다.
+1. 생성자 주입해야 하는 이유는 의존관계 주입을 하지 않은 경우에는 Controller 객체를 생성할 수 없기 때문에 NullPointerException를 방지할 수 있고, 테스트 코드 작성에도 용이합니다.      
+2. 생성자 주입을 사용하면, 객체가 순환참조를 하고 있는 경우에 스프링 애플리케이션이 구동되지 않기에, 순환 참조에 대한 오류를 쉽게 잡을 수 있습니다.           
+3. 주입 받을 필드를 final로 선언이 가능하기 때문에 해당 객체가 반드시 외부에서 주입 받는다는 것을 명확히 표시를 할 수 있고, Controller 내부에서 service 객체를 바꿔치기를 할 수 없습니다.
 <br><br>
 #### 🤔 생성자 주입은 언제 사용할까요?
+생성자 주입은 생성자 호출시점에 딱 1번만 호출되는 것을 보장하며 변하지 않고, 필수 의존관계에 사용합니다.
 <br><br>
 #### 🤔 Setter 주입은 언제 사용할까요?
+Setter 주입은 선택, 변경 가능성이 있는 의존관계에 사용되며 스프링빈을 선택적으로 등록이 가능합니다.
 <br><br>
 #### 📚 유익한 자료
 - [세 가지 DI 컨테이너로 향하는 저녁 산책](https://www.nextree.co.kr/p11247/)
 - [DI 기초](https://github.com/cheese10yun/TIL/blob/master/Spring/IoC/DI-%EA%B8%B0%EC%B4%88.md)
 - [스프링 - 생성자 주입을 사용해야 하는 이유, 필드인젝션이 좋지 않은 이유](https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/)
+
+---
+<br><br>
+
+## Spring Bean이란 무엇인가요?
+### 핵심답변
+Spring Bean은 스프링 컨테이너가 생성, 관계 설정, 사용 등을 제어해 주는 제어의 역전 원리가 적용된 객체를 말합니다.
+<br><br>
+#### 🤔 스프링 Bean의 생성 과정을 설명해주세요.
+Application Context 또는 Bean Factory는 Configuration Metadata 라는 빈 구성 정보를 읽어 빈을 생성하고 관리합니다.     
+이때, Bean Definition이라는 인터페이스로 추상화된 객체를 만듭니다.    
+###### 빈 구성 정보란?
+스프링 컨테이너가 빈 객체가 어떻게 만들어지고 어떻게 동작하게 할 것인가에 대한 설정 정보입니다.
+
+###### 빈 구성 정보를 작성하는 방법은 무엇이 있을까요?
+자바, 코틀린, 그루비, XML 등 다양한 방법으로 작성할 수 있습니다.    
+- Java-based configuration : 자바 코드를 빈 설정용 DSL로 사용해 작성한다. (스프링 3.0 이상 지원)
+  
+```java
+import org.springframework.context.annotation.Configuration; 
+import org.springframework.context.annotation.Bean;
+
+@Configuration
+public class ContainerConfiguration {
+    
+  @Bean
+  public MovieFinder movieFinder() {
+    return new EmptyMovieFinder(); 
+  }
+  
+  @Bean
+  public MovieLister movieLister(MovieFinder movieFinder) {
+    return new MovieLister(movieFinder); 
+  }
+  
+}
+ ```
+- Annotation-based configuration : @Autowired, @Qualifier 등 자바 애노테이션을 사용해 작성한다. (스프링 2.5 이상 지원)
+- XML-based configuration : 가장 오래된 방식으로 XML 문서 형식으로 작성한다.
+<br><br>
+#### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
+
+<br><br>
+#### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
+
+<br><br>
+#### 📚 유익한 자료
+[스프링 @Bean과 @Component의 차이](https://velog.io/@albaneo0724/Spring-%EC%8A%A4%ED%94%84%EB%A7%81-Bean%EA%B3%BC-Component%EC%9D%98-%EC%B0%A8%EC%9D%B4)
 
 ---
 <br><br>
@@ -218,11 +317,12 @@ Servlet을 이용해서 웹 요청을 다루게 되면, 개발자들이 처리 �
 <br><br>
 #### 🤔 Spring Web MVC에서 요청 마다 Thread가 생성되어 Controller를 통해 요청을 수행할텐데, 어떻게 1개의 Controller만 생성될 수 있을까요?
 Controller 객체 하나를 생성하면 객체 자체는 Heap에 생성되지만, 해당 Class의 정보는 메소드 영역에 저장됩니다.           
-모든 Thread는 객체의 Binary Code 정보를 공유할 수 있습니다.              
-공유되는 정보를 사용하기 위하여 굳이 Controller 객체를 사용하고 있는 쓰레드나 Controller 객체 자체가 Block될 필요가 없습니다.
+그러므로, 모든 Thread는 객체의 Binary Code 정보를 공유할 수 있습니다.              
+공유되는 정보를 사용하기 위하여, 굳이 Controller 객체를 사용하고 있는 쓰레드나 Controller 객체 자체가 Block될 필요가 없습니다.   
 왜냐하면, 객체 내부적으로 상태를 갖는 것이 없으니, 내부의 상태를 변경할 일이 없고 그저 메소드에 대한 정보만 ‘같이 공유해서’ 쓰면 되기 때문입니다.    
 
-Controller가 내부적으로 상태를 갖는 것이 없으니 메소드 호출만 하면 되기 때문에 굳이 동기화할 이유가 없고, 그저 처리 로직만 ‘공유되어’ 사용되는 것이기 때문에 몇 십만개의 요청이 들어오든 상관없습니다.               
+Controller가 내부적으로 상태를 갖는 것이 없으니 메소드 호출만 하면 되기 때문에 굳이 동기화할 이유가 없고,       
+그저 처리 로직만 ‘공유되어’ 사용되는 것이기 때문에 몇 십만개의 요청이 들어오든 상관없습니다.               
 <br><br>
 #### 📚 유익한 자료
 - [[10분 테코톡] 🐶 코기의 Servlet vs Spring](https://www.youtube.com/watch?v=calGCwG_B4Y&list=PLgXGHBqgT2TvpJ_p9L_yZKPifgdBOzdVH&index=63&t=50s)
@@ -296,6 +396,45 @@ DispatcherServlet은 요청에 대응할 수 있는 Controller, ViewResolver, Ha
 ---
 <br><br>
 
+## Filter와 Interceptor 차이
+### 핵심답변
+필터는 Servlet Filter로써 javax.servlet 스펙에 포함되는 클래스입니다.              
+인터셉터는 Spring MVC 스펙에 포함되어 있는 클래스입니다.
+
+<img width="500" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSz6DV%2Fbtq9zjRpUGv%2F68Fw4fZtDwaNCZiCFx57oK%2Fimg.png">
+
+필터는 Dispatcher Servlet에 요청이 전달되기 전과 후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리할 수 있는 기능을 제공해줍니다.          
+반면 인터셉터는 Spring이 제공하는 기술로써, Dispatcher Servlet이 컨트롤러를 호출하기 전, 후로 끼어들기 때문에 스프링의 영역 내부에서 Controller(Handler)에 관한 요청과 응답에 대해 처리해줍니다.
+<br><br>
+
+#### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. <br>Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
+Interceptor는 DispatcherServlet 내부에 존재하기 때문에 HandlerExceptionResolver를 사용해서 예외를 처리할 수가 있습니다.
+
+하지만, Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 Web Application 레벨에서 처리해주어야 합니다.       
+대표적인 방법으로는 Filter 내부에서 예외를 처리하기 위한 필터를 따로 둬서 try-catch문을 사용하여 처리하는 방식을 둘 수가 있습니다.       
+또한, HandlerExceptionResolver를 빈으로 주입받아 @ExceptionHandler에서 처리하는 방법이 있습니다.
+<br><br>
+
+#### 🤔 Filter와 Interceptor는 어떤 경우에 사용될 수 있을까요?
+Filter와 Interceptor는 공통 업무를 프로그램 흐름의 앞, 중간, 뒤에 추가하여 자동으로 처리할 때 사용합니다.
+
+자바 웹 개발을 하다보면, 공통적으로 처리해야 할 업무들이 많습니다.                
+예를 들어 로그인 관련(세션 체크)처리, 권한 체크, XSS(Cross site script)방어, 페이지 인코딩 변환 등이 있습니다.         
+공통업무에 관련된 코드를 모든 페이지 마다 작성 해야한다면 중복된 코드가 많아지게 되고 프로젝트 단위가 커질수록 서버에 부하를 줄 수도있으며, 소스 관리도 되지 않습니다.
+
+즉, 공통 부분은 빼서 따로 관리하는게 좋습니다.     
+이러한 공통업무를 프로그램 흐름의 앞, 중간, 뒤에 추가하여, 자동으로 처리하기 위해, Filter와 Interceptor를 활용할 수 있습니다.
+
+- Filter는 전체적인 Request단에서 어떤 처리가 필요할 때 사용할 수 있습니다.
+  - 인증, 이미지 변환, 데이터 압축, 암호화 필터, XML 컨텐츠를 변형하는 XSLT 필터, URL 및 기타정보를 캐시하는 필터, 문자 인코딩
+- Interceptor는 세션 및 쿠키 체크와 같이 http 프로토콜 단위로 처리해야 하는 업무가 있을 때 사용할 수 있습니다.
+  <br><br>
+#### 📚 유익한 자료
+[Spring Filter, Interceptor, AOP](https://baek-kim-dev.site/61)
+
+---
+<br><br>
+
 ## AOP(Aspect Oriented Programming)란 무엇일까요?
 ### 핵심답변
 여러 layer에 걸친 공통된 관심사 분리하는 것을 말합니다.      
@@ -316,148 +455,6 @@ DispatcherServlet은 요청에 대응할 수 있는 Controller, ViewResolver, Ha
 ---
 <br><br>
 
-## Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.
-### 핵심답변
-- Servlet Filter를 사용하여 커스텀한 CORS 설정하는 방법이 있습니다. 
-- Controller 클래스에 @Crossorigin 어노테이션을 통해 해결할 수 있습니다.
-- WebMvcConfiguer를 구현한 Configuration 클래스를 만들어서 addCorsMappings()를 재정의할 수도 있습니다. 
-- 마지막으로 Spring Security에서 CorsConfigurationSource를 Bean으로 등록하고 config에 추가해줌으로써 해결할 수 있습니다.
-<br><br>
-#### 1️⃣ Servlet Filter를 사용하여 커스텀한 CORS 설정하는 방법
-서버의 응답을 보내기 전에 Access-Control-Allow-Origin 헤더를 싣는 필터를 작성하는 방법입니다.   
-```java
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-@Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public class CorsFilter implements Filter {
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
-
-    @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) res;
-
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5500");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods","*");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers",
-                "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
-        if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
-        }else {
-            chain.doFilter(req, res);
-        }
-    }
-
-    @Override
-    public void destroy() {
-
-    }
-}
-```
-이 방법은 실제로 응답 헤더에 실릴 값들을 모두 설정해줍니다.    
-복잡한 설정이 필요한 경우에 사용하면 좋을 것 같습니다.
-<br><br>
-#### 2️⃣ Controller 클래스에 @Crossorigin 어노테이션을 활용하는 방법
-Controller 클래스 상단이나 Controller Mapping 메소드 상단에 CrossOrigin(origins="도메인 url")을 어노테이션으로 작성하는 방법입니다.   
-```java
-@CrossOrigin(origins = "http://127.0.0.1:5500/")  // 컨트롤러 클래스의 상단
-@RequiredArgsConstructor
-@RestController
-public class ArticleRestController {
-
-  public final ArticleRepository articleRepository;
-  public final ArticleService articleService;
-  public final LocationDistance location;
-
-  @CrossOrigin(origins = "http://127.0.0.1:5500/")  // 컨트롤러 맵핑 메소드 상단
-  @GetMapping("/api/articles/{query}")
-  public ResponseEntity<List<Article>> getArticles (@PathVariable("query") String query) {
-    List<Article> articles = articleRepository.findAllByTitleContains(query);
-    return ResponseEntity.ok().body(articles);
-  }
-}
-```
-1번 방법에 비해, 코드가 간결하고, 어노테이션 형태라 사용할 곳에 붙여 쓰면 되어 편리합니다.     
-메소드 단위로 어노테이션을 사용할 수 있는 것은 AWS Lambda로 API를 개발할 때 유용할 것 같습니다.      
-<br>
-#### 3️⃣ WebMvcConfig를 구현한 Configuration 클래스를 만드는 방법
-WebMvcConfig 클래스를 활용하는 방법입니다.   
-WebMvcConfiguer를 implement한 클래스를 만들고, @Configuration 어노테이션으로 어플리케이션에 연결하는 방법입니다.      
-allowedOrigins, allowedMethods 메서드를 통해 cors를 설정해줄 수 있습니다.   
-```java
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5500", "http://127.0.0.1:5500")
-                .allowedMethods("POST", "PUT", "GET", "HEAD", "OPTIONS", "DELETE");
-    }
-}
-```
-프로젝트 때, 3번 방법을 활용했습니다.    
-간단한 코드로 전체 범위의 CORS를 설정해줄 수 있어서 선택했습니다.
-<br><br>
-#### 📚 유익한 자료
-- [CORS를 해결하는 3가지 방법](https://wonit.tistory.com/572)
-- [CORS는 왜 이렇게 우리를 힘들게 하는걸까?](https://evan-moon.github.io/2020/05/21/about-cors/)
-
----
-<br><br>
-
-## Spring Bean이란 무엇인가요?
-### 핵심답변
-
-<br><br>
-#### 🤔 스프링 Bean의 생성 과정을 설명해주세요.
-
-<br><br>
-#### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
-
-<br><br>
-#### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
-
-<br><br>
-#### 📚 유익한 자료
-
-
----
-<br><br>
-
-## Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.
-### 핵심답변
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익한 자료
-
-
----
-<br><br>
 
 ## Spring에서 예외처리하는 방법에 대해서 설명해주세요.
 ### 핵심답변
@@ -630,7 +627,7 @@ public class FilterChainExceptionHandler extends OncePerRequestFilter {
 <br>
 
 #### 🤔 HandlerExceptionResolver에 대해 구체적으로 설명해주세요.
-HandlerExceptionResolver는 컨트롤러 작업 중 발생한 예외를 어떻게 처리할 지 결정하는 전략입니다.       
+HandlerExceptionResolver는 컨트롤러 작업 중 발생한 예외를 어떻게 처리할지 결정하는 전략입니다.       
 앞서 설명드린 @ExceptionHandler 어노테이션을 활용하여 예외를 처리하는 방법과 @ControllerAdvice 어노테이션을 활용하여 예외를 처리하는 방법은 HandlerExceptionResolver를 이용한 예외 처리 방법입니다.
 
 Dispatcher Servlet에 기본적으로 3개의 HandlerExceptionResolver가 등록 되어있습니다.
@@ -671,41 +668,111 @@ Dispatcher Servlet에 기본적으로 3개의 HandlerExceptionResolver가 등록
 ---
 <br><br>
 
-## Filter와 Interceptor 차이
+
+## Spring에서 CORS 에러를 해결하기 위한 방법을 설명해주세요.
 ### 핵심답변
-필터는 Servlet Filter로써 javax.servlet 스펙에 포함되는 클래스입니다.              
-인터셉터는 Spring MVC 스펙에 포함되어 있는 클래스입니다.     
+- Servlet Filter를 사용하여 커스텀한 CORS 설정하는 방법이 있습니다.
+- Controller 클래스에 @Crossorigin 어노테이션을 통해 해결할 수 있습니다.
+- WebMvcConfiguer를 구현한 Configuration 클래스를 만들어서 addCorsMappings()를 재정의할 수도 있습니다.
+- 마지막으로 Spring Security에서 CorsConfigurationSource를 Bean으로 등록하고 config에 추가해줌으로써 해결할 수 있습니다.
+  <br><br>
+#### 1️⃣ Servlet Filter를 사용하여 커스텀한 CORS 설정하는 방법
+서버의 응답을 보내기 전에 Access-Control-Allow-Origin 헤더를 싣는 필터를 작성하는 방법입니다.
+```java
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
-<img width="500" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSz6DV%2Fbtq9zjRpUGv%2F68Fw4fZtDwaNCZiCFx57oK%2Fimg.png">
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-필터는 Dispatcher Servlet에 요청이 전달되기 전과 후에 url 패턴에 맞는 모든 요청에 대해 부가작업을 처리할 수 있는 기능을 제공해줍니다.          
-반면 인터셉터는 Spring이 제공하는 기술로써, Dispatcher Servlet이 컨트롤러를 호출하기 전, 후로 끼어들기 때문에 스프링의 영역 내부에서 Controller(Handler)에 관한 요청과 응답에 대해 처리해줍니다.
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class CorsFilter implements Filter {
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5500");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods","*");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers",
+                "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+        if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }else {
+            chain.doFilter(req, res);
+        }
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}
+```
+이 방법은 실제로 응답 헤더에 실릴 값들을 모두 설정해줍니다.    
+복잡한 설정이 필요한 경우에 사용하면 좋을 것 같습니다.
 <br><br>
+#### 2️⃣ Controller 클래스에 @Crossorigin 어노테이션을 활용하는 방법
+Controller 클래스 상단이나 Controller Mapping 메소드 상단에 CrossOrigin(origins="도메인 url")을 어노테이션으로 작성하는 방법입니다.
+```java
+@CrossOrigin(origins = "http://127.0.0.1:5500/")  // 컨트롤러 클래스의 상단
+@RequiredArgsConstructor
+@RestController
+public class ArticleRestController {
 
-#### 🤔 Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. <br>Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
-Interceptor는 DispatcherServlet 내부에 존재하기 때문에 HandlerExceptionResolver를 사용해서 예외를 처리할 수가 있습니다.     
+  public final ArticleRepository articleRepository;
+  public final ArticleService articleService;
+  public final LocationDistance location;
 
-하지만, Filter는 DispatcherServlet 외부에 존재하기 때문에 예외가 발생했을 때 Web Application 레벨에서 처리해주어야 합니다.       
-대표적인 방법으로는 Filter 내부에서 예외를 처리하기 위한 필터를 따로 둬서 try-catch문을 사용하여 처리하는 방식을 둘 수가 있습니다.
-또한, HandlerExceptionResolver를 빈으로 주입받아 @ExceptionHandler에서 처리하는 방법이 있습니다.
-<br><br>
+  @CrossOrigin(origins = "http://127.0.0.1:5500/")  // 컨트롤러 맵핑 메소드 상단
+  @GetMapping("/api/articles/{query}")
+  public ResponseEntity<List<Article>> getArticles (@PathVariable("query") String query) {
+    List<Article> articles = articleRepository.findAllByTitleContains(query);
+    return ResponseEntity.ok().body(articles);
+  }
+}
+```
+1번 방법에 비해, 코드가 간결하고, 어노테이션 형태라 사용할 곳에 붙여 쓰면 되어 편리합니다.     
+메소드 단위로 어노테이션을 사용할 수 있는 것은 AWS Lambda로 API를 개발할 때 유용할 것 같습니다.      
+<br>
+#### 3️⃣ WebMvcConfig를 구현한 Configuration 클래스를 만드는 방법
+WebMvcConfig 클래스를 활용하는 방법입니다.   
+WebMvcConfiguer를 implement한 클래스를 만들고, @Configuration 어노테이션으로 어플리케이션에 연결하는 방법입니다.      
+allowedOrigins, allowedMethods 메서드를 통해 cors를 설정해줄 수 있습니다.
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-#### 🤔 Filter와 Interceptor는 어떤 경우에 사용될 수 있을까요?
-Filter와 Interceptor는 공통 업무를 프로그램 흐름의 앞, 중간, 뒤에 추가하여 자동으로 처리할 때 사용합니다.               
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
 
-자바 웹 개발을 하다보면, 공통적으로 처리해야 할 업무들이 많습니다.                
-예를 들어 로그인 관련(세션 체크)처리, 권한 체크, XSS(Cross site script)방어, 페이지 인코딩 변환 등이 있습니다.         
-공통업무에 관련된 코드를 모든 페이지 마다 작성 해야한다면 중복된 코드가 많아지게 되고 프로젝트 단위가 커질수록 서버에 부하를 줄 수도있으며, 소스 관리도 되지 않습니다.     
-
-즉, 공통 부분은 빼서 따로 관리하는게 좋습니다.     
-이러한 공통업무를 프로그램 흐름의 앞, 중간, 뒤에 추가하여, 자동으로 처리하기 위해, Filter와 Interceptor를 활용할 수 있습니다.          
-
-- Filter는 전체적인 Request단에서 어떤 처리가 필요할 때 사용할 수 있습니다.
-  - 인증, 이미지 변환, 데이터 압축, 암호화 필터, XML 컨텐츠를 변형하는 XSLT 필터, URL 및 기타정보를 캐시하는 필터, 문자 인코딩
-- Interceptor는 세션 및 쿠키 체크와 같이 http 프로토콜 단위로 처리해야 하는 업무가 있을 때 사용할 수 있습니다.
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5500", "http://127.0.0.1:5500")
+                .allowedMethods("POST", "PUT", "GET", "HEAD", "OPTIONS", "DELETE");
+    }
+}
+```
+프로젝트 때, 3번 방법을 활용했습니다.    
+간단한 코드로 전체 범위의 CORS를 설정해줄 수 있어서 선택했습니다.
 <br><br>
 #### 📚 유익한 자료
-[Spring Filter, Interceptor, AOP](https://baek-kim-dev.site/61)
+- [CORS를 해결하는 3가지 방법](https://wonit.tistory.com/572)
+- [CORS는 왜 이렇게 우리를 힘들게 하는걸까?](https://evan-moon.github.io/2020/05/21/about-cors/)
 
 ---
 <br><br>
@@ -715,74 +782,78 @@ Filter와 Interceptor는 공통 업무를 프로그램 흐름의 앞, 중간, �
 
 데이터를 주고 받을 때, DTO를 사용하는 이유는 다음과 같습니다.
 1. 첫번째는 비즈니스 로직의 캡슐화 입니다.          
-기존 클래스를 사용하지 않고 데이터를 DTO를 사용하여, 비즈니스 로직의 캡슐화를 할 수 있습니다.<br>
-기존 클래스를 통해 데이터를 통신하면, 외부 사용자에게 데이터베이스의 스키마 형태, 데이터베이스의 구조, 서비스 내부 로직을 유출 될 수 있습니다.<br>
-대표적인 예로, JPA를 사용할 때, 모델은 데이터베이스의 테이블 구조와 매우 유사합니다.<br>
-이때, DTO는 변수의 접근자를 private로 설정하고 public한 getter함수, setter함수를 만들어 캡슐화 할 수 있습니다.
+Entity를 사용하지 않고 DTO를 사용하여, 비즈니스 로직의 캡슐화를 할 수 있습니다.<br>
+Entity를 통해 데이터를 통신하면, 외부 사용자에게 데이터베이스의 스키마 형태, 데이터베이스의 구조, 서비스 내부 로직을 유출 될 수 있습니다.<br>
+이때 DTO를 사용하여, 변수의 접근자를 private로 설정하고 public한 getter함수, setter함수를 만들어 캡슐화 할 수 있습니다.
 
-2. 두번째는 클라이언언트에게 필요한 정보를 Model이 전부 담을 수 없을 때 사용합니다.    
-가장 대표적으로 에러 메세지가 있습니다.<br>
-서비스 실행 도중 사용자 측에 에러가 발생하면, 에러 메세지를 담아 전송해주어야 합니다.<br>
-모델은 서비스 로직과 관련이 없기 때문에 모델에 에러메세지를 담기에는 애매합니다. <br>
-이런 경우 DTO에 에러 메세지 필드를 선언하고 에러 메세지를 포함시키면 됩니다.
+2. 순환참조 문제를 예방할 수 있습니다.
+<br>양방향 참조된 Entity를 Controller에서 response로 return하게 되면,
+<br>Entity가 참조하고 있는 객체는 지연 로딩 되고,
+<br>로딩된 객체는 또 다시 본인이 참조하고 있는 객체를 호출하는 순환 참조의 문제를 낳습니다.
+<br>따라서 이를 방지하기 위해 return으로 DTO를 두는 것이 더 안전합니다.
 <br><br>
 
-#### 🤔
-
-<br><br>
-
-#### 🤔
+#### 🤔 DTO 유효성 검사는 어떻게 할 수 있을까요?
 
 <br><br>
 #### 📚 유익한 자료
-- [DTO란 무엇인가, VO와의 비교](https://kafcamus.tistory.com/13)
+- [요청과 응답으로 엔티티(Entity) 대신 DTO를 사용하자](https://tecoble.techcourse.co.kr/post/2020-08-31-dto-vs-entity/)
+- [Spring Boot에서 DTO 검증하기](https://tecoble.techcourse.co.kr/post/2020-09-20-validation-in-spring-boot/)
 - [Entity, DTO, 그 사이의 ModelMapper 이야기](https://yonguri.tistory.com/m/entry/Entity-DTO-%EA%B7%B8-%EC%82%AC%EC%9D%B4%EC%9D%98-ModelMapper-%EC%9D%B4%EC%95%BC%EA%B8%B0)
 
 ---
 <br><br>
 
-## JPA를 사용할 때의 이점에 대해서 설명해주세요.
-### 핵심답변
-JPA가 있다면, 자바 언어로 구현하다가, 갑자기 SQL로 구현해주지 않아도 됩니다.      
-JPA를 통해 SQL을 자바로 만들 수 있고, 그 결과 유지보수가 쉽습니다.      
+# 피드백
+## POJO
+#### POJO와 Java bean, Spring bean는 같은 것들인가요?
+- POJO는 특정 규약과 환경에 종속되지 않은 재활용될 수 있는 객체입니다.
+- Java Bean은 POJO에서 아래의 조건이 추가된 객체입니다.
+  - Fields는 접근 제어자가 private, getter와 setter로만 접근 되어야만 한다.
+    - 캡슐화를 위해서다.
+  - Constructor는 argument를 가지면 안된다.
+    - Class 내의 인자가 있는 생성자를 추가학 되면, 컴파일러는 default 생성자를 생성하지 않게 되기 때문이다.
+  - Serializable 인터페이스를 상속받아야 한다.
+    - Java Bean이 네트워크를 통해 전송되거나 파일에 저장되는 일이 잦기 때문이다.
+- Spring Bean은 스프링 컨테이너가 생성, 관계 설정, 사용 등을 제어해 주는 제어의 역전 원리가 적용된 객체를 말합니다.
 
-JPA를 사용하지 않았을 때는 필드 변경 시, 모든 SQL을 수정해야 했습니다.      
-JPA를 사용했을 때는 필드가 변경 시, 필드만 변경해주면 됩니다. SQL은 JPA가 처리하기 때문에 손댈 것이 없습니다.
-<br><br>
-#### 🤔
+## DI/IoC
+#### 1. IoC가 무엇인지는 아시는 것 같은데, IoC가 필요한 이유는 무엇인가요? 왜 외부에서 제어 흐름을 관리해야하죠?
+수많은 객체들을 편리하게 관리하고 변경에 유연한 코드 구조를 가져가기 위함입니다.
 
-<br><br>
-#### 🤔
+IoC의 예시 중 하나는 개발자가 직접 객체를 관리하지 않고 스프링 컨테이너에서 직접 객체를 생성하여 해당 객체에 주입 시키는 것입니다.    
+작성하고자 하는 코드에서 객체 생성, 소멸 등 객체를 관리하는 코드와 함께 비즈니스 코드까지 같이 있으면, 변경이 어렵습니다.            
+객체를 관리해주는 컨테이너와 그 외 내가 구현 하고자 하는 부분으로 각각 관심을 분리하면, 변경에 유연한 코드를 작성 할 수 있는 구조가 되기 때문에 제어를 역전합니다.
 
-<br><br>
-#### 📚 유익한 자료
+#### 2. BeanFactory와 ApplicationContext는 각각 무엇인가요?
+스프링 컨테이너로 BeanFactory와 ApplicationContext를 사용합니다.
+- BeanFactory는 Bean을 등록, 생성, 조회, 반환 관리를 합니다.
+<br>일반적으로는 BeanFactory를 사용하는 경우보다 BeanFactory를 확장해 만들어진 ApplicationContext를 주로 사용합니다.
+- ApplicationContext는 BeanFactory의 특징을 그대로 가지고 있으면서, 동시에 스프링 AOP 통합과 국제화 지원, 이벤트 기반 애플리케이션이나 웹 애플리케이션을 위한 기능을 제공합니다.
 
+## Bean
+#### 1. Spring framework로 웹 어플리케이션을 개발할 때 Bean Scope 중 프로토타입 스코프는 어떤 경우에 활용하면 좋을까요?
+https://yangbongsoo.gitbook.io/study/spring-1/ioc_container_di#undefined
 
----
-<br><br>
+## MVC - Dispatcher Servlet 동작 원리
+#### 1. Dispatcher Servlet은 어느 시점에 생성되나요?
+#### 2. Dispatcher Servlet이 Controller 객체를 직접 메모리에 생성하나요?
+###### 직접 생성하지 않는다면 무엇이 그 역할을 수행하나요?
+#### 3. DispatcherServlet이 생성된 이후의 과정은 잘 알고 계신 것 같은데, 웹 어플리케이션이 실행된 이후부터 DispatcherServlet이 생성되기전까지 Spring framework가 어떤 준비를 하는지 설명해주실 수 있나요?
 
-## JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
-### 핵심답변
-JPA에서 발생하는 케이스들은 2가지 입니다. 즉시로딩 N+1과 지연로딩 N+1입니다.      
-N + 1 문제의 원인은 다음과 같습니다.   
-즉시 로딩의 경우,
-지연 로딩의 경우,
+## AOP
+- AOP의 기본적인 개념과 Spring에서 AOP를 어떻게 응용하고 활용하는지에 대한 질문이 주로 나오는 편입니다.
+#### 1. 프로젝트에서 AOP를 활용한 부분이 있으실까요?
+###### 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?
+###### 그럼 @Transactional 어노테이션은 AOP를 활용한 기능인가요?
+#### 2. 만약 프로젝트의 모든 Entity에서 Entity 생성시간과 수정시간 필드를 사용한다면, 이 필드를 한 곳에서 관리할 수 있는 방법이 있을까요? Spring framework를 사용하는 환경입니다.
 
-해결방법은 다음과 같습니다.
-###### 1. Join Fetch
-첫번째 방법은 Join Fetch를 사용하는 것입니다.
-###### 2. @EntityGraph
-두번째 방법은 EntityGraph 어노테이션을 사용하는 것입니다.
+## Getter, Setter
+- Setter를 데이터 무결성과 연결하시면 면접관들이 `읭?`하실 가능성이 있습니다. 물론 추가 설명하시면 이해하시겠지만, Setter보다는 Builder 패턴이나 SOLID 개방폐쇄원칙에 더 적합한 주제입니다.
+- https://cheese10yun.github.io/spring-jpa-best-06/
+- https://cheese10yun.github.io/spring-builder-pattern/
 
-<br><br>
-#### 🤔 설명해주신 해결 방법의 한계점은 무엇이 있을까요?
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 📚 유익한 자료
-- [JPA N+1 발생원인과 해결방법](https://cheese10yun.github.io/jpa-nplus-1/)
-
----
-<br><br>
+## DTO
+- 단순히 데이터를 객체 형식으로 넘기기 위해서만 사용하는 것은 아닙니다.
+- 실무에서 API 개발시에도 DTO는 정말 자주 활용됩니다. 때문에 면접에서는 DTO의 개념에 대해 묻는 것에 그치지 않고, DTO를 실제로 활용할 때 Serialize/Deserialize와 ObjectMapper가 중요한 이슈이기 때문에 이 점에 대해 질문이 들어올 수 있습니다. 만약 개인/팀 프로젝트에서 DTO를 사용하셨다면 더더욱 준비하셔야 합니다.
+- DTO로 넘긴 데이터가 어떻게 JSON 형식으로 변환되고, JSON 데이턱 어떻게 객체에 매핑되는지, 그 과정에서 어떤 라이브러리가 관여하는지, Serialize/Deserialize를 하는 이유는 무엇인지 등을 학습해두세요-!

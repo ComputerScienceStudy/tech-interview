@@ -1,5 +1,12 @@
 # [3주차 면접 스터디] DB 정리
 
+[RDBMS vs NoSQL](https://github.com/ComputerScienceStudy/tech-interview/blob/main/AHW/WEEK03.md#rdbms-vs-nosql%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94)
+[인덱스(Index)](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#%EC%9D%B8%EB%8D%B1%EC%8A%A4)
+[트랜젝션](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98)
+[JPA](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#jpajava-persistence-api)
+[정규화(Normalization) vs 비정규화(Denormalization)](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#%EC%A0%95%EA%B7%9C%ED%99%94%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94)
+[SQL](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#sql)
+
 ### RDBMS vs NOSQL에 대해서 설명해주세요.
 
 1. **RDBMS**
@@ -389,11 +396,11 @@
 
 ### QueryDSL을 사용하는 이유와 JPQL과 차이점에 대해서 설명해주세요.
 
-[QueryDSL]([https://tecoble.techcourse.co.kr/post/2021-08-08-basic-querydsl/](https://tecoble.techcourse.co.kr/post/2021-08-08-basic-querydsl/))
+[QueryDSL](https://tecoble.techcourse.co.kr/post/2021-08-08-basic-querydsl/)
 
-[JPQL]([https://victorydntmd.tistory.com/205?category=795879](https://victorydntmd.tistory.com/205?category=795879))
+[JPQL](https://victorydntmd.tistory.com/205?category=795879)
 
-[JPQL vs QueryDSL 간단 비교]([https://devkingdom.tistory.com/242](https://devkingdom.tistory.com/242))
+[JPQL vs QueryDSL 간단 비교](https://devkingdom.tistory.com/242)
 
 ---
 

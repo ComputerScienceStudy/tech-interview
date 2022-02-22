@@ -308,7 +308,7 @@ ALTER TABLE ex_table ALTER COLUMN [컬럼명] SET DEFAULT 'Default값';
     3. 브라우저를 닫거나, 서버에서 세션을 삭제했을 때에만 삭제가 되므로 보안 측면에서 쿠키보다 더 좋습니다.
 
 #### Q) 동작 방식
-- 쿠키
+- 쿠키        
 ![](https://images.velog.io/images/apolontes/post/0a2cb209-b2ff-4352-bd2a-8d8bbbe0746b/2022-02-22_20-03-14.png)
 
  1. 클라이언트가 서버에 로그인 요청을 합니다.

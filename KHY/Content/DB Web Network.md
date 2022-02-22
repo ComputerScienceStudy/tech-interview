@@ -18,7 +18,7 @@ NOSQL은 RDBMS에 비해 자유로운 형태로 데이터를 저장합니다.
 #### 🤔 테이블 간의 관계는 무엇이 있고, 외래키는 무엇인가요?
 테이블 간의 관계는 관계를 맺는 테이블의 수에 따라 다음과 같이 나눌 수 있습니다.
 
-<img width="300" src="http://www.tcpschool.com/lectures/img_mysql_relationship.png">
+<img width="500" src="http://www.tcpschool.com/lectures/img_mysql_relationship.png">
 
 1. 일대일(one-to-one) 관계
 2. 일대다(one-to-many) 관계
@@ -210,7 +210,7 @@ RDBMS에도 다양한 인덱스 구조가 있으나 여기서 예로 든 것은 
 #### 🤔 Elastic Search의 키워드 검색과 RDBMS의 LIKE 검색의 차이에 대해 설명해주세요.
 Elastic Search의 키워드 검색은 document를 저장할 때 수행하는 알고리즘과 동일한 알고리즘으로 키워드를 분리합니다.           
 그 중에서 랭킹알고리즘을 통해서 가장 유사한 순서대로 결과를 나타냅니다.          
-RDBMS에서의 LIKE 검색은 와일드카드로 시작하지 않는 경우에만 인덱스를 사용하고 나머지 경우는 전체를 탐색하기 때문에 상대적으로 느립니다.            
+RDBMS에서의 LIKE 검색은 와일드카드로 시작하지 않는 경우에만 인덱스를 사용하고 나머지 경우는 전체를 탐색하기 때문에 상대적으로 느립니다.
 <br><br>
 ###### 역인덱싱에 대해 자세히 설명해주세요.
 역인덱싱은 대용량 텍스트의 효율적인 검색을 위해 고안된 방법으로         
@@ -220,7 +220,7 @@ RDBMS에서의 LIKE 검색은 와일드카드로 시작하지 않는 경우에�
 이 때 문서를 유의미한 단어로 분리하기 위해 형태소 분석 과정을 거칩니다.
 <br><br>
 #### 📚 유익한 자료
-
+- [Inverted Index](https://esbook.kimjmin.net/06-text-analysis/6.1-indexing-data)
 ---
 <br><br>
 
@@ -281,7 +281,7 @@ RDBMS에서의 LIKE 검색은 와일드카드로 시작하지 않는 경우에�
 - [비정규화](https://thebook.io/006765/part03/ch07/03/02/)
 
 ---
-
+<br><br>
 ## JPA란?
 ### 핵심답변
 JPA란 Java Persistance API의 약자로 JAVA ORM 표준 기술입니다.       
@@ -322,9 +322,11 @@ public interface EntityManager {
     // More interface methods...
 }
 ```
+
 ###### Hibernate
 Hibernate는 JPA의 구현체입니다.     
 javax.persistence.EntityManager와 같은 인터페이스를 직접 구현한 라이브러리입니다.
+
 ###### Spring Data JPA
 Spring Data JPA는 Spring에서 제공하는 모듈 중 하나로, 개발자가 JPA를 더 쉽고 편하게 사용할 수 있도록 도와줍니다.            
 이는 JPA를 한 단계 추상화시킨 Repository라는 인터페이스를 제공함으로써 이루어집니다.           

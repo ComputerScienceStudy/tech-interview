@@ -2,17 +2,24 @@
 
 ### 목차
 
-[RDBMS vs NoSQL](https://github.com/ComputerScienceStudy/tech-interview/blob/main/AHW/WEEK03.md#rdbms-vs-nosql%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94)
+#### DB
+- [RDBMS vs NoSQL](https://github.com/ComputerScienceStudy/tech-interview/blob/main/AHW/WEEK03.md#rdbms-vs-nosql%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94)
 
-[인덱스(Index)](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#%EC%9D%B8%EB%8D%B1%EC%8A%A4)
+- [인덱스(Index)](https://github.com/ComputerScienceStudy/tech-interview/blob/main/AHW/WEEK03.md#%EC%9D%B8%EB%8D%B1%EC%8A%A4)
 
-[트랜젝션](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98)
+- [트랜젝션](https://github.com/ComputerScienceStudy/tech-interview/blob/main/AHW/WEEK03.md#%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98)
 
-[JPA](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#jpajava-persistence-api)
+- [JPA](https://github.com/ComputerScienceStudy/tech-interview/blob/main/AHW/WEEK03.md#jpajava-persistence-api)
 
-[정규화(Normalization) vs 비정규화(Denormalization)](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#%EC%A0%95%EA%B7%9C%ED%99%94%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94)
+- [정규화(Normalization) vs 비정규화(Denormalization)](https://github.com/ComputerScienceStudy/tech-interview/blob/main/AHW/WEEK03.md#%EC%A0%95%EA%B7%9C%ED%99%94%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94)
 
-[SQL](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#sql)
+- [SQL](https://github.com/ComputerScienceStudy/tech-interview/blob/main/AHW/WEEK03.md#sql)
+
+#### WEB
+- 
+
+#### NETWORK
+- 
 
 ---
 
@@ -536,3 +543,82 @@
 **출처**
 
 [1](https://tipntech.tistory.com/16)
+
+---
+
+### 쿠키(Cookie)와 세션(Session)
+- 쿠키와 세션의 필요성
+- 동작방식
+- 쿠키와 세션은 언제 사용하나요?
+
+---
+
+### 세션 기반 인증방식 vs 토큰 기반 인증방식
+- 동작방식
+- 장단점
+
+---
+
+#### JWT
+- JWT 사용 이유 및 장단점
+
+---
+
+#### 웹 서버와 WAS의 차이점
+
+---
+
+#### 웹 공격 패턴 및 방어 방법
+- SQL Injection에 대해서 간단히 설명해주세요
+
+
+---
+
+#### RESTful의 개념
+- RESTful이란 무엇이며, 이것에 대해서 아는대로 설명해보세요.
+- 본인이 프로젝트를 진행할때 Restful API를 지키기위해 한 노력은 무엇인가요?
+
+---
+
+#### Challenge
+- 웹 사이트를 제작했는데 고해상도 이미지를 많이 사용하여 페이지 로딩 속도가 느립니다. 최적화 하는 방법에 대해서 모두 설명하세요.
+- 브라운이 새로운 검색 엔진을 개발하려고 합니다. 어떻게 설계 및 개발 것인지 아는 지식을 모두 동원하여 설명하세요.
+
+---
+
+#### 웹 브라우저에서 URI에 구글닷컴을 쳤을 때 발생하는 일들을 아는 대로 설명해주세요.
+- DNS 서버, HTTP 프로토콜(80포트), HTTPS 프로토콜(443포트), DOM, IP, PORT 등의 용어를 사용해서
+
+---
+
+#### 사용자가 웹브라우저를 통해 서버에 이미지를 요청해서 사용자에게 보여주기까지 과정을 설명하세요.
+
+---
+
+#### OSI 7계층
+- OSI 7계층이 무엇인지 그 존재 이유에 대해서 설명해보세요.
+- TCP/IP 4계층에 대해 설명해보세요.
+- 웹 서버 소프트웨어(Apache, Nginx)는 OSI 7계층 중 어디서 작동하는지 설명해보세요.
+- 웹 서버 소프트웨어(Apache, Nginx)의 서버 간 라우팅 기능은 OSI 7계층 중 어디서 작동하는지 설명해보세요.
+
+---
+
+#### DNS란?
+
+---
+
+#### HTTP
+- HTTP의 역할
+- HTTP와 HTTPS의 차이를 설명하세요.
+- HTTPS에 대해서 설명하고 SSL Handshake에 대해서 설명해보세요.
+- HTTP 프로토콜의 특징
+- HTTP 1.1 VS 2.0 VS 3.0
+- HTTP 응답코드
+- HTTP Method - PUT과 PATCH의 차이
+
+---
+
+#### TCP와 UDP
+- TCP와 UDP의 차이점에 대해서 설명해보세요.
+- 3 way hand shake에 대해서 설명하세요.
+

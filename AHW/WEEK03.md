@@ -332,8 +332,9 @@
     - JPA를 쉽게 사용하기 위해 스프링에서 제공하고 있는 프레임워크
     - Spring Data JPA의 `Repository`의 구현에서 JPA를 사용
 
-  | JPA | Java의 Interface |
+  | 구분 | 예시 |
   | --- | --- |
+  | JPA | Java의 Interface |
   | Hibernate | Interface를 구현한 Class |
   | Spring Data JPA | JPA에게 Repository라는 인터페이스 제공 |
 

@@ -12,6 +12,8 @@
 - Generic의 개념
 - ThreadLocal이 무엇이고 언제 활용되는지
 
+<br><br>
+
 ## [Spring Framework](https://github.com/ComputerScienceStudy/tech-interview/blob/main/Week2.md)
 ### Spring
 - POJO란 무엇인가요? Spring Framework에서 POJO는 무엇이 될 수 있을까요?
@@ -35,6 +37,8 @@
 - Filter와 Interceptor 차이
   - Filter는 Servlet의 스펙이고, Interceptor는 Spring MVC의 스펙입니다. Spring Application에서 Filter와 Interceptor를 통해 예외를 처리할 경우 어떻게 해야 할까요?
 - DTO를 사용하는 이유
+
+<br><br>
 
 ## [DB, Web, Network](https://github.com/ComputerScienceStudy/tech-interview/blob/main/Week3.md)
 ### DB
@@ -65,6 +69,7 @@
   - Elastic Search의 키워드 검색과 RDBMS의 LIKE 검색의 차이에 대해 설명해주세요.
 - SQL
   - A라는 테이블이 존재할 때, 새로운 속성(Column)을 추가한다고 할때, 모든 행(row)에 Default값을 넣어주고 싶을때, 어떤 쿼리문을 작성해야 할까요?
+  
 ### WEB
 - 쿠키와 세션
   - 쿠키와 세션의 필요성
@@ -86,7 +91,6 @@
   - 브라운이 새로운 검색 엔진을 개발하려고 합니다. 어떻게 설계 및 개발 것인지 아는 지식을 모두 동원하여 설명하세요.
 
 ### Network
-
 - 웹 브라우저에서 URI에 구글닷컴을 쳤을 때 발생하는 일들을 아는 대로 설명해주세요. <br>DNS 서버, HTTP 프로토콜(80포트), HTTPS 프로토콜(443포트), DOM, IP, PORT 등등의 용어를 사용해서
 - 사용자가 웹브라우저를 통해 서버에 이미지를 요청해서 사용자에게 보여주기까지 과정을 설명하세요.
 - OSI 7계층
@@ -106,4 +110,3 @@
 - TCP와 UDP
   - TCP와 UDP의 차이점에 대해서 설명해보세요.
   - 3 way hand shake에 대해서 설명하세요.
-

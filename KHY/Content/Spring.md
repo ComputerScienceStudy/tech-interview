@@ -59,7 +59,7 @@ annotation으로 메세지 수신을 선언하고 method parameter를 통해 수
 <br><br>
 #### 📚 유익한 자료
 - [Plain old Java Object](https://en.wikipedia.org/wiki/Plain_old_Java_object)
-- [당신의 코드는 POJO하신가요?](https://www.youtube.com/watch?v=5NcqgXgmmjg&t=2863s)
+
 ---
 <br><br>
 
@@ -182,9 +182,14 @@ Spring Bean은 스프링 컨테이너가 생성, 관계 설정, 사용 등을 �
 #### 🤔 스프링 Bean의 생성 과정을 설명해주세요.
 Application Context 또는 Bean Factory는 Configuration Metadata 라는 빈 구성 정보를 읽어 빈을 생성하고 관리합니다.     
 이때, Bean Definition이라는 인터페이스로 추상화된 객체를 만듭니다.    
+
+Bean은 객체 생성 → 의존 설정 → 초기화 → 사용 → 소멸 과정의 생명주기를 가지고 있습니다.           
+Bean은 스프링 컨테이너에 의해 생명주기를 관리하며 빈 초기화방법은 @PostConstruct 를 빈 소멸에서는 @PreDestroy 를 사용합니다.            
+생성한 스프링 빈을 등록할 때는 @Component을 이용하거나 @Bean 을 사용하여 빈 설정파일에 직접 빈을 등록할 수 있습니다.
+<br><br>
 ###### 빈 구성 정보란?
 스프링 컨테이너가 빈 객체가 어떻게 만들어지고 어떻게 동작하게 할 것인가에 대한 설정 정보입니다.
-
+<br><br>
 ###### 빈 구성 정보를 작성하는 방법은 무엇이 있을까요?
 자바, 코틀린, 그루비, XML 등 다양한 방법으로 작성할 수 있습니다.    
 - Java-based configuration : 자바 코드를 빈 설정용 DSL로 사용해 작성한다. (스프링 3.0 이상 지원)
@@ -212,7 +217,11 @@ public class ContainerConfiguration {
 - XML-based configuration : 가장 오래된 방식으로 XML 문서 형식으로 작성한다.
 <br><br>
 #### 🤔 스프링 Bean의 Scope에 대해서 설명해주세요.
+빈 스코프는 빈이 존재할 수 있는 범위를 뜻하며 싱글톤, 프로토타입, request, session, application 등이 있습니다.         
 
+싱글톤은 기본 스코프로 스프링 컨테이너의 시작과 종료까지 유지되는 가장 넓은 범위의 스코프입니다.        
+프로토타입은 빈의 생성과 의존관계 주입까지만 관여하고 더는 관리하지 않는 매우 짧은 범위의 스코프입니다.        
+request는 웹 요청이 들어오고 나갈때까지 유지하는 스코프, session은 웹 세션이 생성, 종료할때까지, application은 웹 서블릿 컨텍스트와 같은 범위로 유지하는 스코프입니다.
 <br><br>
 #### 🤔 Bean/Component 어노테이션에 대해서 설명해주시고, 둘의 차이점에 대해 설명해주세요.
 

@@ -110,6 +110,9 @@ DB에서 등호(=) 뿐 아니라 부등호(<, >)도 사용할 수 있습니다.
 B Tree는 항상 정렬된 상태에 있기 때문에 특정 값보다 크고 작은 부등호 연산에도 빠릅니다.   
 또한, 데이터 탐색뿐 아니라, 저장, 수정, 삭제에도 항상 O(logN)의 시간 복잡도를 가지기 때문에
 DB 인덱스 자료구조로 B Tree를 많이 사용합니다.
+
+<img width="500" src ="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FczuTGq%2FbtqBeLlZ2ZM%2Fxh3mYPN2iZUjnmAN1p35uK%2Fimg.png">
+
 <br><br>
 #### 🤔 index 대상 컬럼 선장할 때 기준
 일반적으로 Cardinality가 높은 컬럼을 우선적으로 인덱싱하는 것이 검색 성능에 유리합니다.      
@@ -121,11 +124,10 @@ Cardinality 높은 컬럼의 경우, Index를 통해 데이터를 더 많이 필
 <br><br>
 #### 📚 유익한 자료
 - [How Does Indexing Work](https://chartio.com/learn/databases/how-does-indexing-work/)
-- [B - Tree Data structure](http://www.btechsmartclass.com/data_structures/b-trees.html)
 - [위키백과 - B+ 트리](https://ko.wikipedia.org/wiki/B%2B_%ED%8A%B8%EB%A6%AC)
 - [DB 인덱스(INDEX) 자료구조](https://junhyunny.github.io/information/data-structure/db-index-data-structure/)
 - [Binary Search Tree에서 B+Tree까지(Database Index 추가)](https://velog.io/@jewelrykim/Binary-Search-Tree%EC%97%90%EC%84%9C-BTree%EA%B9%8C%EC%A7%80Database-Index-%EC%B6%94%EA%B0%80)
-
+- [B-Tree 인덱스 구조](https://beelee.tistory.com/37)
 ---
 <br><br>
 
@@ -177,9 +179,12 @@ Durty Read, Nonrepeatable Read와 같은 문제를 예방하려면 트랜잭션�
 소실된 수정 <br>Lost Update | T1, T2가 모두 어떤 로우를 수정하려고 읽고 그 로우의 상태에 따라 수정하는 경우입니다. <br>T1이 먼저 로우를 수정 후 커밋하기 전, <br>T2가 T1이 수정한 로우를 똑같이 수정했다면 T1이 커밋한 후에 T2 역시 커밋하게 됩니다. <br>그러면 **T1이 수정한 로우를 T2가 넢어쓰게 되어 T1이 수정한 내용이 소실됩니다.**
 <br>
 
-#### 🤔 트랜잭션 잠금에 대해서 설명해주세요.
-<br><br>
 #### 🤔 잠금 타임아웃과 교착 상태가 발생하는 이유에 대해서 설명해주세요.
+
+잠금 타임아웃은 다음과 같은 상황에서 발생합니다.         
+트랜잭션A의 갱신과 트랜잭션B의 갱신이 충돌하는 경우, wait이 발생하고 지정 시간이 지나면 잠금 타임아웃이 발생합니다.        
+교착상태는 다음과 같은 상황에서 발생합니다.        
+트랜잭션 A는 a에, 트랜잭션 B는 b에 갱신을 한 상태일 때, 트랜잭션 A가 b에 갱신을 하려 하고, 트랜잭션 B는 a에 갱신을 하려고 하면 교착상태가 발생합니다.
 <br><br>
 #### 🤔 트랜잭션 Rollback은 어떤 경우에 하나요?
 하나의 트랜잭션 처리가 비정상적으로 종료되면 트랜잭션의 원자성을 위해 롤백을 사용합니다.     
@@ -187,11 +192,6 @@ Durty Read, Nonrepeatable Read와 같은 문제를 예방하려면 트랜잭션�
 트랜잭션을 롤백함으로써 해당 트랜잭션에서 작업한 모든 연산을 취소하여 실제 데이터베이스에 반영하지 않도록 합니다.       
 롤백하고 난 후에는 해당 트랜잭션을 재시작하거나 폐기해야 합니다.
 <br><br>
-#### 📚 유익한 자료
-
----
-<br><br>
-
 ## Elastic Search에 대해서 간단히 설명해주세요.
 ### 핵심 답변
 Elastic Search는 자바로 개발된 오픈소스 검색엔진 입니다.          
@@ -370,8 +370,6 @@ HTTP 프로토콜의 경우, 현재 접속한 사용자가 이전에 접속했�
 <br><br>
 #### 🤔 쿠키와 세션의 동작방식에 대해서 설명해주세요.
 ###### 쿠키
-<img width="350" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FBjzmc%2FbtrqOgQpvN5%2FvBaLMopSvroTlGorOoANCK%2Fimg.png">
-
 1. 웹 브라우저가 서버에 요청
 2. 상태를 유지하고 싶은 값을 쿠키로 생성
 3. 서버가 응답할 때, HTTP 헤더(Set-Cookie)에 쿠키를 포함해서 전송
@@ -381,8 +379,6 @@ HTTP 프로토콜의 경우, 현재 접속한 사용자가 이전에 접속했�
 5. 서버에서는 쿠키 정보를 읽어 이전 상태 정보를 확인한 후 응답
 <br><br>
 ###### 세션
-<img width="480" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fdjd2G8%2FbtrqOhod6mQ%2Fm8f0KkjaHKbMCOkkrbxd5K%2Fimg.png">
-
 1. 웹브라우저가 서버에 요청합니다.
 2. 서버가 해당 웹브라우저(클라이언트)에 유일한 ID (Session ID)를 부여합니다.
 3. 서버가 응답할 때 HTTP헤더(Set-Cooke)에 Session ID를 포함하여 전송하여,<br>
@@ -402,17 +398,6 @@ HTTP 프로토콜의 경우, 현재 접속한 사용자가 이전에 접속했�
 - [쿠키와 세션](https://doooyeon.github.io/2018/09/10/cookie-and-session.html)
 ---
 <br><br>
-## 세션 기반 인증 방식과 토큰 기반 인증 방식의 차이점에 대해서 설명해주세요.
-### 핵심 답변
-<br><br>
-#### 🤔 세션 기반 인증 방식과 토큰 기반 인증 방식의 동작방식에 대해서 설명해주세요.
-<br><br>
-#### 🤔 세션 기반 인증 방식과 토큰 기반 인증 방식의 장단범은 무엇인가요?
-<br><br>
-#### 📚 유익한 자료
-
----
-<br><br>
 ## JWT에 대해서 간단히 설명해주세요.
 ### 핵심 답변
 
@@ -430,9 +415,7 @@ HTTP 프로토콜의 경우, 현재 접속한 사용자가 이전에 접속했�
 - 페이로드 자체는 암호화 된 것이 아니라, BASE64로 인코딩 된 것입니다. 중간에 Payload를 탈취하여 디코딩하면 데이터를 볼 수 있으므로, JWE로 암호화하거나 Payload에 중요 데이터를 넣지 않아야 합니다.
 - JWT는 상태를 저장하지 않기 때문에 한번 만들어지면 제어가 불가능합니다. 즉, 토큰을 임의로 삭제하는 것이 불가능하므로 토큰 만료 시간을 꼭 넣어주어야 합니다.
 <br><br>
-#### 🤔 
 #### 📚 유익한 자료
-- [JWT 공식 문서](https://jwt.io/introduction/)
 - [JWT(Json Web Token)란?](https://mangkyu.tistory.com/56)
 
 ---
@@ -449,13 +432,6 @@ WAS는 동적으로 동작하며 DB와 연동되고 비즈니스 로직을 포�
 <br><br>
 #### 📚 유익한 자료
 [웹서버, WAS 개념 정리](https://brunch.co.kr/@springboot/21)
-
----
-<br><br>
-## SQL Injection에 대해서 간단히 설명해주세요.
-### 핵심 답변
-<br><br>
-#### 📚 유익한 자료
 
 ---
 <br><br>
@@ -532,12 +508,6 @@ LAN 어댑터는 이를 전기신호로 변환시켜 송출합니다.
 웹 서버에 도착한 패킷은 프로토콜 스택이 패킷을 추출하여 메시지를 복원하고 웹 서버 애플리케이션에 넘깁니다.        
 애플리케이션은 요청에 대한 응답 데이터를 작성하여 클라이언트로 회송하고, 이는 전달된 방식 그대로 전송됩니다.
 <br><br>
-#### 🤔 
-<br><br>
-#### 📚 유익한 자료
-
----
-<br><br>
 ## 사용자가 웹브라우저를 통해 서버에 이미지를 요청해서 사용자에게 보여주기까지 과정을 설명하세요.
 ### 핵심 답변
 1. 웹 브라우저가 https://www.google.com/images/google.png로 이미지를 요청 해야 한다는 것을 인지한다.
@@ -572,8 +542,6 @@ LAN 어댑터는 이를 전기신호로 변환시켜 송출합니다.
 11. 커넥션이 닫히면 웹브라우저는 사용자에게 이미지를 보여준다.
     - 구문 분석 ( HTML, CSS, JS ) + 렌더링 ( DOM Tree 구성 - 렌더 트리 구성 - 렌더트리 레이아웃 배치 - 렌더트리 그리기 )
     - HTML parsing, CSS parsing, Page Rendering, GPU Rendering 을 통해 그림을 그려냄
-<br><br>
-#### 🤔 
 <br><br>
 #### 📚 유익한 자료
 - [사용자가 웹브라우저를 통해 서버에 이미지를 요청해서 사용자에게 보여주기까지 과정](https://krksap.tistory.com/1148)
@@ -613,8 +581,6 @@ Application Layer에서 작동됩니다.
 웹 서버 소프트웨어는 HTTP 프로토콜을 이용하여 HTML, CSS, Javascript, image와 같은 정적인 정보들을 웹 브라우저에 전송합니다.      
 HTTP 프로토콜은 OSI 7 계층인 Application Layer에 위치한 프로토콜로서, 브라우저(클라이언트)와 서버 사이에 정보를 주고 받기 위한 프로토콜로 사용됩니다.
 <br><br>
-#### 🤔 웹 서버 소프트웨어(Apache, Nginx)의 서버 간 라우팅 기능은 OSI 7계층 중 어디서 작동하는지 설명해보세요.
-<br><br>
 #### 📚 유익한 자료
 - [네트워크의 기본 'OSI 7계층' 한번에 이해하고 외우는 방법](https://www.ciokorea.com/news/36536#csidxa7b8fb7c6c7e34a85f2253bf8c1b283)
 
@@ -641,14 +607,7 @@ TCP 3way handshake는 가상회선을 수립하는 단계입니다.
 SYN, ACK 패킷을 주고받으며, 임의의 난수로 SYN 플래그를 전송하고, ACK 플래그에는 1을 더한값을 전송합니다.         
 정확한 순서는 SYN(n) -> ACK(n + 1), SYN(m) -> ACK(m + 1) 순으로 일어납니다.
 <br><br>
-###### 왜 임의의 난수를 지정하나요? 
-기존 요청과 구분하기 위해서   
-더 있을까?
-<br><br>
-#### 📚 유익한 자료
 
----
-<br><br>
 ## HTTP의 역할은 무엇인가요?
 ### 핵심답변
 WWW(World Wide Web)에서 하이퍼텍스트(hypertext) 문서를 교환하기 위하여 사용되는 통신규약입니다.
@@ -733,16 +692,6 @@ HTTP Method를 통해 자원에 대한 처리를 표현합니다.
 <br><br>
 #### 📚 유익한 자료
 [나만 모르고 있던 HTTP/2](https://www.popit.kr/%EB%82%98%EB%A7%8C-%EB%AA%A8%EB%A5%B4%EA%B3%A0-%EC%9E%88%EB%8D%98-http2/)
-
----
-<br><br>
-## DNS에 대해서 설명해보세요.
-### 핵심 답변
-
-<br><br>
-#### 🤔
-<br><br>
-#### 📚 유익한 자료
 
 ---
 <br><br>

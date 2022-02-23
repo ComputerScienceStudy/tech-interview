@@ -398,9 +398,6 @@ DispatcherServlet은 요청에 대응할 수 있는 Controller, ViewResolver, Ha
 <br><br>
 #### 📚 유익한 자료
 - [Spring MVC의 핵심 객체 DispatcherServlet에 대한 모든 것(DispatcherServlet이 하는 역할 정리, 동작 프로세스)](https://jeong-pro.tistory.com/225)
-- [스프링 MVC](https://github.com/cheese10yun/TIL/blob/master/Spring/mvc/mvc-basic.md)
-- [Spring MVC 흐름](https://github.com/cheese10yun/TIL/blob/master/Spring/mvc/mvc-flow.md)
-- [Spring 웹 MVC 강의 정리](https://github.com/cheese10yun/TIL/blob/master/Spring/mvc/Spring-%EC%9B%B9MVC-%EA%B0%95%EC%9D%98-%EC%A0%95%EB%A6%AC.md)
 
 ---
 <br><br>
@@ -801,13 +798,8 @@ Entity를 통해 데이터를 통신하면, 외부 사용자에게 데이터베�
 <br>로딩된 객체는 또 다시 본인이 참조하고 있는 객체를 호출하는 순환 참조의 문제를 낳습니다.
 <br>따라서 이를 방지하기 위해 return으로 DTO를 두는 것이 더 안전합니다.
 <br><br>
-
-#### 🤔 DTO 유효성 검사는 어떻게 할 수 있을까요?
-
-<br><br>
 #### 📚 유익한 자료
 - [요청과 응답으로 엔티티(Entity) 대신 DTO를 사용하자](https://tecoble.techcourse.co.kr/post/2020-08-31-dto-vs-entity/)
-- [Spring Boot에서 DTO 검증하기](https://tecoble.techcourse.co.kr/post/2020-09-20-validation-in-spring-boot/)
 - [Entity, DTO, 그 사이의 ModelMapper 이야기](https://yonguri.tistory.com/m/entry/Entity-DTO-%EA%B7%B8-%EC%82%AC%EC%9D%B4%EC%9D%98-ModelMapper-%EC%9D%B4%EC%95%BC%EA%B8%B0)
 
 ---

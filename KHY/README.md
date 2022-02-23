@@ -93,8 +93,8 @@
 - 웹 서버와 WAS의 차이점
 - 웹 공격 패턴과 방어 방법
   - SQL Injection에 대해서 간단히 설명해주세요.
-- RESTful의 개념
-  - RESTful이란 무엇이며, 이것에 대해서 아는대로 설명해보세요.
+- Restful의 개념
+  - Restful이란 무엇이며, 이것에 대해서 아는대로 설명해보세요.
   - 본인이 프로젝트를 진행할때 Restful API를 지키기위해 한 노력은 무엇인가요?
 - Challenge
   - 웹 사이트를 제작했는데 고해상도 이미지를 많이 사용하여 페이지 로딩 속도가 느립니다. 최적화 하는 방법에 대해서 모두 설명하세요.
@@ -105,21 +105,20 @@
   DNS 서버, HTTP 프로토콜(80포트), HTTPS 프로토콜(443포트), DOM, IP, PORT 등등의 용어를 사용해서
 - 사용자가 웹브라우저를 통해 서버에 이미지를 요청해서 사용자에게 보여주기까지 과정을 설명하세요.
 - OSI 7계층
-  - OSI 7계층에 대해서 설명하세요. (각각 알려진 유명 프로토콜)
-  - OSI 7계층과 그 존재 이유, TCP/IP 4계층에 대해 설명해보세요.
+  - OSI 7계층이 무엇인지 그 존재 이유에 대해서 설명해보세요.
+  - TCP/IP 4계층에 대해 설명해보세요.
   - 웹 서버 소프트웨어(Apache, Nginx)는 OSI 7계층 중 어디서 작동하는지 설명해보세요.
-- TCP와 UDP
-  - TCP와 UDP의 차이점에 대해서 설명해보세요.
-  - 3 way hand shake에 대해서 설명하세요.
+  - 웹 서버 소프트웨어(Apache, Nginx)의 서버 간 라우팅 기능은 OSI 7계층 중 어디서 작동하는지 설명해보세요.
+- DNS란?
 - HTTP
   - HTTP의 역할
   - HTTP와 HTTPS의 차이를 설명하세요.
   - HTTPS에 대해서 설명하고 SSL Handshake에 대해서 설명해보세요.
   - HTTP 프로토콜의 특징
-  - HTTP 1.1 VS 2.0
+  - HTTP 1.1 VS 2.0 VS 3.0
   - HTTP 응답코드
   - HTTP Method - PUT과 PATCH의 차이
-  - HTTP Method - GET과 POST의 차이
-- DNS에 대해서 설명하세요.
-
+- TCP와 UDP
+  - TCP와 UDP의 차이점에 대해서 설명해보세요.
+  - 3 way hand shake에 대해서 설명하세요.
 </details>

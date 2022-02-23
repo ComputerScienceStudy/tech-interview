@@ -473,3 +473,278 @@ Spring에서 JPA와 Mybatis를 혼용해서 사용할 수 있기 때문에 필�
 - **JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.**
 [JPA N+1 발생원인과 해결 방법](https://www.popit.kr/jpa-n1-%EB%B0%9C%EC%83%9D%EC%9B%90%EC%9D%B8%EA%B3%BC-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EB%B2%95/)
 [JPA N+1) 문제 완전 정리](https://galid1.tistory.com/800)
+
+<br><br>
+---
+# 💡 피드백
+## POJO
+#### POJO와 Java bean, Spring bean는 같은 것들인가요?
+| 구분 | 개념 |
+| :--: | :--: |
+| POJO | 특정 프레임워크에 바인딩되지 않은 Java 객체 |
+| Java Bean | \*엄격한 컨벤션을 지키는 특수 유형의 POJO |
+| Spring Bean | 개발자가 관리하는 객체가 아닌, 스프링 IoC 컨테이너에서 관리되는 객체 |
+
+- **\* 엄격한 컨벤션**
+	1. Access Level - 모든 클래스의 속성은 private
+	2. Getter/Setter 메소드로 제어
+	3. 기본 생성자(인수가 없는 public 생성자) 필수
+	    - 역직렬화 시에 인수 없이 인스턴스를 생성하기 위함
+	4. Serializable 인터페이스를 구현하여 상태를 저장할 수 있게 함
+<br>
+
+[📚 Reference](https://2jinishappy.tistory.com/324)
+<br><br>
+
+---
+## DI/IoC
+
+#### 1. IoC가 무엇인지는 아시는 것 같은데, IoC가 필요한 이유는 무엇인가요? 왜 외부에서 제어 흐름을 관리해야하죠?
+
+- 객체지향적으로 **Single Responsibility Principle**을 지킬 수 있다.
+	
+	즉, A class가 B의 의존관계를 선택할 필요 X = B class의 변경에 대해 A class는 변경 X
+
+- 개발자가 객체를 `new`로 직접 만들지 않고 IoC Container가 객체를 Bean으로써 대신 관리해주는 것이 IoC이다.
+
+	따라서, `new`로 객체 생성시 `new`를 쓸 때마다 시스템 용량을 차지하는데, bean에 한번만 등록해줌으로써 편리성이 높아지고, 속도가 빨라진다.
+
+<br>
+
+[📚 Reference](https://okky.kr/article/1034744?note=2487385)
+<br><br>
+
+#### 2. BeanFactory와 ApplicationContext는 각각 무엇인가요?
+- BeanFactory
+	- Bean을 등록, 생성, 조회 등의 관리를 하고, 의존관계를 설정하는 기능을 담당하는 가장 기본적인 IoC 컨테이너이자 클래스
+
+- ApplicationContext
+	- BeanFactory의 확장된 버전으로, BeanFactory의 모든 기능을 포함하고, 추가 기능 또한 제공하는 컨테이너
+
+<br>
+
+[📚 Reference](https://beststar-1.tistory.com/39#빈_팩토리(BeanFactory)
+<br><br>
+
+---
+## MVC - Dispatcher Servlet 동작 원리
+
+#### 1. Dispatcher Servlet은 어느 시점에 생성되나요?
+- 웹 애플리케이션의 서블릿 컨텍스트를 초기화하는 시점에 옵션에 따라 `lazy loading` 혹은 `pre loading` 방식으로 생성됩니다.
+
+<details>
+<summary>💡 ServletContext</summary>
+
+- 톰캣이 실행되면서 서블릿과 서블릿 컨테이너 간 연동을 위해 사용되는 Context
+- 하나의 웹 애플리케이션마다 하나의 서블릿 컨텍스트를 가진다.
+- 서블릿 컨테이너가 생성될 때 컨텍스트가 생성되고 종료되면 소멸된다.
+
+</details>
+
+<br>
+	
+#### 2. Dispatcher Servlet이 Controller 객체를 직접 메모리에 생성하나요? 직접 생성하지 않는다면 무엇이 그 역할을 수행하나요?
+
+- **NO**
+	- DispatcherServlet은 적절한 controller를 선택하는 일을 HandlerMapping에게 요청한다.
+	- HandlerMapping이 적합한 controller를 선택 후 DispatcherServlet에 전달한다.
+	- 즉, HandlerMapping이 Controller 객체를 직접 메모리에 생성하는 역할을 수행한다(고 생각합니다).
+
+<br>
+
+#### 3. DispatcherServlet이 생성된 이후의 과정은 잘 알고 계신 것 같은데, 웹 어플리케이션이 실행된 이후부터 DispatcherServlet이 생성되기전까지 Spring framework가 어떤 준비를 하는지 설명해주실 수 있나요?
+	
+a. Tomcat(WAS)에 의해 web.xml이 로딩됨
+
+b. web.xml에 등록외어 있는 ContextLoaderListener (Java Class) 생성
+
+c. 생성된 ContextLoaderListener가 root-context.xml을 로딩
+
+d. root-context.xml에 등록되어 있는 Spring Container가 구동됨
+
+e. 클라이언트로부터 웹 어플리케이션 요청을 받음
+
+f. 최초의 클라이언트 요청에 의해 **DispatcherServlet 생성**
+
+<br>
+
+<details>
+<summary>💡 용어 사전</summary>
+
+- `web.xml`: 각종 설정을 위한 파일
+- `ContextLoaderListener` 객체: src/main/resources 소스 폴더에 있는 applicationContext.xml 파일을 로딩하여 스프링 컨테이너를 구동 (= Root 컨테이너)
+- `root-context.xml`: view와 관련되지 않은 객체를 정의하고, Service, Repository(DAO), DB등 비즈니스 로직과 관련된 설정을 수행하는 파일
+
+![image](https://user-images.githubusercontent.com/90819869/155349278-75cce6a8-0139-447e-99fc-74ed93368a86.png)
+
+</details>	
+
+<br>
+
+[📚 1. Reference](https://velog.io/@suhongkim98/DispatcherServlet과-스프링-컨테이너-생성-과정)
+	
+[📚 2. Reference](https://velog.io/@hsw0194/Spring-MVC-HandlerMapping%EC%9D%98-%EB%8F%99%EC%9E%91%EB%B0%A9%EC%8B%9D-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-1%ED%8E%B8)
+	
+[📚 3. Reference](https://javannspring.tistory.com/231)
+	
+[📚 3. Reference](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc)
+
+<br><br>
+
+## AOP
+
+#### 1. 프로젝트에서 AOP를 활용한 부분이 있으실까요?
+
+<br>
+
+#### 1-1. 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?
+
+- AOP를 활용한 로깅
+
+	- 기존에 서비스 로직에 로깅하는 코드(cross-cutting)를 제거하고, 핵심 로직에서 분리하여 핵심 로직 부분을 전혀 수정하지 않고 원하는곳에 적용할 수 있습니다.
+
+#### 1-2. 그럼 @Transactional 어노테이션은 AOP를 활용한 기능인가요?
+
+- **YES**. 어노테이션 기반 AOP를 통해 구현되어 있기 때문에, 아래와 같은 특징이 있습니다.
+
+	- 클래스, 메소드에 @Transactional이 선언되면 해당 클래스에 트랜잭션이 적용된 프록시 객체 생성
+	- 프록시 객체는 @Transactional이 포함된 메서드가 호출될 경우, 트랜잭션을 시작하고 Commit or Rollback을 수행
+	- CheckedException or 예외가 없을 때는 Commit
+	- UncheckedException이 발생하면 Rollback
+
+<br>
+
+#### 2. 만약 프로젝트의 모든 Entity에서 Entity 생성시간과 수정시간 필드를 사용한다면, 이 필드를 한 곳에서 관리할 수 있는 방법이 있을까요? Spring framework를 사용하는 환경입니다.
+
+- **YES**. JPA Auditing을 활용하여 관리 가능
+
+	- JPA Auditing 적용 방법
+		1. Posts 클래스에서 BaseTimeEntity를 상속받아 자동으로 Entity의 시간을 관리
+		2. Application 클래스에 @EnableJpaAuditing을 추가
+
+<br>
+
+[📚 1-1. Reference](https://velog.io/@znftm97/Spring-AOP를-활용하여-로깅)
+
+[📚 1-2. Reference](https://imiyoungman.tistory.com/9)
+	
+[📚 2. Reference](https://frtt0608.tistory.com/114)
+
+<br><br>
+
+## Bean
+
+#### 1. Spring framework로 웹 어플리케이션을 개발할 때 Bean Scope(Bean의 생성과 의존 설정까지만 관여하는 매우 짧은 스코프) 중 프로토타입 스코프는 어떤 경우에 활용하면 좋을까요?
+
+- 용도
+	- `new` 키워드로 오브젝트를 생성하는 것을 대신하기 위해 사용
+	
+- 활용 사례
+	- `new`가 아닌, 컨테이너의 DI 기능을 사용하고 싶은 경우
+	- 매번 새로운 오브젝트가 필요하면서 DI를 통해 다른 빈을 사용해야할 경우
+
+<br>
+
+[📚 1. Reference](https://gunju-ko.github.io/toby-spring/2019/04/15/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85%EA%B3%BC-%EC%8A%A4%EC%BD%94%ED%94%84.html)
+
+<br><br>
+
+## DTO
+
+#### 1. Serialize/Deserialize란?
+
+- **Serialize(직렬화)**
+	- 자바 시스템 내부에서 사용되는 객체(Object) 또는 데이터(Data)를 외부 자바 시스템에서도 사용할 수 있도록 바이트(byte) 형태로 데이터를 변환하는 기술
+	- JVM(Java Virtual Machine)의 메모리에 상주(힙 또는 스택)되어 있는 객체 데이터를 바이트 형태로 변환하는 것
+	
+- **Deserialize(역직렬화)**
+	- 직렬화와 반대로, 바이트로 변환된 데이터를 원래대로 객체(Object)나 데이터(Data)로 변환하는 기술
+	- 직렬화된 바이트 형태의 데이터를 객체로 변환해서 JVM에 상주시키는 것
+
+<br>
+
+#### 1-1. ObjectMapper란?
+
+-  Java 객체를 JSON으로 직렬화하거나 JSON 컨텐츠를 Java 객체로 역직렬화 할 때 사용하는 Jackson 라이브러리의 클래스
+- ObjectMapper를 통해 직렬화와 역직렬화 설정을 해줄 수 있습니다.
+- **장점**: 코드량을 줄일 수 있다.
+- **단점**: 모든 dto나 entity에 설정해줘야 한다. 또, 외래키로 묶여있는 다른 entity나 dto는 변환되지 않는다.
+
+<br>
+
+#### 1-2. Serialize/Deserialize를 하는 이유는 무엇인가요?
+- 대부분 OS의 프로세스 구현은 서로 다른 가상 메모리 주소 공간(Virtual Address Spage, VAS)을 갖기 때문에, *Object 타입의 참조값(주소 값) 데이터 인스턴스를 전달할 수 없습니다*.
+- 만약 전달한다고 하더라도, *서로 다른 메모리 공간에서는 전달된 참조값이 무의미*합니다.
+- 따라서, **서로 다른 메모리 공간 사이의 데이터 전달을 위해** 메모리 공간의 주소 값이 아닌 바이트(byte) 형태로 직렬화(변환)된 객체 데이터를 전달하고, 사용하는 쪽에서는 역직렬화 하여 사용하는 방법이 사용됩니다.
+
+<br>
+	
+#### 2. DTO로 넘긴 데이터가 어떻게 JSON 형식으로 변환되고, JSON 데이터가 어떻게 객체에 매핑되는지, 그 과정에서 어떤 라이브러리가 관여하는지 설명해주세요.
+
+- **Jackson이란?**
+	- Java Object를 Json으로 변환하거나 Json을 Java Object로 변환하는데 사용할 수 있는 Java 라이브러리
+
+- **Java Object → JSON**
+	- Java 객체를 JSON으로 직렬화하기 위해 ObjectMapper의 **`writeValue()` 메서드**를 이용
+	- 파라미터로 JSON을 저장할 파일과 직렬화시킬 객체를 넣어줍니다.
+	- 정상 실행 시, 개발자가 지정한 경로(`src/person.json`)에 json 파일(`{"name":"hwon","age":20,"address":"seoul"}`)이 생성됩니다.
+
+	```java
+	import com.fasterxml.jackson.databind.ObjectMapper;
+
+	import java.io.File;
+	import java.io.IOException;
+
+	public class ObjectMapperEx {
+	    public static void main(String[] args) {
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		// Java Object ->  JSON
+		Person person = new Person("hwon", 20, "seoul");
+		try {
+		    objectMapper.writeValue(new File("src/person.json"), person);
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+	```
+	
+- **JSON → Java Object**
+	- JSON 파일을 Java 객체로 역직렬화하기 위해 ObjectMapper의 **`readValue()` 메서드**를 이용
+	- 파라미터로 JSON 형태의 문자열 or 객체와 역직렬화 시킬 클래스를 넣어줍니다.
+	- 실행 결과, 파일 내 정보(`Person(name=hwon, age=20, address=seoul)`)가 확인됩니다.
+
+	```java
+	import com.fasterxml.jackson.core.JsonProcessingException;
+	import com.fasterxml.jackson.databind.ObjectMapper;
+
+	public class ObjectMapperEx {
+	    public static void main(String[] args) {
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		// JSON -> Java Object
+		String json = "{\"name\":\"zooneon\",\"age\":25,\"address\":\"seoul\"}";
+		try {
+		    Person deserializedPerson = objectMapper.readValue(json, Person.class);
+		    System.out.println(deserializedPerson);
+		} catch (JsonProcessingException e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+	```
+	
+<br>
+
+[📚 1. Reference](https://wildeveloperetrain.tistory.com/97)
+	
+[📚 1-1. Reference](https://way-be-developer.tistory.com/240)
+
+[📚 1-1. Reference](https://velog.io/@a45hvn/Java-dto%EC%99%80-entity-%EB%B3%80%ED%99%98%ED%95%98%EA%B8%B0-2)
+	
+[📚 1-2. Reference](https://wildeveloperetrain.tistory.com/97)
+	
+[📚 2. Reference](https://velog.io/@leyuri/Java-Json-lib-Jackson)
+
+[📚 2. Reference](https://velog.io/@zooneon/Java-ObjectMapper%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-JSON-%ED%8C%8C%EC%8B%B1%ED%95%98%EA%B8%B0#java-object-%E2%86%92-json)

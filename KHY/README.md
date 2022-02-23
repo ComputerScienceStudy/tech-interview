@@ -14,19 +14,6 @@
     - final 키워드
     - Generic의 개념
     - ThreadLocal이 무엇이고 언제 활용되는지
-    - static이란 무엇인가요?
-      - java의 non-static 멤버와 static 멤버의 차이 
-      - java의 main 메서드가 static인 이유
-    - Wrapper Class란 무엇인가요?
-    - Getter와 Setter를 사용해야하는 이유에 대해서 설명해주세요.
-    - Lombok
-- 객체지향
-    - 객체지향에 대해서 설명해주세요. 
-    - SOLID(객체지향 5대원칙)에 대해서 설명해주세요.
-- 오류처리
-    - Checked Exception과 Unchecked Exception에 대해 설명해주세요. 스프링 트랜잭션 추상화에서 rollback 대상은 무엇일까요?
-    - 자바의 동시성 이슈(공유자원 접근)에 대해 설명해주세요. 
-    - 자바에서 null을 안전하게 다루는 방법에 대해 설명해주세요.
 </details>
     
 ## [Spring Framework](https://github.com/ComputerScienceStudy/tech-interview/blob/main/KHY/Content/Spring.md)
@@ -86,8 +73,6 @@
   - JPA, Hibernate 그리고 Spring Data JPA 각각에 대해서 설명해주세요.
   - JPA를 사용할 때의 이점에 대해서 설명해주세요.
   - JPA에서 N + 1 문제가 발생하는 이유와 이를 해결하는 방법을 설명해주세요.
-  - 양방향 매핑을 피해야 하는 이유
-  - 순환 관계는 언제 발생하고, 순환 관계를 피하기 위해서 어떻게 처리했는가?
   - 데이터 정합성에 대해서 설명해주세요. JPA에서 이것들을 어떻게 처리하는가요?
   - DB Lock에 대해서 설명해주세요. JPA에서 이것들을 어떻게 처리하는가요?
 - SQL
@@ -97,7 +82,7 @@
 - 쿠키와 세션
   - 쿠키와 세션의 필요성
   - 동작방식
-  - 쿠키와 세션은 언제 사용한요?
+  - 쿠키와 세션은 언제 사용하나요?
 - 세션 기반 인증 방식과 토큰 기반 인증 방식의 차이
   - 동작방식
   - 장단점
@@ -136,12 +121,5 @@
   - HTTP Method - PUT과 PATCH의 차이
   - HTTP Method - GET과 POST의 차이
 - DNS에 대해서 설명하세요.
-- CORS
-  - CORS는 무엇이며 이것에 대해서 설명해보세요.
-  - CORS 동작방식
-  - CORS 해결방법
-- 로드 밸런서
-  - 로드 밸런서에 대해서 설명해주세요.
-  - 로드 밸런서의 종류
 
 </details>

@@ -124,8 +124,23 @@ setter 메소드를 사용해 의존성을 주입해 주지 않아도, 메인 �
 
 #### 🤔  BeanFactory와 ApplicationContext는 각각 무엇인가요?
 
-BeanFactory란, 
-<br>
+BeanFactory란, 스프링 IOC 컨테이너 최상위에 있는 인터페이스입니다.    
+ApplicationContext는, BeanFactory를 상속받아 필요한 기능을 추가한 것 입니다.      
+
+스프링에서 단순 DI의 관점에서 IOC를 담당하는 컨네이너를 Beanfactory로 봅니다.      
+다만, 스프릥 컨테이너는 DI 작업보다 많은 일을 하기때문에 BeanFactory에 어플리케이션을 개발하는 데 필요한 여러가지 기능을 추가한것을
+어플리케이션 컨텍스트라 합니다.    
+
+- 스피링 DI관점에서 IOC 컨테이너는 Beanfactory
+- 일반적인 관점에서 IOC 컨테이너는 ApplicationContext
+
+
+- 둘의 다른 차이 - 빈 로딩 시점
+  - ApplicationContext 인터페이스를 구현한 컨테이너들은 실행 시점에 모든 빈을 로딩하기 때문에 무거운 컨테이너라고 이야기 합니다. 
+  - 이 뿐만 아니라, BeanFactory에 비해 다양한 편의 기능들을 가지고 있으니 더 무겁습니다.
+  - 반면, BeanFactory만을 구현한 컨테이너들은 DI 관점만 가지고 있고, 빈을 필요할 때 로딩해주기 때문에 가벼운 경량 컨테이너라고 이야기 합니다.
+  
+  <br>
     
 >[IOC와 DI에 대하여](https://mo-world.tistory.com/entry/IOC%EC%99%80-DI-%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC-%EC%8A%A4%ED%94%84%EB%A7%81-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%89%BD%EA%B2%8C-%EC%84%A4%EB%AA%85)    
 [IOC 컨테이너](https://dev-coco.tistory.com/80)   
@@ -180,21 +195,35 @@ Controller가 내부적으로 상태를 갖는 것이 없으니 메소드 호출
 **[추가 예상질문]**
 #### 🤔 Dispatcher Servlet은 어느 시점에 생성되나요?
 Spring 앱이 실행되어 내부 tomcat이 실행되면서, 서블릿 컨텍스트를 초기화할때 생성 됩니다.    
-<br><br>
+<br>
 
 #### 🤔 서블릿 컨텍스트란?
 서블릿 컨텍스트란, 톰캣이 실행되면서 서블릿과 서블릿 컨테이너 간 연동을 위해 사용되는 Context로,
 하나의 웹 애플리케이션마다 하나의 서블릿 컨텍스트를 가집니다.
-<br><br>
+<br>
 
 #### 🤔 Dispatcher Servlet이 Controller 객체를 직접 메모리에 생성하나요?
-<br><br>
+아닙니다. Controller 객체는 Bean으로써 Spring IoC컨테이너에 담겨있고 객체에 대한 정보를 HandlerMapping에서 저장하고 있어, HandlerMapping에서 컨트롤러에 대한 정보를 찾고, 디스패처 서블릿이 해당 객체로 요청을 보내게 됩니다.
+
+<br>
 
 #### 🤔 직접 생성하지 않는다면 무엇이 그 역할을 수행하나요?
-<br><br>
+HandlerMapping에서 Controller에 대한 객체 정보를 담고 있어, 해당 인터페이스에서 컨트롤러 정보를 디스패처 서블릿에게 제공합니다.
+
+<br>
 
 #### 🤔 DispatcherServlet이 생성된 이후의 과정은 잘 알고 계신 것 같은데, 웹 어플리케이션이 실행된 이후부터 DispatcherServlet이 생성되기전까지 Spring framework가 어떤 준비를 하는지 설명해주실 수 있나요?
-<br><br>
+1. 웹 어플리케이션이 실행되면, Tomcat에 의해 web.xml이 Loading됩니다.
+2. web.xml에 등록되어 있는 ContextLoaderListener (Java Class) 생성됩니다.
+   - ContextLoaderListener 클래스는 ServletContextListener 인터페이스를 구현하고 있으며, ApplicationContext를 생성하는 역할을 수행합니다. Servlet의 생명주기를 관리해줍니다.
+3. 생성된 ContextLoaderListener는 root-context.xml을 Loading합니다.
+   - ContextLoaderListener 객체는 src/main/resources 소스 폴더에 있는 applicationContext.xml 파일을 로딩하여 스프링 컨테이너를 구동하는데 이를 Root 컨테이너라고 합니다.
+4. root-context.xml에 등록되어 있는 Spring Container가 구동됩니다.
+   - root-context.xml에는 주로 view 지원을 제외한 공통 bean을 설정합니다.
+   - 예) spring properties 파일을 로컬과 서버용으로 구분지을 때 여기서 propery value를 설정해줍니다.
+5. 클러이언트로부터 최초의 웹 어플리케이션 요청이 오면, DispatcherServlet이 생성됩니다.
+
+<br>
 
 ## AOP
     
@@ -338,6 +367,7 @@ Spring Security는 Spring MVC에 포함되지 않은 Filter의 영역입니다.
 #### 🤔 그럼 @transactional 어노테이션은 AOP를 활용한 기능인가요?
 네, @transactional 처리가 spring AOP를 기반으로 하고있습니다.     
 따라서 프록시 기반으로 동작하며, 프록시 내부에서 내부를 호출하면 transaction이 적용하지 않습니다.      
+
 ![image](https://user-images.githubusercontent.com/42319300/154854260-22a3dd91-b674-488f-b9f3-1e8d1ea05fd6.png)
 
 <br><br>
@@ -547,7 +577,7 @@ Bean은 메소드에 사용하며, Component는 클래스에 사용이 됩니다
 **[추가 예상질문]**
 #### 🤔 Spring framework로 웹 어플리케이션을 개발할 때 Bean Scope 중 프로토타입 스코프는 어떤 경우에 활용하면 좋을까요?
 spring scope를 prototype으로 설정해준다면, bean으로 의존성을 주입할때마다, 새로운 객체가 반환되므로,    
-만들어진 객체 각가으 상태를 개별적으로 기억해야하는 Stateful한 상황에 쓰이면 좋을거 같습니다.
+만들어진 객체 각각의 상태를 개별적으로 기억해야하는 Stateful한 상황에 쓰이면 좋을거 같습니다.
 
 <br>
 
@@ -649,10 +679,17 @@ DAO는, 데이터에 접근하는 객체로서, 데이터베이스에 접근하�
 <Br><Br>
 
 **[추가 예상질문]**
-#### 🤔 DTO로 넘긴 데이터가 어떻게 JSON 형식으로 변환되고, JSON 데이턱 어떻게 객체에 매핑되는지 그 과정에서 어떤 라이브러리가 관여하는지, 
+#### 🤔 DTO로 넘긴 데이터가 어떻게 JSON 형식으로 변환되고, JSON 데이터가 어떻게 객체에 매핑되는지 그 과정에서 어떤 라이브러리가 관여하는지, 
+spring에서는 @RequestBody 어노테이션과 @ResponseBody 어노테이션이 각각 HTTP요청 바디를 자바객체로 변환하고 자바객체를 다시 HTTP 응답 바디로 변환해줍니다.
+
+그 과정에서 사용되는 라이브러리로는,       
+제가 프로젝트를 진행할 당시에 Response를 Entity to DTO로 보내주기위해서 Modelmapper를 사용하였습니다.
+
 <Br><Br>
 
 #### 🤔 Serialize/Deserialize를 하는 이유는 무엇인지
+JSON으로 통신하는 이유는, 데이터를 전송하는데 최소한의 데이터를 전송하고, JSON은 다양한 언어 다양한 환경에서도 통상적으로 적용이 되기 때문입니다.
+
 <Br><Br>
 ## JPA
 

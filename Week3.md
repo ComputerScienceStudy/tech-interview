@@ -1,6 +1,6 @@
 # DB, Web, Network
 ## 목차
-### DB
+### [DB](https://github.com/ComputerScienceStudy/tech-interview/edit/main/Week3.md#db-1)
 - RDBMS vs NOSQL에 대해서 설명해주세요.
 - 인덱스
     - 데이터베이스에서 index를 만들면 내부적으로 어떤동작이 이루어지는지 설명해주시고, 장단점에 대해 설명해주세요.
@@ -30,7 +30,7 @@
     - A라는 테이블이 존재할 때, 새로운 속성(Column)을 추가한다고 할때, 모든 행(row)에 Default값을 넣어주고 싶을때, 어떤 쿼리문을 작성해야할까요
 <br><br>
 
-## **WEB**
+## [WEB](https://github.com/ComputerScienceStudy/tech-interview/edit/main/Week3.md#web-1)
 
 - 쿠키와 세션
     - 쿠키와 세션의 필요성
@@ -48,7 +48,7 @@
     - RESTful이란 무엇이며, 이것에 대해서 아는대로 설명해보세요.
     - 본인이 프로젝트를 진행할때 Restful API를 지키기위해 한 노력은 무엇인가요?
 
-## **Network**
+## [Network](https://github.com/ComputerScienceStudy/tech-interview/edit/main/Week3.md#netwwork)
 
 - 웹 브라우저에서 URI에 구글닷컴을 쳤을 때 발생하는 일들을 아는 대로 설명해주세요.
 - 사용자가 웹브라우저를 통해 서버에 이미지를 요청해서 사용자에게 보여주기까지 과정을 설명하세요.
@@ -73,6 +73,7 @@
 <br><br>
 
 ---
+## DB
 
 ### RDBMS vs NOSQL에 대해서 설명해주세요.
 
@@ -692,9 +693,10 @@ Alter table A add 컬럼명 자료형 default 초깃값;
 <br><br>
 
 ---
-## **Web**
+## Web
 
 ### 쿠키와 세션
+---
 
 **핵심답변**
 

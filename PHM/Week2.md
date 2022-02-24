@@ -281,53 +281,7 @@ public class Advice {
 - JoinPoint : Advice가 적용될 위치, 끼어들 수 있는 지점, 메서드 진입 지점, 생성자 호출 시점, 필드에서 값을 꺼내올 때의 시점을 말합니다. 앱을 실행할 때 특정 작업이 시작되는 시점입니다.
 - PointCut : JoinPoint가 적용되는 대상, Adivice가 실행될 지점을 설정합니다.
 
-<br><Br>
 
-**[추가 예상질문]**
-#### 🤔 프로젝트에서 AOP를 활용한 부분이 있으실까요?
-저 같은 경우에는, 에러 처리를 @RestControllerAdvice 어노테이션과 @ExceptionHandler를 이용해 AOP 방식으로 전역적으로 처리할때 사용을 하였습니다.     
-
-<br><br>
-#### 🤔 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?
-사용자 인증은 Spring Security를 이용하였습니다.     
-Spring Security는 Spring MVC에 포함되지 않은 Filter의 영역입니다.      
-따라서 AOP를 활용하지 않았습니다.
-
-- 사용자 인증방식을 AOP기능을 이용한다면,AOP pointcut 기능을 이용해서 모든 요청이 서블릿으로 들어올 때 before pointcut을 걸어두어 회원정보를 검사할 수 있습니다.
-- 로깅방식또한 AOP를 이용해서 구현할 수 있습니다.
-
-<br><br>
-#### 🤔 그럼 @transactional 어노테이션은 AOP를 활용한 기능인가요?
-네, @transactional 처리가 spring AOP를 기반으로 하고있습니다.     
-따라서 프록시 기반으로 동작하며, 프록시 내부에서 내부를 호출하면 transaction이 적용하지 않습니다.      
-
-![image](https://user-images.githubusercontent.com/42319300/154854260-22a3dd91-b674-488f-b9f3-1e8d1ea05fd6.png)
-
-<br><br>
-#### 🤔 만약 프로젝트의 모든 Entity에서 Entity 생성시간과 수정시간 필드를 사용한다면, 이 필드를 한 곳에서 관리할 수 있는 방법이 있을까요? Spring framework를 사용하는 환경입니다.
-생성시간과, 수정시간 필드를 가지는 entity를 생성하고, 이를 상속받도록 합니다.    
-@EnableJpaAuditing를 이용해서 수정시간과 생성시간을 기록할 수 있습니다.
-```java
-/*Timestampe Entity*/
-@MappedSuperclass // 상속했을 때, 컬럼으로 인식하게 합니다. 
-@EntityListeners(AuditingEntityListener.class) // 생성/수정 시간을 자동으로 반영하도록 설정 
-public class Timestamped { 
-    @CreatedDate // 생성일자임을 나타냅니다. 
-    private LocalDateTime createdAt; 
-    
-    @LastModifiedDate // 마지막 수정일자임을 나타냅니다. 
-    private LocalDateTime modifiedAt; 
-}
-
-/*Spring Application*/
-@SpringBootApplication
-@EnableJpaAuditing
-public class MaruMaruSpartaVerSpringApplication {
-   public static void main(String[] args) {
-      SpringApplication.run(MaruMaruSpartaVerSpringApplication.class, args);
-   }
-}
-```
 <br>
 
 >[AOP란 - (AOP, Spring AOP, AOP 어노테이션)](https://thalals.tistory.com/271)
@@ -755,10 +709,12 @@ Comment 정보를 조회하면, Post에 대한 조회는 이미 끝난 상태라
 <Br><Br>
 #### 🤔 JPA를 사용할 때 쿼리를 사용하는 방법에 대해서 설명해주세요.
 JPQL, queryDsl, @Formula
+
 <Br><Br>
 
 
 ---
+<Br><BR>
 
 피드백
 
@@ -831,6 +787,53 @@ HandlerMapping에서 Controller에 대한 객체 정보를 담고 있어, 해당
 
 <br>
 
+### AOP
+#### 🤔 프로젝트에서 AOP를 활용한 부분이 있으실까요?
+저 같은 경우에는, 에러 처리를 @RestControllerAdvice 어노테이션과 @ExceptionHandler를 이용해 AOP 방식으로 전역적으로 처리할때 사용을 하였습니다.
+
+<br><br>
+#### 🤔 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?
+사용자 인증은 Spring Security를 이용하였습니다.     
+Spring Security는 Spring MVC에 포함되지 않은 Filter의 영역입니다.      
+따라서 AOP를 활용하지 않았습니다.
+
+- 사용자 인증방식을 AOP기능을 이용한다면,AOP pointcut 기능을 이용해서 모든 요청이 서블릿으로 들어올 때 before pointcut을 걸어두어 회원정보를 검사할 수 있습니다.
+- 로깅방식또한 AOP를 이용해서 구현할 수 있습니다.
+
+<br><br>
+#### 🤔 그럼 @transactional 어노테이션은 AOP를 활용한 기능인가요?
+네, @transactional 처리가 spring AOP를 기반으로 하고있습니다.     
+따라서 프록시 기반으로 동작하며, 프록시 내부에서 내부를 호출하면 transaction이 적용하지 않습니다.
+
+![image](https://user-images.githubusercontent.com/42319300/154854260-22a3dd91-b674-488f-b9f3-1e8d1ea05fd6.png)
+
+<br><br>
+#### 🤔 만약 프로젝트의 모든 Entity에서 Entity 생성시간과 수정시간 필드를 사용한다면, 이 필드를 한 곳에서 관리할 수 있는 방법이 있을까요? Spring framework를 사용하는 환경입니다.
+생성시간과, 수정시간 필드를 가지는 entity를 생성하고, 이를 상속받도록 합니다.    
+@EnableJpaAuditing를 이용해서 수정시간과 생성시간을 기록할 수 있습니다.
+```java
+/*Timestampe Entity*/
+@MappedSuperclass // 상속했을 때, 컬럼으로 인식하게 합니다. 
+@EntityListeners(AuditingEntityListener.class) // 생성/수정 시간을 자동으로 반영하도록 설정 
+public class Timestamped { 
+    @CreatedDate // 생성일자임을 나타냅니다. 
+    private LocalDateTime createdAt; 
+    
+    @LastModifiedDate // 마지막 수정일자임을 나타냅니다. 
+    private LocalDateTime modifiedAt; 
+}
+
+/*Spring Application*/
+@SpringBootApplication
+@EnableJpaAuditing
+public class MaruMaruSpartaVerSpringApplication {
+   public static void main(String[] args) {
+      SpringApplication.run(MaruMaruSpartaVerSpringApplication.class, args);
+   }
+}
+```
+<br>
+
 ### Bean
 #### 🤔 Spring framework로 웹 어플리케이션을 개발할 때 Bean Scope 중 프로토타입 스코프는 어떤 경우에 활용하면 좋을까요?
 spring scope를 prototype으로 설정해준다면, bean으로 의존성을 주입할때마다, 새로운 객체가 반환되므로,    
@@ -849,3 +852,8 @@ spring에서는 @RequestBody 어노테이션과 @ResponseBody 어노테이션이
 
 #### 🤔 Serialize/Deserialize를 하는 이유는 무엇인지
 JSON으로 통신하는 이유는, 데이터를 전송하는데 최소한의 데이터를 전송하고, JSON은 다양한 언어 다양한 환경에서도 통상적으로 적용이 되기 때문입니다.
+
+
+### Getter, Setter
+피드백
+- Setter를 데이터 무결성과 연결하시면 면접관들이 읭?하실 가능성이 있습니다. 물론 추가 설명하시면 이해하시겠지만, Setter보다는 Builder 패턴이나 SOLID 개방폐쇄원칙에 더 적합한 주제입니다.

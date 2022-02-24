@@ -595,6 +595,7 @@ OrderBy, Not 등이 있습니다.
 👉 ApplicationContext란 BeanFactory를 구현하고 있는, BeanFactory의 확장된 버전이라고 이해할 수 있습니다. BeanFactory의 모든 기능을 포함하고 있으면서 Environment(Profile과 Source 설정, properties 값 불러오기 가능)나, MessageSource(메세지 설정파일을 localizing하는 i18n)을 제공하는 인터페이스)와 같은 추가 기능을 사용할 수 있으므로 특별한 이유가 없다면 BeanFactory보다 ApplicationContext를 사용하는 것이 더 바람직합니다.
 
 # MVC - Dispatcher Servlet 동작 원리
+![](https://images.velog.io/images/apolontes/post/5019cbf6-34eb-4b8f-a44d-50b8e99dbeb4/2022-02-24_11-12-41.png)
 ### 예상 추가질문
 1. Dispatcher Servlet은 어느 시점에 생성되나요?     
 👉 Tomcat이 실행되어 web.xml파일을 통해 서블릿 컨텍스트를 초기화하는 시점에 옵션에 따라 lazy loading(클라이언트로부터 최초로 요청을 받을 때 서블릿 컨테이너는 DispatcherServlet에 대한 객체를 생성하고 다음 요청부터는 싱글톤으로 활용) 혹은 pre loading(서블릿 컨텍스트를 초기화하는 시점에 미리 DispatcherServlet 인스턴스를 생성) 방식으로 생성됩니다.

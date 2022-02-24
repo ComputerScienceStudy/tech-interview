@@ -446,14 +446,6 @@ Filter와 Interceptor는 공통 업무를 프로그램 흐름의 앞, 중간, �
 여러 layer에 걸친 공통된 관심사 분리하는 것을 말합니다.      
 여러 layer에 걸친 공통된 관심사를 분리하면, 애플리케이션의 부가 기능을 모듈화하고, 핵심기능과 상호작용 할 수 있게 합니다.    
 스프링은 IoC/DI를 이용해 프락시 기반 관점 지향 프로그래밍을 지원합니다.
-
-
-<br><br>
-#### 🤔
-
-<br><br>
-#### 🤔
-
 <br><br>
 #### 📚 유익한 자료
 - 클린 코드 11장 시스템
@@ -805,18 +797,18 @@ Entity를 통해 데이터를 통신하면, 외부 사용자에게 데이터베�
 ---
 <br><br>
 
-피드백
+# 피드백
 ## POJO
 #### POJO와 Java bean, Spring bean는 같은 것들인가요?
-- POJO는 특정 규약과 환경에 종속되지 않은 재활용될 수 있는 객체입니다.
-- Java Bean은 POJO에서 아래의 조건이 추가된 객체입니다.
+- `POJO`는 특정 규약과 환경에 종속되지 않은 재활용될 수 있는 객체입니다.
+- `Java Bean`은 POJO에서 아래의 조건이 추가된 객체입니다.
   - Fields는 접근 제어자가 private, getter와 setter로만 접근 되어야만 한다.
     - 캡슐화를 위해서다.
   - Constructor는 argument를 가지면 안된다.
     - Class 내의 인자가 있는 생성자를 추가학 되면, 컴파일러는 default 생성자를 생성하지 않게 되기 때문이다.
   - Serializable 인터페이스를 상속받아야 한다.
     - Java Bean이 네트워크를 통해 전송되거나 파일에 저장되는 일이 잦기 때문이다.
-- Spring Bean은 스프링 컨테이너가 생성, 관계 설정, 사용 등을 제어해 주는 제어의 역전 원리가 적용된 객체를 말합니다.
+- `Spring Bean`은 스프링 컨테이너가 생성, 관계 설정, 사용 등을 제어해 주는 제어의 역전 원리가 적용된 객체를 말합니다.
 
 ## DI/IoC
 #### 1. IoC가 무엇인지는 아시는 것 같은데, IoC가 필요한 이유는 무엇인가요? 왜 외부에서 제어 흐름을 관리해야하죠?
@@ -828,9 +820,9 @@ IoC의 예시 중 하나는 개발자가 직접 객체를 관리하지 않고 �
 
 #### 2. BeanFactory와 ApplicationContext는 각각 무엇인가요?
 스프링 컨테이너로 BeanFactory와 ApplicationContext를 사용합니다.
-- BeanFactory는 Bean을 등록, 생성, 조회, 반환 관리를 합니다.
+- `BeanFactory`는 Bean을 등록, 생성, 조회, 반환 관리를 합니다.
   <br>일반적으로는 BeanFactory를 사용하는 경우보다 BeanFactory를 확장해 만들어진 ApplicationContext를 주로 사용합니다.
-- ApplicationContext는 BeanFactory의 특징을 그대로 가지고 있으면서, 동시에 스프링 AOP 통합과 국제화 지원, 이벤트 기반 애플리케이션이나 웹 애플리케이션을 위한 기능을 제공합니다.
+- `ApplicationContext`는 BeanFactory의 특징을 그대로 가지고 있으면서, 동시에 스프링 AOP 통합과 국제화 지원, 이벤트 기반 애플리케이션이나 웹 애플리케이션을 위한 기능을 제공합니다.
 
 ## Bean
 #### 1. Spring framework로 웹 어플리케이션을 개발할 때 Bean Scope 중 프로토타입 스코프는 어떤 경우에 활용하면 좋을까요?
@@ -850,9 +842,41 @@ https://yangbongsoo.gitbook.io/study/spring-1/ioc_container_di#undefined
 #### 2. 만약 프로젝트의 모든 Entity에서 Entity 생성시간과 수정시간 필드를 사용한다면, 이 필드를 한 곳에서 관리할 수 있는 방법이 있을까요? Spring framework를 사용하는 환경입니다.
 
 ## Getter, Setter
-#### Setter보다는 Builder 패턴이나 SOLID 개방폐쇄원칙에 더 적합한 주제입니다.
-- https://cheese10yun.github.io/spring-jpa-best-06/
-- https://cheese10yun.github.io/spring-builder-pattern/
+무분별하게 setter를 사용하는 것은 바람직하지 않다고 생각합니다.        
+그 이유는 첫번째로 setter 메소드는 의도를 갖기 힘듭니다.         
+두번째로 setter가 있으면 객체를 언제든지 변경할 수 있는 상태가 되어서 객체의 안전성이 보장받기 힘들기 때문입니다.     
+객체를 생성할 때, Setter 대신 Builder 기반으로 생성하는 방법이 있습니다.
+Builder 패턴을 사용하면 다음과 같은 장점이 있습니다.
+
+```java
+public static class SignUpReq {
+
+	private com.cheese.springjpa.Account.model.Email email;
+	private Address address;
+
+	@Builder
+	public SignUpReq(Email email, String fistName, String lastName, String password, Address address) {
+        this.email = email;
+        this.address = address;
+	}
+
+	public Account toEntity() {
+        return Account.builder()
+            .email(this.email)
+            .address(this.address)
+            .build();
+	}
+}
+
+public Account create(AccountDto.SignUpReq dto) {
+    return accountRepository.save(dto.toEntity());
+}
+```
+
+1. 인자가 많을 경우 쉽고 안전하게 객체를 생성할 수 있습니다.
+2. 인자의 순서와 상관없이 객체를 생성할 수 있습니다.
+3. 적절한 책임을 이름에 부여하여 가독성을 높일 수 있습니다.
+
 
 ## DTO
 #### Serialize/Deserialize와 ObjectMapper

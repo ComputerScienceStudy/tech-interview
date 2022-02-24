@@ -600,9 +600,11 @@ OrderBy, Not 등이 있습니다.
 👉 Tomcat이 실행되어 web.xml파일을 통해 서블릿 컨텍스트를 초기화하는 시점에 옵션에 따라 lazy loading(클라이언트로부터 최초로 요청을 받을 때 서블릿 컨테이너는 DispatcherServlet에 대한 객체를 생성하고 다음 요청부터는 싱글톤으로 활용) 혹은 pre loading(서블릿 컨텍스트를 초기화하는 시점에 미리 DispatcherServlet 인스턴스를 생성) 방식으로 생성됩니다.
 
 2. Dispatcher Servlet이 Controller 객체를 직접 메모리에 생성하나요? 직접 생성하지 않는다면 무엇이 그 역할을 수행하나요?       
-👉 
+👉 아닙니다. Front-Controller 역할을 하는 DispatcherServelt이 request를 받으면 DispatcherServelt은 적절한 controller를 선택하는 일을 HandlerMapping에게 요청합니다. HandlerMapping은 적합한 Controller를 선택합니다.
+	
 3. DispatcherServlet이 생성된 이후의 과정은 잘 알고 계신 것 같은데, 웹 어플리케이션이 실행된 이후부터 DispatcherServlet이 생성되기전까지 Spring framework가 어떤 준비를 하는지 설명해주실 수 있나요?        
 👉 Tomcat(WAS)에 의해 web.xml이 로딩 -> web.xml에 등록된 ContextLoaderListener(Java Class) 생성 -> 생성된  ContextLoaderListener는 root-context.xml을 로딩 -> root-context.xml에 등록된 Spring Container가 구동 -> 클라이언트로부터 웹 어플리케이션 요청 -> DispatcherServlet이 생성됨
+	
 # AOP
 ### 예상 추가질문
 1. 프로젝트에서 AOP를 활용한 부분이 있으실까요?

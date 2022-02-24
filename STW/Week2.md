@@ -608,8 +608,12 @@ OrderBy, Not 등이 있습니다.
 # AOP
 ### 예상 추가질문
 1. 프로젝트에서 AOP를 활용한 부분이 있으실까요?
-    - 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?
-    - 그럼 @Transactional 어노테이션은 AOP를 활용한 기능인가요?
+    - 사용자 인증과 로깅을 구현하셨던데 이건 AOP를 활용한 것이 아닌가요?		
+	👉 맞습니다. AOP는 인증, 로깅, 트랜잭션 등 전체 시스템에 공통적으로 필요한 기능에 적용될 수 있습니다.핵심 기능과 횡단 관심사를 분리해 코드를 일일히 구현하는 대신 어드바이스로 정의해 코드의 특정 위치에 실행하기 위한 포인트컷을 정의해주기 때문에 이와같은 기능에 적용할 수 있습니다.		
+	
+    - 그럼 @Transactional 어노테이션은 AOP를 활용한 기능인가요?		
+	👉 맞습니다. Spring에서 AOP는 Dynamic Proxy와 CGLIB (Byte Code Instrument) 두가지 방식으로 구현됩니다. 인터페이스를 클래스로 구현할 경우 Dynamic Proxy가, 단일 클래스는 CGLIB (Byte Code Instrument)를 사용합니다. 비즈니스 로직을 구현할 때 클래스보다 인터페이스로 유연하게 설계할 것을 권장하고 있으므로 인터페이스와 구현체로 이루어진 구성에서는 Dynamic Proxy를 통해 사용됩니다. 하지만 Spring Boot에서는 CGLIB가 예외를 덜 발생시키는 장점이 있어 CGLIB를 기본으로 적용하여 사용하는 것으로 알고 있습니다. 		[레퍼런스](https://private-space.tistory.com/98)
+
 2. 만약 프로젝트의 모든 Entity에서 Entity 생성시간과 수정시간 필드를 사용한다면, 이 필드를 한 곳에서 관리할 수 있는 방법이 있을까요? Spring framework를 사용하는 환경입니다.        
 👉 JPA Auditing을 사용하여 생성시간과 수정 시간을 자동화 할 수 있습니다. Domain 패키지에 BaseTimeEntity 클래스를 작성하고, 생성 및 수정 시간을 자동화 하고 싶은 Entity 클래스에 상속시킨 후 스프링 부트의 Main함수 클래스에 @EnableJpaAudting을 선언해 주면 됩니다. 
 

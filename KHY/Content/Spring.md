@@ -873,11 +873,37 @@ public Account create(AccountDto.SignUpReq dto) {
 }
 ```
 
-1. 인자가 많을 경우 쉽고 안전하게 객체를 생성할 수 있습니다.
+1. 인자가 많을 경우 쉽고 안전하게 객체를 생성할 수 있습니다.<br>
+   - Assert.notNull을 사용하여, 객체가 null이거나 empty인 경우에는 객체 생성 못하게 막을 수 있습니다.
+   - 객체가 null이거나 empty인 경우에는 exception을 발생시켜 흐름을 종료할 수 있습니다.
 2. 인자의 순서와 상관없이 객체를 생성할 수 있습니다.
 3. 적절한 책임을 이름에 부여하여 가독성을 높일 수 있습니다.
 
+```java
+    @Builder
+    public Order(Address address, List<Product> products) {
+        Assert.notNull(address, "address must not be null");
+        Assert.notNull(products, "products must not be null");
+        Assert.notEmpty(products, "products must not be empty");
+
+        this.address = address;
+        this.products = products;
+    }
+```
+```java
+    @Test(expected = IllegalArgumentException.class)
+    public void Account_accountNumber_비어있으면_exception() {
+        Account.builder()
+          .accountHolder("홍길동")
+          .accountNumber("")
+          .bankName("신한은행")
+          .build();
+  }
+```
 
 ## DTO
 #### Serialize/Deserialize와 ObjectMapper
-- DTO로 넘긴 데이터가 어떻게 JSON 형식으로 변환되고, JSON 데이턱 어떻게 객체에 매핑되는지, 그 과정에서 어떤 라이브러리가 관여하는지, Serialize/Deserialize를 하는 이유는 무엇인지
+1. DTO로 넘긴 데이터가 어떻게 JSON 형식으로 변환되고
+2. JSON 데이터가 어떻게 객체에 매핑되는지
+3. 그 과정에서 어떤 라이브러리가 관여하는지
+4. Serialize/Deserialize를 하는 이유는 무엇인지

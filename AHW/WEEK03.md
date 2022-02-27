@@ -41,6 +41,8 @@
 
 - [서버가 웹브라우저를 통해 이미지를 요청받아 출력하는 과정](https://github.com/ComputerScienceStudy/tech-interview/edit/main/AHW/WEEK03.md#%EC%82%AC%EC%9A%A9%EC%9E%90%EA%B0%80-%EC%9B%B9%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%84%9C%EB%B2%84%EC%97%90-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-%EC%9A%94%EC%B2%AD%ED%95%B4%EC%84%9C-%EC%82%AC%EC%9A%A9%EC%9E%90%EC%97%90%EA%B2%8C-%EB%B3%B4%EC%97%AC%EC%A3%BC%EA%B8%B0%EA%B9%8C%EC%A7%80-%EA%B3%BC%EC%A0%95%EC%9D%84-%EC%84%A4%EB%AA%85%ED%95%98%EC%84%B8%EC%9A%94)
 
+#### 피드백
+
 ---
 ## DB
 ----
@@ -1218,3 +1220,88 @@
 [1. TCP vs UDP](https://velog.io/@hidaehyunlee/TCP-%EC%99%80-UDP-%EC%9D%98-%EC%B0%A8%EC%9D%B4#31-tcp%EC%9D%98-%ED%8A%B9%EC%A7%95)
 
 [2. 3-way handshake](https://gmlwjd9405.github.io/2018/09/19/tcp-connection.html)
+
+<br>
+
+---
+## 피드백
+---
+
+### RDBMS vs NOSQL
+- RDB를 사용할 때 성능 향상을 위해 서버 자체의 성능을 Scale-up하는 방법 밖에 없다고 답변하는 것은 추천드리지 않습니다. 실무에서는 RDB를 사용하는 케이스가 더 많은데요, DB의 성능이나 DB 용량이 문제가 되는 경우에는 서버 성능을 늘리기도 하지만 한계가 있기 때문에 샤딩(Sharding)을 통해 문제를 해결하기도 합니다. 때문에 무조건 Scale-up만 가능하다고 답변하는 것은 오해를 불러올 수 있습니다. 신입 개발자에게 샤딩까지 물어볼 회사는 많지 않겠지만, 샤딩에 대해서 개략적으로라도 알고 계시는 것이 좋습니다.
+
+1. 진행하신 프로젝트들에서는 어떤 DB를 사용하셨고, 왜 사용하셨나요?
+
+<br>
+
+---
+### 인덱스
+
+1. 프로젝트를 하시거나 공부를 하실 때 인덱스를 직접 설정해보셨나요?
+
+<br>
+
+---
+### 트랜잭션
+
+1. MySQL을 사용하셨다 했는데, MySQL InnoDB의 기본 트랜잭션 격리 수준(Isolation Level)은 무엇인가요?
+
+2. 그리고 해당 격리 수준에서 발생할 수 있는 Non-repeatable Read(Phantom Read)에 대해 설명해주실 수 있나요?
+
+3. Oracle DB의 기본 트랜잭션 격리 수준(Isolation Level)은 무엇인가요?
+
+<br>
+
+---
+### JPA
+
+1. JPA를 사용하실 때, JPA가 생성해주는 쿼리를 직접 수정(튜닝)해야하는 경우에는 어떻게 하셨나요?
+
+2. JPA에서 지연로딩(Lazy Loading)을 사용할 때 프록시 객체가 쓰이는 이유를 아시나요?
+
+3. 프로젝트에서 JPA를 사용하셨는데, Primary Key 생성 전략은 어떤 것을 선택하셨고 그 이유는 무엇인가요?
+
+4. Optimistic Lock에 대해 설명해주세요.
+  - Optimistic Lock은 Application 레이어에서 사용되는 lock인가요? 아니면 DB에서 사용되는 lock인가요?
+  - 그렇다면 Pessimistic Lock은 어느 레이어에서 사용되는 lock인가요?
+5. Pessimistic Lock에 대해 설명해주세요.
+  - Pessimistic Lock은 데드락의 가능성이 없나요?
+  - 일반적인 Web Application에서는 Optimistic Lock과 Pessimistic Lock 중 어느 것을 주로 사용하나요?
+
+<br>
+
+---
+### SQL
+
+1. 간단한 SQL문제는 신입개발자를 채용하는 스타트업이나 중소규모의 회사에서 제출하는 경우가 많습니다. 때문에 기본적인 CRUD와 Inner Join 까지는 간단한 예제를 풀어보시는 것이 좋습니다. (검색해보시면 예제들을 찾을 수 있습니다)
+
+2. 특히 실무에서는 join을 사용하는 일이 많기 때문에 inner join, outer join, straight join 등의 차이를 정확하게 이해하시는 것이 좋습니다.
+
+3. 그리고 실무에서 쿼리 성능으로 인해 쿼리 튜닝이 필요해지는 경우는, 신입 개발자가 쿼리에서 In절에 서브쿼리를 사용해서 테이블 풀스캔이 발생하는 경우가 많은데요, in절을 사용할때 주의점도 알아두시면 좋습니다.
+
+4. 실행계획(explain) 사용법과 사용 이유를 아시나요?
+
+5. 보통 DB에 쿼리를 날린다고 표현하는데요, DB에 요청된 쿼리가 어떻게 실행되는지, 그 실행 과정에 대해 아시나요?
+
+- 답변 예시
+    1. Parser가 쿼리 파싱해서 DB가 이해할 수 있도록 변경 (문법오류 확인)
+    2. 파싱된 쿼리를 Optimizer에 전달
+    3. Optimizer는 파싱된 쿼리를 가지고, 인덱스의 유무, 데이터 분산 또는 편향 정도 등의 통계 정보를 참고해서 여러 실행계획을 세우고, 비용을 연산해서 가장 낮은 비용의 실행계획을 선택한다.
+        - 이때 비용 평가는 카탈로그 매니져(통계정보 저장소)의 데이터를 기반으로 이루어진다.
+        - Optimizer는 한정된 통계로 인해 최적화를 못할 수 있다.
+    4. 선택된 실행계획을 DBMS는 절차적 코드로 변환하고 데이터 접근 수행
+
+<br>
+
+---
+
+### RESTful API
+
+1. RESTful API에서 중요한 것은 URI나 Http method 활용이 아닙니다. 이 부분은 부수적인 것이고, RESTful API의 개념에 대해 묻는 질문에는 면접관이 원하는 답이 아닐 가능성이 높습니다.
+
+2. RESTful API의 가장 중요한 특징은 Stateless(무상태)입니다. 즉, Server가 API를 요청하는 Client의 어떠한 상태도 저장하지 않는다는 것이고, 이 말은 Client가 Server에 종속되지 않는다는 것입니다.
+    - 따라서 Client는 매 요청마다 자신을 인증할 수 있는 Token이나 Key 등을 Request에 포함시켜 전송하게 됩니다.
+    - Client가 Server에 종속되지 않는게 중요한 이유는 반대의 경우(=Stateful)를 생각하면 이해하기 쉽습니다.
+    - 반대로 Stateful하다면(상태가 있다면), 대규모 환경에서 동일한 웹서버를 다수 배치해 로드밸런싱하는 경우 각 Server가 Client의 상태, 세션을 공유할 수 있는 Redis 같은 별도의 시스템이 필요합니다.
+    - 하지만 Stateless한 RESTful API는 Client의 요청(호출)을 어느 Server라도 동일하게 처리할 수 있습니다.
+    - 즉, 어떤 Server라도 Client들의 요청에 응답할 수 있다는 것은, 서버 환경이 분산되었든 아니든, Client쪽에서는 Server쪽에 신경 쓸 필요 없이 API 호출만 하면 원하는 결과를 받을 수 있다는 점에서 RESTful API가 활용되는 것입니다.

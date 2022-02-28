@@ -40,7 +40,7 @@
 2021.11.19 ~ 2021.12.31(5주, 4명)
 
 **프로젝트 설명**
-반려견을 키우는 반려인들을 위한 커뮤니티 사이트
+ - 반려견을 키우는 반려인들을 위한 커뮤니티 사이트
 
 **주요기능**
 
@@ -69,7 +69,7 @@
 - API 문서 관리 : Swagger
 - 프로젝트 관리 : Git issue, Git Project
 
-[https://github.com/thalals/MaruMaru_sparta_ver.Spring](https://github.com/thalals/MaruMaru_sparta_ver.Spring)
+<img src="https://img.shields.io/badge/Github-%230A0A0A.svg?&style=flat-square&logo=Github&logoColor=white"> [Project: 강만다](https://github.com/thalals/MaruMaru_sparta_ver.Spring)
 
 <br>
 
@@ -79,7 +79,7 @@
 2021.01 ~ 2021.07(약 6달, 1인 졸업작품 - 학업 중 프로젝트 진행)
 
 **프로젝트 설명**
-어두운 밤, 가족들이 “조금더 안전하게 거리를 다니면 좋겠다” 라는 생각에서 시작했습니다.
+ - 어두운 밤, 가족들이 “조금더 안전하게 거리를 다니면 좋겠다” 라는 생각에서 시작했습니다.
 
 사용자에게 최단경로와 안전경로를 제공하는 Django 프로젝트입니다.
 
@@ -104,7 +104,7 @@
     - geocoder : 현재 사용자 위치 추출
     - haversine : 실제 좌표간 거리 측정
 
-[https://github.com/thalals/SafetyMap-Graduation-Project](https://github.com/thalals/SafetyMap-Graduation-Project)
+<img src="https://img.shields.io/badge/Github-%230A0A0A.svg?&style=flat-square&logo=Github&logoColor=white"> [Project: 안전보행길 탐색지도](https://github.com/thalals/SafetyMap-Graduation-Project)
 
 <br>
 
@@ -117,7 +117,7 @@
 - Git, Github, Bootstrap, Django에 대한 스터디 및 프로젝트 진행
 - 롯데&대학생 멋쟁이사자차럼 해커톤 은상 수상
 
-[https://github.com/thalals/Project_barobarot](https://github.com/thalals/Project_barobarot)
+<img src="https://img.shields.io/badge/Github-%230A0A0A.svg?&style=flat-square&logo=Github&logoColor=white"> [Project: 바로바롯](https://github.com/thalals/Project_barobarot)
 
 <br>
 

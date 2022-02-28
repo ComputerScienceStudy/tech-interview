@@ -1,6 +1,8 @@
 
 # 박형민 | 성장하는 즐거움
 
+<img width="200" alt="Screen Shot 2021-12-30 at 2 43 45 AM" src="https://user-images.githubusercontent.com/42319300/155941568-dd34b2a6-7d5b-47a5-8046-d2b55c341150.jpg">
+
 📧 **이메일** : **thalsal@naver.com**
 
 📬 **Phone  : 010-4147-1796**
@@ -9,7 +11,9 @@
 
 📓 **Github** : **[Park Hyeongmin](https://github.com/thalals)**
 
-![KakaoTalk_20210911_193852559.jpg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/81b056e9-43de-400a-b3d2-1865a7b886ca/KakaoTalk_20210911_193852559.jpg)
+
+<br>
+
 
 ## 안녕하세요, 개발자 박형민입니다!
 
@@ -27,7 +31,7 @@
 - “이거 너가 만들었어?”의 **“너”**이고 싶은 개발자입니다.
   사용자가 만족하며 사용하는 서비스를 만드는 것을 목표로 나아가는 중입니다!
 
----
+<br>
 
 ## 🖥️ 팀/개인 프로젝트
 
@@ -67,7 +71,8 @@
 
 [https://github.com/thalals/MaruMaru_sparta_ver.Spring](https://github.com/thalals/MaruMaru_sparta_ver.Spring)
 
----
+<br>
+
 
 ### 🌍 안전보행길 탐색 지도 (학술제 대상 수상작 ✨)
 
@@ -101,7 +106,8 @@
 
 [https://github.com/thalals/SafetyMap-Graduation-Project](https://github.com/thalals/SafetyMap-Graduation-Project)
 
----
+<br>
+
 
 ## 💁🏻대외 활동
 
@@ -113,7 +119,8 @@
 
 [https://github.com/thalals/Project_barobarot](https://github.com/thalals/Project_barobarot)
 
----
+<br>
+
 
 ## 🏫 교육 이력
 
@@ -130,7 +137,8 @@
 - 2021 SCH SW 졸업 학술제 대상 수상
 - 2020 3학년 학과대표
 
----
+<br>
+
 
 ## 💡 자격 정보
 
@@ -146,7 +154,8 @@
 - 발행 기관 : 한국정보통신자격협회
 - 공부법 : 군 복무 중, IT관련 자격증 취득 기회가 생겨, 밤새 연등을해가며 필기와 실기 모두 복무 중 합격
 
----
+<br>
+
 
 ## 🔫 병역
 

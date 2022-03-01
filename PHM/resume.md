@@ -54,7 +54,7 @@
 - AWS EB(Elastic Beanstalk) 백엔드 배포
 - RDS(MySql) 연동
 - Git Action을 이용한 무중단 서비스 배포
-- Docker 스크립트를 이용한, 배포 버전 관리
+- AWS ECR/Docker 스크립트를 이용한, 배포 버전 관리
 - 게시글(posts) 카테고리 CRUD
 - 좋아요, 댓글, 검색, 페이지네이션
 

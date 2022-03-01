@@ -49,7 +49,7 @@
 
 **내가 담당한 기능**
 
-- JPA Pagealbe, 서브쿼리 이용해 외부참조 엔티티 Size로 정렬
+- JPA Pageable 서브쿼리 이용해 외부참조 엔티티 Size로 정렬
 - 만남 희망 장소 주위, 카테고리 별 장소 추천 기능 구현
 - AWS EB(Elastic Beanstalk) 백엔드 배포
 - RDS(MySql) 연동

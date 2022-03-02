@@ -123,4 +123,4 @@
   - 3 way hand shake에 대해서 설명하세요.
 </details>
 
-### [Cheet Sheet](https://sunzero.notion.site/39419328056f4c08a5168ef4e24e6da6)
+## [Cheet Sheet](https://github.com/ComputerScienceStudy/tech-interview/blob/main/KHY/Cheet%20Sheet.md)

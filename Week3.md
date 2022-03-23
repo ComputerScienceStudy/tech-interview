@@ -278,7 +278,7 @@ Dirty Read, Nonrepeatable Read와 같은 문제를 예방하려면 트랜잭션�
 
 ---
 
-**🤔  ORM이란?**
+**🤔  ORM(Object Relational Mapping)이란?**
 
 객체와 관계형 데이터베이스를 매핑해주는 것으로 쿼리문 작성 없이 객체를 데이터베이스에 직접 저장할 수 있게 도와주는 기술입니다.
 <br><br>

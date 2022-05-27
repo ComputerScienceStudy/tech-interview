@@ -615,7 +615,7 @@ Spring IoC 컨테이너가 인스턴스화, 관리, 생성하는 자바 객체�
 ApplicationContext가 만들어서 그 안에 담고 있는 객체입니다.
 
 따라서 기존 자바 프로그래밍처럼 Class 생성 후 new 연산자로 객체를 생성하는 것이 아니라           
-ApplicationContect.getBean()와 같은 메서드를 사용해 스프링으로부터 객체를 얻습니다.
+ApplicationContext.getBean()와 같은 메서드를 사용해 스프링으로부터 객체를 얻습니다.
 <br><br>
 
 #### 🤔 스프링 Bean의 생성 과정을 설명해주세요.          
